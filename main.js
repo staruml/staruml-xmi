@@ -31,7 +31,8 @@ define(function (require, exports, module) {
         MenuManager    = app.getModule("menu/MenuManager"),
         FileSystem     = app.getModule("filesystem/FileSystem");
 
-    var XMIReader      = require("XMIReader");
+    var XMI21Reader    = require("XMI21Reader"),
+        UML2           = require("UML2");
 
     var CMD_XMI_IMPORT     = 'xmi.import',
         CMD_XMI_EXPORT_V11 = 'xmi.export.v1.1',
@@ -40,11 +41,11 @@ define(function (require, exports, module) {
     function _handleXMIImport(fullPath) {
         var result = new $.Deferred();
         if (fullPath) {
-            XMIReader.loadFromFile(fullPath).then(result.resolve, result.reject);
+            XMI21Reader.loadFromFile(fullPath).then(result.resolve, result.reject);
         } else {
             FileSystem.showOpenDialog(false, false, "Select a XMI File (.xmi)", null, ["xmi"], function (err, files) {
                 if (!err) {
-                    XMIReader.loadFromFile(files[0]).then(result.resolve, result.reject);
+                    XMI21Reader.loadFromFile(files[0]).then(result.resolve, result.reject);
                 } else {
                     result.reject(err);
                 }

@@ -1,221 +1,217 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="2.1" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/2.0.0/UML" xmlns:untitled_profile="http:///schemas/untitled_profile/0" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http:///schemas/untitled_profile/0 XMI21.profile.uml#7D0WqNKAU0xuAwAF_content">
-	<uml:Model name="untitled" xmi:id="7D0WqNKAU0xuAwAF">
-		<xmi:Documentation exporter="Visual Paradigm" exporterVersion="7.0.2">
-			<xmi:Extension extender="Visual Paradigm">
-				<nickname exportedFromDifferentName="false"/>
-			</xmi:Extension>
-		</xmi:Documentation>
-		<profileApplication xmi:id="7D0WqNKAU0xuAwAF_7D0WqNKAU0xuAwAF_content_profileApplication">
-			<eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML" xmi:id="7D0WqNKAU0xuAwAF_7D0WqNKAU0xuAwAF_content_annotations">
-				<references href="XMI21.profile.uml#7D0WqNKAU0xuAwAF_content" xmi:type="ecore:EPackage"/>
-			</eAnnotations>
-			<appliedProfile href="XMI21.profile.uml#7D0WqNKAU0xuAwAF_profile"/>
-		</profileApplication>
+<xmi:XMI xmi:version="2.1" xmlns:uml="http://schema.omg.org/spec/UML/2.0" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1">
+	<xmi:Documentation exporter="Visual Paradigm" exporterVersion="7.0.2">
 		<xmi:Extension extender="Visual Paradigm">
-			<projectProperties>
-				<projectProperty name="author" value="niklaus"/>
-			</projectProperties>
-			<ProjectOptions>
-				<IDPositionRotation>
-					<Positions>
-						<Position id="BPTask" value="\u0004"/>
-						<Position id="BPSubProcess" value="\u0004"/>
-						<Position id="BPGateway" value="\u0004"/>
-						<Position id="BPPool" value="\u0002"/>
-						<Position id="BPLane" value="\u000b"/>
-						<Position id="BPDataObject" value="\u0008"/>
-						<Position id="BPStartEvent" value="\u0004"/>
-						<Position id="BPIntermediateEvent" value="\u0004"/>
-						<Position id="BPEndEvent" value="\u0004"/>
-						<Position id="BPGroup" value="\u0004"/>
-						<Position id="BPChoreographyTask" value="\u0004"/>
-						<Position id="BPChoreographySubProcess" value="\u0004"/>
-						<Position id="BPCallActivity" value="\u0004"/>
-						<Position id="BPCallChoreographyActivity" value="\u0004"/>
-						<Position id="BPTextAnnotation" value="\u0004"/>
-						<Position id="BPSequenceFlow" value="\u000e"/>
-						<Position id="BPMessageFlow" value="\u000e"/>
-						<Position id="BPAssociation" value="\u000e"/>
-						<Position id="BPDataAssociation" value="\u000e"/>
-					</Positions>
-					<Positions>
-						<Rotation id="BPTask" value="\u0000"/>
-						<Rotation id="BPSubProcess" value="\u0000"/>
-						<Rotation id="BPGateway" value="\u0000"/>
-						<Rotation id="BPPool" value="\u0000"/>
-						<Rotation id="BPLane" value="\u0000"/>
-						<Rotation id="BPDataObject" value="\u0000"/>
-						<Rotation id="BPStartEvent" value="\u0000"/>
-						<Rotation id="BPIntermediateEvent" value="\u0000"/>
-						<Rotation id="BPEndEvent" value="\u0000"/>
-						<Rotation id="BPGroup" value="\u0000"/>
-						<Rotation id="BPChoreographyTask" value="\u0000"/>
-						<Rotation id="BPChoreographySubProcess" value="\u0000"/>
-						<Rotation id="BPCallActivity" value="\u0000"/>
-						<Rotation id="BPCallChoreographyActivity" value="\u0000"/>
-						<Rotation id="BPTextAnnotation" value="\u0000"/>
-						<Rotation id="BPSequenceFlow" value="\u0004"/>
-						<Rotation id="BPMessageFlow" value="\u0004"/>
-						<Rotation id="BPAssociation" value="\u0004"/>
-						<Rotation id="BPDataAssociation" value="\u0004"/>
-					</Positions>
-				</IDPositionRotation>
-				<CodeSyncOptions addImportInsteadOfQualifiedName="true" autoRealizeInterface="false" braceOnAnnotationTypeDeclaration="\u0000" braceOnClassDeclaration="\u0000" braceOnConstructorDeclaration="\u0000" braceOnEnumDeclaration="\u0000" braceOnMethodDeclaration="\u0000" collectionType="\u0001" commitCodeSynchronizationPathsSetting="false" dataTypeForAssociationCollectionType="java.util.Collection" defaultAttributeType="int" defaultOperationReturnType="void" defaultParameterType="int" generateAnnotationInCodeConvention="true" generateAnnotationOn="\u0000" generatePreAndPostCondition="\u0000" getterTemplate="return this.{attribute};" importQualifiedNameForReferenceType="false" indentationPolicy="\u0000" indentationSize="1" linesAfterImportDeclaration="1" linesAfterPackageDeclaration="1" linesBeforeDiffKindDeclaration="1" linesBeforeFieldDeclaration="0" linesBeforeFirstDeclaration="1" linesBeforeImportDeclaration="1" linesBeforeInnerTypeDeclaration="2" linesBeforeMethodDeclaration="1" linesBeforePackageDeclaration="0" linesInEmptyBody="1" operationTemplate="// TODO - implement {class}.{operation}&#10;throw new UnsupportedOperationException();" removeMethodBodyAfterChangedToAbstractMethod="true" reverseGetterSetter="0" reverseInterfaceGetterSetterAsAssociation="true" setterTemplate="this.{attribute} = {parameter};" textFileEncoding="UTF-8" textFileEncodingUseSystemDefault="true" useIsPrefixForReturnBooleanGetters="true" usingJavaGenericsToDefineTypeInReturnedCollection="true"/>
-				<LanguageDataType>
-					<LanguageDataTypeModel id="Java" name="Java">
-						<DataType>boolean</DataType>
-						<DataType>byte</DataType>
-						<DataType>char</DataType>
-						<DataType>double</DataType>
-						<DataType>float</DataType>
-						<DataType>int</DataType>
-						<DataType>long</DataType>
-						<DataType>short</DataType>
-						<DataType>void</DataType>
-						<DataType>String</DataType>
-					</LanguageDataTypeModel>
-					<LanguageDataTypeModel id="XML Schema" name="XML Schema">
-						<DataType>xs:anySimpleType</DataType>
-						<DataType>xs:anyType</DataType>
-						<DataType>xs:anyURI</DataType>
-						<DataType>xs:base64Binary</DataType>
-						<DataType>xs:boolean</DataType>
-						<DataType>xs:byte</DataType>
-						<DataType>xs:date</DataType>
-						<DataType>xs:dateTime</DataType>
-						<DataType>xs:decimal</DataType>
-						<DataType>xs:double</DataType>
-						<DataType>xs:duration</DataType>
-						<DataType>xs:ENTITIES</DataType>
-						<DataType>xs:ENTITY</DataType>
-						<DataType>xs:float</DataType>
-						<DataType>xs:gDay</DataType>
-						<DataType>xs:gMonth</DataType>
-						<DataType>xs:gMonthDay</DataType>
-						<DataType>xs:gYear</DataType>
-						<DataType>xs:gYearMonth</DataType>
-						<DataType>xs:hexBinary</DataType>
-						<DataType>xs:ID</DataType>
-						<DataType>xs:IDREF</DataType>
-						<DataType>xs:IDREFS</DataType>
-						<DataType>xs:int</DataType>
-						<DataType>xs:integer</DataType>
-						<DataType>xs:language</DataType>
-						<DataType>xs:long</DataType>
-						<DataType>xs:Name</DataType>
-						<DataType>xs:NCName</DataType>
-						<DataType>xs:negativeInteger</DataType>
-						<DataType>xs:NMTOKEN</DataType>
-						<DataType>xs:NMTOKENS</DataType>
-						<DataType>xs:nonNegativeInteger</DataType>
-						<DataType>xs:nonPositiveInteger</DataType>
-						<DataType>xs:normalizedString</DataType>
-						<DataType>xs:NOTATION</DataType>
-						<DataType>xs:positiveInteger</DataType>
-						<DataType>xs:QName</DataType>
-						<DataType>xs:short</DataType>
-						<DataType>xs:string</DataType>
-						<DataType>xs:time</DataType>
-						<DataType>xs:token</DataType>
-						<DataType>xs:unsignedByte</DataType>
-						<DataType>xs:unsignedInt</DataType>
-						<DataType>xs:unsignedLong</DataType>
-						<DataType>xs:unsignedShort</DataType>
-					</LanguageDataTypeModel>
-					<LanguageDataTypeModel id="C++" name="C++">
-						<DataType>__wchar_t</DataType>
-						<DataType>bool</DataType>
-						<DataType>char</DataType>
-						<DataType>double</DataType>
-						<DataType>float</DataType>
-						<DataType>int</DataType>
-						<DataType>long</DataType>
-						<DataType>long double</DataType>
-						<DataType>short</DataType>
-						<DataType>signed char</DataType>
-						<DataType>unsigned char</DataType>
-						<DataType>unsigned int</DataType>
-						<DataType>unsigned long</DataType>
-						<DataType>unsigned short</DataType>
-						<DataType>void</DataType>
-					</LanguageDataTypeModel>
-					<LanguageDataTypeModel id="Visual Basic" name="Visual Basic">
-						<DataType>Boolean</DataType>
-						<DataType>Byte</DataType>
-						<DataType>Char</DataType>
-						<DataType>Date</DataType>
-						<DataType>Decimal</DataType>
-						<DataType>Double</DataType>
-						<DataType>Integer</DataType>
-						<DataType>Long</DataType>
-						<DataType>Object</DataType>
-						<DataType>Short</DataType>
-						<DataType>Single</DataType>
-						<DataType>String</DataType>
-						<DataType>Void</DataType>
-					</LanguageDataTypeModel>
-					<LanguageDataTypeModel id="C#" name="C#">
-						<DataType>bool</DataType>
-						<DataType>byte</DataType>
-						<DataType>char</DataType>
-						<DataType>decimal</DataType>
-						<DataType>double</DataType>
-						<DataType>float</DataType>
-						<DataType>int</DataType>
-						<DataType>long</DataType>
-						<DataType>object</DataType>
-						<DataType>sbyte</DataType>
-						<DataType>short</DataType>
-						<DataType>string</DataType>
-						<DataType>uint</DataType>
-						<DataType>ulong</DataType>
-						<DataType>ushort</DataType>
-						<DataType>void</DataType>
-					</LanguageDataTypeModel>
-					<LanguageDataTypeModel id="ActionScript" name="ActionScript">
-						<DataType>Boolean</DataType>
-						<DataType>int</DataType>
-						<DataType>uint</DataType>
-						<DataType>Null</DataType>
-						<DataType>Number</DataType>
-						<DataType>String</DataType>
-						<DataType>void</DataType>
-					</LanguageDataTypeModel>
-					<LanguageDataTypeModel id="UML" name="UML">
-						<DataType>boolean</DataType>
-						<DataType>byte</DataType>
-						<DataType>char</DataType>
-						<DataType>double</DataType>
-						<DataType>float</DataType>
-						<DataType>int</DataType>
-						<DataType>long</DataType>
-						<DataType>short</DataType>
-						<DataType>void</DataType>
-						<DataType>string</DataType>
-					</LanguageDataTypeModel>
-				</LanguageDataType>
-				<DiagramOptions activityDiagramControlFlowDisplayOption="\u0000" activityDiagramShowActionCallBehaviorOption="\u0000" activityDiagramShowActivityEdgeWeight="true" activityDiagramShowObjectNodeType="true" activityDiagramShowPartitionHandle="\u0000" addDataStoresExtEntitiesToDecomposedDFD="\u0002" alignColumnProperties="true" autoGenerateRoleName="false" autoSetAttributeType="true" autoSetColumnType="true" autoSyncRoleName="true" bpdAutoStretchPools="true" bpdConnectGatewayWithFlowObjectInDifferentPool="\u0000" bpdDefaultConnectionPointStyle="\u0001" bpdDefaultConnectorStyle="\u0005" bpdDhowIdOption="\u0000" bpdShowActivitiesTypeIcon="true" businessProcessDiagramDefaultLanguage="English" classVisibilityStyle="\u0001" connectorLabelOrientation="\u0000" createOneMessagePerDirection="true" decisionMergeNodeConnectionPointStyle="\u0000" defaultAssociationEndNavigable="\u0001" defaultAssociationEndVisibility="\u0000" defaultAssociationShowFromMultiplicity="true" defaultAssociationShowFromRoleName="true" defaultAssociationShowFromRoleVisibility="true" defaultAssociationShowStereotypes="true" defaultAssociationShowToMultiplicity="true" defaultAssociationShowToRoleName="true" defaultAssociationShowToRoleVisibility="true" defaultAttributeMultiplicity="false" defaultAttributeType="" defaultAttributeVisibility="\u0001" defaultClassAttributeMultiplicity="" defaultClassAttributeMultiplicityOrdered="false" defaultClassAttributeMultiplicityUnique="true" defaultClassInterfaceBall="false" defaultClassVisibility="\u0004" defaultColumnType="integer(10)" defaultConnectionPointStyle="\u0000" defaultConnectorStyle="\u0001" defaultDiagramBackground="Cr:255,255,255,255" defaultDisplayAsRobustnessAnalysisIcon="true" defaultDisplayAsRobustnessAnalysisIconInSequenceDiagram="true" defaultDisplayAsStereotypeIcon="false" defaultFontColor="Cr:0,0,0,255" defaultGenDiagramTypeFromScenario="\u0000" defaultHtmlDocFontColor="Cr:0,0,0,255" defaultLineJumps="\u0000" defaultOperationVisibility="\u0004" defaultParameterDirection="\u0002" defaultShowAttributeInitialValue="true" defaultShowAttributeOption="\u0001" defaultShowClassMemberStereotype="true" defaultShowDirection="false" defaultShowMultiplicityConstraints="false" defaultShowOperationOption="\u0001" defaultShowOperationSignature="true" defaultShowOrderedMultiplicityConstraint="true" defaultShowOwnedAssociationEndAsAttribute="true" defaultShowOwner="false" defaultShowTemplateParameter="true" defaultShowTypeOption="\u0001" defaultShowUniqueMultiplicityConstraint="true" defaultTypeOfSubProcess="\u0000" defaultWrapClassMember="false" drawTextAnnotationOpenRectangleFollowConnectorEnd="true" enableMinimumSize="true" entityColumnConstraintsPresentation="\u0002" erdIndexNumOfDigits="-1" erdIndexPattern="{table_name}" erdIndexPatternSyncAutomatically="true" expandedSubProcessDiagramContent="\u0001" foreignKeyArrowHeadSize="\u0002" foreignKeyConnectorEndPointAssociatedColumn="false" foreignKeyNamePattern="{reference_table_name}{reference_column_name}" foreignKeyNamePatternCaseHandling="0" foreignKeyRelationshipPattern="{association_name}" fractionalMetrics="true" generalizationSetNotation="\u0001" graphicAntiAliasing="true" gridDiagramFontSize="14" highlightConnectorsOfSelectedOrMouseOverShape="false" lineJumpSize="\u0000" modelElementNameAlignment="\u0004" multipleLineClassName="\u0001" paintConnectorThroughLabel="true" primaryKeyConstraintPattern="" primaryKeyNamePattern="ID" renameConstructorAfterRenameClass="\u0000" renameExtensionPointToFollowExtendUseCase="\u0000" shapeAutoFitSize="false" showActivationsInSequenceDiagram="true" showActivityStateNodeCaption="65535" showArtifactOption="\u0002" showAssociatedDiagramNameOfInteraction="false" showAssociationRoleStereotypes="true" showAttributeGetterSetter="false" showClassEmptyCompartments="false" showColumnNullable="true" showColumnType="true" showColumnUniqueConstraintName="false" showComponentOption="\u0002" showExtraColumnProperties="true" showInOutFlowsInSubLevelDiagram="true" showMessageOperationSignatureForSequenceAndCommunicationDiagram="true" showMessageStereotypeInSequenceAndCommunicationDiagram="true" showNumberInCollaborationDiagram="true" showNumberInSequenceDiagram="true" showPackageNameStyle="\u0000" showParameterNameInOperationSignature="true" showRowGridLineWithinCompClassDiagram="false" showRowGridLineWithinCompERD="true" showRowGridLineWithinORMDiagram="true" showSchemaNameInERD="true" showTransitionTrigger="\u0000" showUseCaseExtensionPoint="true" showUseCaseID="false" stateShowPrePostConditionAndBodyOfInternalActivities="true" stopTargetLifelineOnCreateDestroyMessage="\u0002" supportHtmlTaggedValue="false" supportMultipleLineAttribute="true" suppressImpliedMultiplicityForAttributeAssociationEnd="false" syncAssociationNameWithAssociationClass="\u0000" syncAssociationRoleNameWithReferencedAttributeName="true" syncDocOfInterfaceToSubClass="\u0000" textAntiAliasing="true" textualAnalysisGenerateRequirementTextOption="\u0001" textualAnalysisHighlightOption="\u0000" useStateNameTab="false">
-					<defaultHtmlDocFont family="Courier New" size="11" style="0"/>
-				</DiagramOptions>
-				<GeneralOptions confirmSubLevelIdWithDot="true"/>
-				<InstantReverseOptions calculateGeneralizationAndRealization="false" createShapeForParentModelOfDraggedClassPackage="false" reverseGetterSetter="\u0000" reverseOperationImplementation="false" showPackageForNewDiagram="\u0001" showPackageOwner="\u0000"/>
-				<ModelQualityOptions enableModelQualityChecking="false"/>
-				<OfficeExchangeOptions generateBlankModel="false" generateTableOfContent="true" insertPageBreak="true"/>
-				<ORMOptions decimalPrecision="19" decimalScale="0" exportCommentToDatabase="true" formattedSQL="false" generateAssociationWithAttribute="false" generateDiagramFromORMWizards="true" getterSetterVisibility="\u0000" idGeneratorType="native" mappingFileColumnOrder="\u0000" numericToClassType="\u0000" quoteSQLIdentifier="\u0000" recreateShapeWhenSync="false" syncToClassDiagramAttributeName="\u0001" syncToClassDiagramAttributeNamePrefix="" syncToClassDiagramAttributeNameSuffix="" syncToClassDiagramClassName="\u0000" syncToClassDiagramClassNamePrefix="" syncToClassDiagramClassNameSuffix="" syncToERDColumnName="\u0000" syncToERDColumnNamePrefix="" syncToERDColumnNameSuffix="" syncToERDTableName="\u0004" syncToERDTableNamePrefix="" syncToERDTableNameSuffix="" synchronizeDefaultValueToColumn="false" synchronizeName="\u0002" tablePerSubclassFKMapping="\u0000" upperCaseSQL="true" useDefaultDecimal="true" wrappingServletRequest="\u0001"/>
-				<RequirementDiagramOptions defaultWrapMember="false" showAttributes="\u0001" supportHTMLAttribute="false"/>
-				<StateCodeEngineOptions autoCreateInitialStateInStateDiagram="true" autoCreateTransitionMethods="true" defaultInitialStateLocationX="-1" defaultInitialStateLocationY="-1" generateDebugMessage="false" generateSample="true" generateTryCatch="true" language="\u0000" regenerateTransitionMethods="false" syncTransitionMethods="true"/>
-				<WarningOptions createORMClassInDefaultPackage="true"/>
-				<PORepository>
-					<POUserIDFormats>
-						<POUserIDFormat digits="2" guid="false" id="r70WqNKAU0xuAwOF" lastNumericValue="0" modelType="BPMNElement" prefix="BP" suffix=""/>
-						<POUserIDFormat digits="2" guid="false" id="b70WqNKAU0xuAwOG" lastNumericValue="0" modelType="Actor" prefix="AC" suffix=""/>
-						<POUserIDFormat digits="2" guid="false" id="b70WqNKAU0xuAwOH" lastNumericValue="0" modelType="UseCase" prefix="UC" suffix=""/>
-						<POUserIDFormat digits="3" guid="false" id="770WqNKAU0xuAwOI" lastNumericValue="0" modelType="Requirement" prefix="REQ" suffix=""/>
-						<POUserIDFormat digits="3" guid="false" id="770WqNKAU0xuAwOJ" lastNumericValue="0" modelType="BusinessRule" prefix="BR" suffix=""/>
-					</POUserIDFormats>
-				</PORepository>
-			</ProjectOptions>
+			<nickname exportedFromDifferentName="false"/>
+		</xmi:Extension>
+	</xmi:Documentation>
+	<xmi:Extension extender="Visual Paradigm">
+		<projectProperties>
+			<projectProperty name="author" value="niklaus"/>
+		</projectProperties>
+		<ProjectOptions>
+			<IDPositionRotation>
+				<Positions>
+					<Position id="BPTask" value="\u0004"/>
+					<Position id="BPSubProcess" value="\u0004"/>
+					<Position id="BPGateway" value="\u0004"/>
+					<Position id="BPPool" value="\u0002"/>
+					<Position id="BPLane" value="\u000b"/>
+					<Position id="BPDataObject" value="\u0008"/>
+					<Position id="BPStartEvent" value="\u0004"/>
+					<Position id="BPIntermediateEvent" value="\u0004"/>
+					<Position id="BPEndEvent" value="\u0004"/>
+					<Position id="BPGroup" value="\u0004"/>
+					<Position id="BPChoreographyTask" value="\u0004"/>
+					<Position id="BPChoreographySubProcess" value="\u0004"/>
+					<Position id="BPCallActivity" value="\u0004"/>
+					<Position id="BPCallChoreographyActivity" value="\u0004"/>
+					<Position id="BPTextAnnotation" value="\u0004"/>
+					<Position id="BPSequenceFlow" value="\u000e"/>
+					<Position id="BPMessageFlow" value="\u000e"/>
+					<Position id="BPAssociation" value="\u000e"/>
+					<Position id="BPDataAssociation" value="\u000e"/>
+				</Positions>
+				<Positions>
+					<Rotation id="BPTask" value="\u0000"/>
+					<Rotation id="BPSubProcess" value="\u0000"/>
+					<Rotation id="BPGateway" value="\u0000"/>
+					<Rotation id="BPPool" value="\u0000"/>
+					<Rotation id="BPLane" value="\u0000"/>
+					<Rotation id="BPDataObject" value="\u0000"/>
+					<Rotation id="BPStartEvent" value="\u0000"/>
+					<Rotation id="BPIntermediateEvent" value="\u0000"/>
+					<Rotation id="BPEndEvent" value="\u0000"/>
+					<Rotation id="BPGroup" value="\u0000"/>
+					<Rotation id="BPChoreographyTask" value="\u0000"/>
+					<Rotation id="BPChoreographySubProcess" value="\u0000"/>
+					<Rotation id="BPCallActivity" value="\u0000"/>
+					<Rotation id="BPCallChoreographyActivity" value="\u0000"/>
+					<Rotation id="BPTextAnnotation" value="\u0000"/>
+					<Rotation id="BPSequenceFlow" value="\u0004"/>
+					<Rotation id="BPMessageFlow" value="\u0004"/>
+					<Rotation id="BPAssociation" value="\u0004"/>
+					<Rotation id="BPDataAssociation" value="\u0004"/>
+				</Positions>
+			</IDPositionRotation>
+			<CodeSyncOptions addImportInsteadOfQualifiedName="true" autoRealizeInterface="false" braceOnAnnotationTypeDeclaration="\u0000" braceOnClassDeclaration="\u0000" braceOnConstructorDeclaration="\u0000" braceOnEnumDeclaration="\u0000" braceOnMethodDeclaration="\u0000" collectionType="\u0001" commitCodeSynchronizationPathsSetting="false" dataTypeForAssociationCollectionType="java.util.Collection" defaultAttributeType="int" defaultOperationReturnType="void" defaultParameterType="int" generateAnnotationInCodeConvention="true" generateAnnotationOn="\u0000" generatePreAndPostCondition="\u0000" getterTemplate="return this.{attribute};" importQualifiedNameForReferenceType="false" indentationPolicy="\u0000" indentationSize="1" linesAfterImportDeclaration="1" linesAfterPackageDeclaration="1" linesBeforeDiffKindDeclaration="1" linesBeforeFieldDeclaration="0" linesBeforeFirstDeclaration="1" linesBeforeImportDeclaration="1" linesBeforeInnerTypeDeclaration="2" linesBeforeMethodDeclaration="1" linesBeforePackageDeclaration="0" linesInEmptyBody="1" operationTemplate="// TODO - implement {class}.{operation}&#10;throw new UnsupportedOperationException();" removeMethodBodyAfterChangedToAbstractMethod="true" reverseGetterSetter="0" reverseInterfaceGetterSetterAsAssociation="true" setterTemplate="this.{attribute} = {parameter};" textFileEncoding="UTF-8" textFileEncodingUseSystemDefault="true" useIsPrefixForReturnBooleanGetters="true" usingJavaGenericsToDefineTypeInReturnedCollection="true"/>
+			<LanguageDataType>
+				<LanguageDataTypeModel id="Java" name="Java">
+					<DataType>boolean</DataType>
+					<DataType>byte</DataType>
+					<DataType>char</DataType>
+					<DataType>double</DataType>
+					<DataType>float</DataType>
+					<DataType>int</DataType>
+					<DataType>long</DataType>
+					<DataType>short</DataType>
+					<DataType>void</DataType>
+					<DataType>String</DataType>
+				</LanguageDataTypeModel>
+				<LanguageDataTypeModel id="XML Schema" name="XML Schema">
+					<DataType>xs:anySimpleType</DataType>
+					<DataType>xs:anyType</DataType>
+					<DataType>xs:anyURI</DataType>
+					<DataType>xs:base64Binary</DataType>
+					<DataType>xs:boolean</DataType>
+					<DataType>xs:byte</DataType>
+					<DataType>xs:date</DataType>
+					<DataType>xs:dateTime</DataType>
+					<DataType>xs:decimal</DataType>
+					<DataType>xs:double</DataType>
+					<DataType>xs:duration</DataType>
+					<DataType>xs:ENTITIES</DataType>
+					<DataType>xs:ENTITY</DataType>
+					<DataType>xs:float</DataType>
+					<DataType>xs:gDay</DataType>
+					<DataType>xs:gMonth</DataType>
+					<DataType>xs:gMonthDay</DataType>
+					<DataType>xs:gYear</DataType>
+					<DataType>xs:gYearMonth</DataType>
+					<DataType>xs:hexBinary</DataType>
+					<DataType>xs:ID</DataType>
+					<DataType>xs:IDREF</DataType>
+					<DataType>xs:IDREFS</DataType>
+					<DataType>xs:int</DataType>
+					<DataType>xs:integer</DataType>
+					<DataType>xs:language</DataType>
+					<DataType>xs:long</DataType>
+					<DataType>xs:Name</DataType>
+					<DataType>xs:NCName</DataType>
+					<DataType>xs:negativeInteger</DataType>
+					<DataType>xs:NMTOKEN</DataType>
+					<DataType>xs:NMTOKENS</DataType>
+					<DataType>xs:nonNegativeInteger</DataType>
+					<DataType>xs:nonPositiveInteger</DataType>
+					<DataType>xs:normalizedString</DataType>
+					<DataType>xs:NOTATION</DataType>
+					<DataType>xs:positiveInteger</DataType>
+					<DataType>xs:QName</DataType>
+					<DataType>xs:short</DataType>
+					<DataType>xs:string</DataType>
+					<DataType>xs:time</DataType>
+					<DataType>xs:token</DataType>
+					<DataType>xs:unsignedByte</DataType>
+					<DataType>xs:unsignedInt</DataType>
+					<DataType>xs:unsignedLong</DataType>
+					<DataType>xs:unsignedShort</DataType>
+				</LanguageDataTypeModel>
+				<LanguageDataTypeModel id="C++" name="C++">
+					<DataType>__wchar_t</DataType>
+					<DataType>bool</DataType>
+					<DataType>char</DataType>
+					<DataType>double</DataType>
+					<DataType>float</DataType>
+					<DataType>int</DataType>
+					<DataType>long</DataType>
+					<DataType>long double</DataType>
+					<DataType>short</DataType>
+					<DataType>signed char</DataType>
+					<DataType>unsigned char</DataType>
+					<DataType>unsigned int</DataType>
+					<DataType>unsigned long</DataType>
+					<DataType>unsigned short</DataType>
+					<DataType>void</DataType>
+				</LanguageDataTypeModel>
+				<LanguageDataTypeModel id="Visual Basic" name="Visual Basic">
+					<DataType>Boolean</DataType>
+					<DataType>Byte</DataType>
+					<DataType>Char</DataType>
+					<DataType>Date</DataType>
+					<DataType>Decimal</DataType>
+					<DataType>Double</DataType>
+					<DataType>Integer</DataType>
+					<DataType>Long</DataType>
+					<DataType>Object</DataType>
+					<DataType>Short</DataType>
+					<DataType>Single</DataType>
+					<DataType>String</DataType>
+					<DataType>Void</DataType>
+				</LanguageDataTypeModel>
+				<LanguageDataTypeModel id="C#" name="C#">
+					<DataType>bool</DataType>
+					<DataType>byte</DataType>
+					<DataType>char</DataType>
+					<DataType>decimal</DataType>
+					<DataType>double</DataType>
+					<DataType>float</DataType>
+					<DataType>int</DataType>
+					<DataType>long</DataType>
+					<DataType>object</DataType>
+					<DataType>sbyte</DataType>
+					<DataType>short</DataType>
+					<DataType>string</DataType>
+					<DataType>uint</DataType>
+					<DataType>ulong</DataType>
+					<DataType>ushort</DataType>
+					<DataType>void</DataType>
+				</LanguageDataTypeModel>
+				<LanguageDataTypeModel id="ActionScript" name="ActionScript">
+					<DataType>Boolean</DataType>
+					<DataType>int</DataType>
+					<DataType>uint</DataType>
+					<DataType>Null</DataType>
+					<DataType>Number</DataType>
+					<DataType>String</DataType>
+					<DataType>void</DataType>
+				</LanguageDataTypeModel>
+				<LanguageDataTypeModel id="UML" name="UML">
+					<DataType>boolean</DataType>
+					<DataType>byte</DataType>
+					<DataType>char</DataType>
+					<DataType>double</DataType>
+					<DataType>float</DataType>
+					<DataType>int</DataType>
+					<DataType>long</DataType>
+					<DataType>short</DataType>
+					<DataType>void</DataType>
+					<DataType>string</DataType>
+				</LanguageDataTypeModel>
+			</LanguageDataType>
+			<DiagramOptions activityDiagramControlFlowDisplayOption="\u0000" activityDiagramShowActionCallBehaviorOption="\u0000" activityDiagramShowActivityEdgeWeight="true" activityDiagramShowObjectNodeType="true" activityDiagramShowPartitionHandle="\u0000" addDataStoresExtEntitiesToDecomposedDFD="\u0002" alignColumnProperties="true" autoGenerateRoleName="false" autoSetAttributeType="true" autoSetColumnType="true" autoSyncRoleName="true" bpdAutoStretchPools="true" bpdConnectGatewayWithFlowObjectInDifferentPool="\u0000" bpdDefaultConnectionPointStyle="\u0001" bpdDefaultConnectorStyle="\u0005" bpdDhowIdOption="\u0000" bpdShowActivitiesTypeIcon="true" businessProcessDiagramDefaultLanguage="English" classVisibilityStyle="\u0001" connectorLabelOrientation="\u0000" createOneMessagePerDirection="true" decisionMergeNodeConnectionPointStyle="\u0000" defaultAssociationEndNavigable="\u0001" defaultAssociationEndVisibility="\u0000" defaultAssociationShowFromMultiplicity="true" defaultAssociationShowFromRoleName="true" defaultAssociationShowFromRoleVisibility="true" defaultAssociationShowStereotypes="true" defaultAssociationShowToMultiplicity="true" defaultAssociationShowToRoleName="true" defaultAssociationShowToRoleVisibility="true" defaultAttributeMultiplicity="false" defaultAttributeType="" defaultAttributeVisibility="\u0001" defaultClassAttributeMultiplicity="" defaultClassAttributeMultiplicityOrdered="false" defaultClassAttributeMultiplicityUnique="true" defaultClassInterfaceBall="false" defaultClassVisibility="\u0004" defaultColumnType="integer(10)" defaultConnectionPointStyle="\u0000" defaultConnectorStyle="\u0001" defaultDiagramBackground="Cr:255,255,255,255" defaultDisplayAsRobustnessAnalysisIcon="true" defaultDisplayAsRobustnessAnalysisIconInSequenceDiagram="true" defaultDisplayAsStereotypeIcon="false" defaultFontColor="Cr:0,0,0,255" defaultGenDiagramTypeFromScenario="\u0000" defaultHtmlDocFontColor="Cr:0,0,0,255" defaultLineJumps="\u0000" defaultOperationVisibility="\u0004" defaultParameterDirection="\u0002" defaultShowAttributeInitialValue="true" defaultShowAttributeOption="\u0001" defaultShowClassMemberStereotype="true" defaultShowDirection="false" defaultShowMultiplicityConstraints="false" defaultShowOperationOption="\u0001" defaultShowOperationSignature="true" defaultShowOrderedMultiplicityConstraint="true" defaultShowOwnedAssociationEndAsAttribute="true" defaultShowOwner="false" defaultShowTemplateParameter="true" defaultShowTypeOption="\u0001" defaultShowUniqueMultiplicityConstraint="true" defaultTypeOfSubProcess="\u0000" defaultWrapClassMember="false" drawTextAnnotationOpenRectangleFollowConnectorEnd="true" enableMinimumSize="true" entityColumnConstraintsPresentation="\u0002" erdIndexNumOfDigits="-1" erdIndexPattern="{table_name}" erdIndexPatternSyncAutomatically="true" expandedSubProcessDiagramContent="\u0001" foreignKeyArrowHeadSize="\u0002" foreignKeyConnectorEndPointAssociatedColumn="false" foreignKeyNamePattern="{reference_table_name}{reference_column_name}" foreignKeyNamePatternCaseHandling="0" foreignKeyRelationshipPattern="{association_name}" fractionalMetrics="true" generalizationSetNotation="\u0001" graphicAntiAliasing="true" gridDiagramFontSize="14" highlightConnectorsOfSelectedOrMouseOverShape="false" lineJumpSize="\u0000" modelElementNameAlignment="\u0004" multipleLineClassName="\u0001" paintConnectorThroughLabel="true" primaryKeyConstraintPattern="" primaryKeyNamePattern="ID" renameConstructorAfterRenameClass="\u0000" renameExtensionPointToFollowExtendUseCase="\u0000" shapeAutoFitSize="false" showActivationsInSequenceDiagram="true" showActivityStateNodeCaption="65535" showArtifactOption="\u0002" showAssociatedDiagramNameOfInteraction="false" showAssociationRoleStereotypes="true" showAttributeGetterSetter="false" showClassEmptyCompartments="false" showColumnNullable="true" showColumnType="true" showColumnUniqueConstraintName="false" showComponentOption="\u0002" showExtraColumnProperties="true" showInOutFlowsInSubLevelDiagram="true" showMessageOperationSignatureForSequenceAndCommunicationDiagram="true" showMessageStereotypeInSequenceAndCommunicationDiagram="true" showNumberInCollaborationDiagram="true" showNumberInSequenceDiagram="true" showPackageNameStyle="\u0000" showParameterNameInOperationSignature="true" showRowGridLineWithinCompClassDiagram="false" showRowGridLineWithinCompERD="true" showRowGridLineWithinORMDiagram="true" showSchemaNameInERD="true" showTransitionTrigger="\u0000" showUseCaseExtensionPoint="true" showUseCaseID="false" stateShowPrePostConditionAndBodyOfInternalActivities="true" stopTargetLifelineOnCreateDestroyMessage="\u0002" supportHtmlTaggedValue="false" supportMultipleLineAttribute="true" suppressImpliedMultiplicityForAttributeAssociationEnd="false" syncAssociationNameWithAssociationClass="\u0000" syncAssociationRoleNameWithReferencedAttributeName="true" syncDocOfInterfaceToSubClass="\u0000" textAntiAliasing="true" textualAnalysisGenerateRequirementTextOption="\u0001" textualAnalysisHighlightOption="\u0000" useStateNameTab="false">
+				<defaultHtmlDocFont family="Courier New" size="11" style="0"/>
+			</DiagramOptions>
+			<GeneralOptions confirmSubLevelIdWithDot="true"/>
+			<InstantReverseOptions calculateGeneralizationAndRealization="false" createShapeForParentModelOfDraggedClassPackage="false" reverseGetterSetter="\u0000" reverseOperationImplementation="false" showPackageForNewDiagram="\u0001" showPackageOwner="\u0000"/>
+			<ModelQualityOptions enableModelQualityChecking="false"/>
+			<OfficeExchangeOptions generateBlankModel="false" generateTableOfContent="true" insertPageBreak="true"/>
+			<ORMOptions decimalPrecision="19" decimalScale="0" exportCommentToDatabase="true" formattedSQL="false" generateAssociationWithAttribute="false" generateDiagramFromORMWizards="true" getterSetterVisibility="\u0000" idGeneratorType="native" mappingFileColumnOrder="\u0000" numericToClassType="\u0000" quoteSQLIdentifier="\u0000" recreateShapeWhenSync="false" syncToClassDiagramAttributeName="\u0001" syncToClassDiagramAttributeNamePrefix="" syncToClassDiagramAttributeNameSuffix="" syncToClassDiagramClassName="\u0000" syncToClassDiagramClassNamePrefix="" syncToClassDiagramClassNameSuffix="" syncToERDColumnName="\u0000" syncToERDColumnNamePrefix="" syncToERDColumnNameSuffix="" syncToERDTableName="\u0004" syncToERDTableNamePrefix="" syncToERDTableNameSuffix="" synchronizeDefaultValueToColumn="false" synchronizeName="\u0002" tablePerSubclassFKMapping="\u0000" upperCaseSQL="true" useDefaultDecimal="true" wrappingServletRequest="\u0001"/>
+			<RequirementDiagramOptions defaultWrapMember="false" showAttributes="\u0001" supportHTMLAttribute="false"/>
+			<StateCodeEngineOptions autoCreateInitialStateInStateDiagram="true" autoCreateTransitionMethods="true" defaultInitialStateLocationX="-1" defaultInitialStateLocationY="-1" generateDebugMessage="false" generateSample="true" generateTryCatch="true" language="\u0000" regenerateTransitionMethods="false" syncTransitionMethods="true"/>
+			<WarningOptions createORMClassInDefaultPackage="true"/>
+			<PORepository>
+				<POUserIDFormats>
+					<POUserIDFormat digits="2" guid="false" id="r70WqNKAU0xuAwOF" lastNumericValue="0" modelType="BPMNElement" prefix="BP" suffix=""/>
+					<POUserIDFormat digits="2" guid="false" id="b70WqNKAU0xuAwOG" lastNumericValue="0" modelType="Actor" prefix="AC" suffix=""/>
+					<POUserIDFormat digits="2" guid="false" id="b70WqNKAU0xuAwOH" lastNumericValue="0" modelType="UseCase" prefix="UC" suffix=""/>
+					<POUserIDFormat digits="3" guid="false" id="770WqNKAU0xuAwOI" lastNumericValue="0" modelType="Requirement" prefix="REQ" suffix=""/>
+					<POUserIDFormat digits="3" guid="false" id="770WqNKAU0xuAwOJ" lastNumericValue="0" modelType="BusinessRule" prefix="BR" suffix=""/>
+				</POUserIDFormats>
+			</PORepository>
+		</ProjectOptions>
+	</xmi:Extension>
+	<uml:Model name="VP_XMI_TestModel" xmi:id="7D0WqNKAU0xuAwAF">
+		<xmi:Extension extender="Visual Paradigm">
 			<vpumlChildModels>
 				<vpumlModel id="Vj0WqNKAU0xuAwAS" modelType="WSDLContainer">
 					<properties>
@@ -233,6 +229,7 @@
 								<property htmlValue="" name="documentation" type="htmlString" value=""/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360496"/>
+								<property name="pmLastModified" type="string" value="1421994031238"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="import" type="boolean" value="false"/>
 								<property name="qualityScore" type="int" value="-1"/>
@@ -294,6 +291,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360545"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -306,6 +304,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360546"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -318,6 +317,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360546"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -330,6 +330,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360546"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -342,6 +343,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360546"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -354,6 +356,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360548"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -366,6 +369,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360549"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -378,6 +382,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360549"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -390,6 +395,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360549"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -402,6 +408,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360549"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -414,6 +421,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360549"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -426,6 +434,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360550"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -438,6 +447,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360550"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -450,6 +460,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360550"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -462,6 +473,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360551"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -474,6 +486,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360551"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -486,6 +499,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360551"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -498,6 +512,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360551"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -510,6 +525,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360551"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -522,6 +538,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360552"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -534,6 +551,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360552"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -546,6 +564,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360552"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -558,6 +577,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360552"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -570,6 +590,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360553"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -582,6 +603,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360553"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -594,6 +616,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360553"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -606,6 +629,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360553"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -618,6 +642,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360553"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -630,6 +655,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360554"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -642,6 +668,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360554"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -654,6 +681,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360554"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -666,6 +694,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360554"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -678,6 +707,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360554"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -690,6 +720,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360554"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -702,6 +733,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360555"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -714,6 +746,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360555"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -726,6 +759,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360555"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -738,6 +772,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360555"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -750,6 +785,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360555"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -762,6 +798,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360555"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -774,6 +811,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360555"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -786,6 +824,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360556"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -798,6 +837,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360556"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -810,6 +850,7 @@
 										<property htmlValue="" name="documentation" type="htmlString" value=""/>
 										<property name="pmAuthor" type="string" value="niklaus"/>
 										<property name="pmCreateDateTime" type="string" value="1421993360556"/>
+										<property name="pmLastModified" type="string" value="1421994031238"/>
 										<property name="userIDLastNumericValue" type="int" value="0"/>
 										<property name="import" type="boolean" value="false"/>
 										<property name="qualityScore" type="int" value="-1"/>
@@ -1095,7 +1136,7 @@
 								<property htmlValue="" name="documentation" type="htmlString" value=""/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360582"/>
-								<property name="pmLastModified" type="string" value="1421993360583"/>
+								<property name="pmLastModified" type="string" value="1421994031271"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1109,7 +1150,7 @@
 						<property htmlValue="" name="documentation" type="htmlString" value=""/>
 						<property name="pmAuthor" type="string" value="niklaus"/>
 						<property name="pmCreateDateTime" type="string" value="1421993360585"/>
-						<property name="pmLastModified" type="string" value="1421993360585"/>
+						<property name="pmLastModified" type="string" value="1421994031277"/>
 						<property name="userIDLastNumericValue" type="int" value="0"/>
 						<property name="qualityScore" type="int" value="-1"/>
 					</properties>
@@ -1133,7 +1174,7 @@
 								<property htmlValue="" name="documentation" type="htmlString" value=""/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360586"/>
-								<property name="pmLastModified" type="string" value="1421993360587"/>
+								<property name="pmLastModified" type="string" value="1421994031285"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1145,7 +1186,7 @@
 								<property htmlValue="" name="documentation" type="htmlString" value=""/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360587"/>
-								<property name="pmLastModified" type="string" value="1421993360588"/>
+								<property name="pmLastModified" type="string" value="1421994031249"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1157,7 +1198,7 @@
 								<property htmlValue="" name="documentation" type="htmlString" value=""/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360588"/>
-								<property name="pmLastModified" type="string" value="1421993360588"/>
+								<property name="pmLastModified" type="string" value="1421994031271"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1169,7 +1210,7 @@
 								<property htmlValue="" name="documentation" type="htmlString" value=""/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360589"/>
-								<property name="pmLastModified" type="string" value="1421993360589"/>
+								<property name="pmLastModified" type="string" value="1421994031242"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1181,7 +1222,7 @@
 								<property htmlValue="" name="documentation" type="htmlString" value=""/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360590"/>
-								<property name="pmLastModified" type="string" value="1421993360590"/>
+								<property name="pmLastModified" type="string" value="1421994031261"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1193,7 +1234,7 @@
 								<property htmlValue="" name="documentation" type="htmlString" value=""/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360590"/>
-								<property name="pmLastModified" type="string" value="1421993360591"/>
+								<property name="pmLastModified" type="string" value="1421994031262"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1205,7 +1246,7 @@
 								<property htmlValue="" name="documentation" type="htmlString" value=""/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360591"/>
-								<property name="pmLastModified" type="string" value="1421993360591"/>
+								<property name="pmLastModified" type="string" value="1421994031266"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1217,7 +1258,7 @@
 								<property htmlValue="" name="documentation" type="htmlString" value=""/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360591"/>
-								<property name="pmLastModified" type="string" value="1421993360592"/>
+								<property name="pmLastModified" type="string" value="1421994031266"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1229,7 +1270,7 @@
 								<property htmlValue="" name="documentation" type="htmlString" value=""/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360592"/>
-								<property name="pmLastModified" type="string" value="1421993360592"/>
+								<property name="pmLastModified" type="string" value="1421994031276"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1241,7 +1282,7 @@
 								<property htmlValue="" name="documentation" type="htmlString" value=""/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360592"/>
-								<property name="pmLastModified" type="string" value="1421993360593"/>
+								<property name="pmLastModified" type="string" value="1421994031276"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1255,7 +1296,7 @@
 						<property htmlValue="" name="documentation" type="htmlString" value=""/>
 						<property name="pmAuthor" type="string" value="niklaus"/>
 						<property name="pmCreateDateTime" type="string" value="1421993360595"/>
-						<property name="pmLastModified" type="string" value="1421993360595"/>
+						<property name="pmLastModified" type="string" value="1421994031248"/>
 						<property name="userIDLastNumericValue" type="int" value="0"/>
 						<property name="qualityScore" type="int" value="-1"/>
 					</properties>
@@ -1271,7 +1312,7 @@
 								<property htmlValue="" name="documentation" type="htmlString" value=""/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360596"/>
-								<property name="pmLastModified" type="string" value="1421993360596"/>
+								<property name="pmLastModified" type="string" value="1421994031258"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 								<property name="codes" type="models">
@@ -1339,7 +1380,7 @@
 								<property htmlValue="" name="documentation" type="htmlString" value=""/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360599"/>
-								<property name="pmLastModified" type="string" value="1421993360599"/>
+								<property name="pmLastModified" type="string" value="1421994031253"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 								<property name="codes" type="models">
@@ -1453,7 +1494,7 @@
 								<property htmlValue="&lt;HTML&gt;&lt;BODY&gt;&lt;p style=&quot;margin-top: 0&quot;&gt;A rival enterprise in a struggle for advantage over the subject enterprise.&lt;/p&gt;&lt;/BODY&gt;&lt;/HTML&gt;" name="documentation" type="htmlString" value="A rival enterprise in a struggle for advantage over the subject enterprise."/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360603"/>
-								<property name="pmLastModified" type="string" value="1421993360603"/>
+								<property name="pmLastModified" type="string" value="1421994031255"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1465,7 +1506,7 @@
 								<property htmlValue="&lt;HTML&gt;&lt;BODY&gt;&lt;p style=&quot;margin-top: 0&quot;&gt;A role played by an individual or enterprise that has investigated, ordered, received, or paid for products or services from the subject enterprise.&lt;/p&gt;&lt;/BODY&gt;&lt;/HTML&gt;" name="documentation" type="htmlString" value="A role played by an individual or enterprise that has investigated, ordered, received, or paid for products or services from the subject enterprise."/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360606"/>
-								<property name="pmLastModified" type="string" value="1421993360607"/>
+								<property name="pmLastModified" type="string" value="1421994031267"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1477,7 +1518,7 @@
 								<property htmlValue="&lt;HTML&gt;&lt;BODY&gt;&lt;p style=&quot;margin-top: 0&quot;&gt;The aggregate of surrounding conditions or Influencers affecting the existence or development of an enterprise.&lt;/p&gt;&lt;/BODY&gt;&lt;/HTML&gt;" name="documentation" type="htmlString" value="The aggregate of surrounding conditions or Influencers affecting the existence or development of an enterprise."/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360607"/>
-								<property name="pmLastModified" type="string" value="1421993360607"/>
+								<property name="pmLastModified" type="string" value="1421994031273"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1489,7 +1530,7 @@
 								<property htmlValue="&lt;HTML&gt;&lt;BODY&gt;&lt;p style=&quot;margin-top: 0&quot;&gt;An enterprise that shares risks and profit with the subject enterprise (or is associated with the subject enterprise to share risks and profit) because this is mutually beneficial.&lt;/p&gt;&lt;/BODY&gt;&lt;/HTML&gt;" name="documentation" type="htmlString" value="An enterprise that shares risks and profit with the subject enterprise (or is associated with the subject enterprise to share risks and profit) because this is mutually beneficial."/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360607"/>
-								<property name="pmLastModified" type="string" value="1421993360608"/>
+								<property name="pmLastModified" type="string" value="1421994031273"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1501,7 +1542,7 @@
 								<property htmlValue="&lt;HTML&gt;&lt;BODY&gt;&lt;p style=&quot;margin-top: 0&quot;&gt;An order prescribed by an authority such as a government body or the management of an enterprise.&lt;/p&gt;&lt;/BODY&gt;&lt;/HTML&gt;" name="documentation" type="htmlString" value="An order prescribed by an authority such as a government body or the management of an enterprise."/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360608"/>
-								<property name="pmLastModified" type="string" value="1421993360608"/>
+								<property name="pmLastModified" type="string" value="1421994031251"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1513,7 +1554,7 @@
 								<property htmlValue="&lt;HTML&gt;&lt;BODY&gt;&lt;p style=&quot;margin-top: 0&quot;&gt;A role played by an individual or enterprise that can furnish or provide products or services to the subject enterprise.&lt;/p&gt;&lt;/BODY&gt;&lt;/HTML&gt;" name="documentation" type="htmlString" value="A role played by an individual or enterprise that can furnish or provide products or services to the subject enterprise."/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360608"/>
-								<property name="pmLastModified" type="string" value="1421993360609"/>
+								<property name="pmLastModified" type="string" value="1421994031251"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1525,7 +1566,7 @@
 								<property htmlValue="&lt;HTML&gt;&lt;BODY&gt;&lt;p style=&quot;margin-top: 0&quot;&gt;The role of technology, including its developments and limitations \u2014 there may be prerequisites for use of technology; there may be enterprise activity that technology enables or restricts.&lt;/p&gt;&lt;/BODY&gt;&lt;/HTML&gt;" name="documentation" type="htmlString" value="The role of technology, including its developments and limitations \u2014 there may be prerequisites for use of technology; there may be enterprise activity that technology enables or restricts."/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360610"/>
-								<property name="pmLastModified" type="string" value="1421993360611"/>
+								<property name="pmLastModified" type="string" value="1421994031284"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1537,7 +1578,7 @@
 								<property htmlValue="&lt;HTML&gt;&lt;BODY&gt;&lt;p style=&quot;margin-top: 0&quot;&gt;Something that is taken for granted or without proof.&lt;/p&gt;&lt;/BODY&gt;&lt;/HTML&gt;" name="documentation" type="htmlString" value="Something that is taken for granted or without proof."/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360611"/>
-								<property name="pmLastModified" type="string" value="1421993360611"/>
+								<property name="pmLastModified" type="string" value="1421994031261"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1549,7 +1590,7 @@
 								<property htmlValue="&lt;HTML&gt;&lt;BODY&gt;&lt;p style=&quot;margin-top: 0&quot;&gt;Value An ideal, custom, or institution that an enterprise promotes or agrees with (either positive or negative).&lt;/p&gt;&lt;/BODY&gt;&lt;/HTML&gt;" name="documentation" type="htmlString" value="Value An ideal, custom, or institution that an enterprise promotes or agrees with (either positive or negative)."/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360611"/>
-								<property name="pmLastModified" type="string" value="1421993360612"/>
+								<property name="pmLastModified" type="string" value="1421994031260"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1561,7 +1602,7 @@
 								<property htmlValue="&lt;HTML&gt;&lt;BODY&gt;&lt;p style=&quot;margin-top: 0&quot;&gt;A Corporate Value explicitly set forth and declared.&lt;/p&gt;&lt;/BODY&gt;&lt;/HTML&gt;" name="documentation" type="htmlString" value="A Corporate Value explicitly set forth and declared."/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360612"/>
-								<property name="pmLastModified" type="string" value="1421993360614"/>
+								<property name="pmLastModified" type="string" value="1421994031270"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1573,7 +1614,7 @@
 								<property htmlValue="&lt;HTML&gt;&lt;BODY&gt;&lt;p style=&quot;margin-top: 0&quot;&gt;A Corporate Value not explicitly declared but nonetheless understood by some or all of the people in an enterprise.&lt;/p&gt;&lt;/BODY&gt;&lt;/HTML&gt;" name="documentation" type="htmlString" value="A Corporate Value not explicitly declared but nonetheless understood by some or all of the people in an enterprise."/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360615"/>
-								<property name="pmLastModified" type="string" value="1421993360615"/>
+								<property name="pmLastModified" type="string" value="1421994031267"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1585,7 +1626,7 @@
 								<property htmlValue="&lt;HTML&gt;&lt;BODY&gt;&lt;p style=&quot;margin-top: 0&quot;&gt;A customary practice or use.&lt;/p&gt;&lt;/BODY&gt;&lt;/HTML&gt;" name="documentation" type="htmlString" value="A customary practice or use."/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360615"/>
-								<property name="pmLastModified" type="string" value="1421993360616"/>
+								<property name="pmLastModified" type="string" value="1421994031266"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1597,7 +1638,7 @@
 								<property htmlValue="&lt;HTML&gt;&lt;BODY&gt;&lt;p style=&quot;margin-top: 0&quot;&gt;The basic underlying framework or features of a system.&lt;/p&gt;&lt;/BODY&gt;&lt;/HTML&gt;" name="documentation" type="htmlString" value="The basic underlying framework or features of a system."/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360616"/>
-								<property name="pmLastModified" type="string" value="1421993360616"/>
+								<property name="pmLastModified" type="string" value="1421994031284"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1609,7 +1650,7 @@
 								<property htmlValue="&lt;HTML&gt;&lt;BODY&gt;&lt;p style=&quot;margin-top: 0&quot;&gt;A point in question or a matter that is in dispute as between contending partners.&lt;/p&gt;&lt;/BODY&gt;&lt;/HTML&gt;" name="documentation" type="htmlString" value="A point in question or a matter that is in dispute as between contending partners."/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360616"/>
-								<property name="pmLastModified" type="string" value="1421993360616"/>
+								<property name="pmLastModified" type="string" value="1421994031283"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1621,7 +1662,7 @@
 								<property htmlValue="&lt;HTML&gt;&lt;BODY&gt;&lt;p style=&quot;margin-top: 0&quot;&gt;Prerogative A right or privilege exercised by virtue of ownership or position in an enterprise.&lt;/p&gt;&lt;/BODY&gt;&lt;/HTML&gt;" name="documentation" type="htmlString" value="Prerogative A right or privilege exercised by virtue of ownership or position in an enterprise."/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360617"/>
-								<property name="pmLastModified" type="string" value="1421993360617"/>
+								<property name="pmLastModified" type="string" value="1421994031259"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1633,7 +1674,7 @@
 								<property htmlValue="&lt;HTML&gt;&lt;BODY&gt;&lt;p style=&quot;margin-top: 0&quot;&gt;The resources available for carrying out the business of an enterprise, especially their&#9;quality.&lt;/p&gt;&lt;/BODY&gt;&lt;/HTML&gt;" name="documentation" type="htmlString" value="The resources available for carrying out the business of an enterprise, especially their&#9;quality."/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360617"/>
-								<property name="pmLastModified" type="string" value="1421993360618"/>
+								<property name="pmLastModified" type="string" value="1421994031259"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1661,7 +1702,7 @@
 								<property htmlValue="&lt;HTML&gt;&lt;BODY&gt;&lt;p style=&quot;margin-top: 0&quot;&gt;If the rule is violated, the penalty is always applied.&lt;/p&gt;&lt;/BODY&gt;&lt;/HTML&gt;" name="documentation" type="htmlString" value="If the rule is violated, the penalty is always applied."/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360620"/>
-								<property name="pmLastModified" type="string" value="1421993360620"/>
+								<property name="pmLastModified" type="string" value="1421994031251"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1673,7 +1714,7 @@
 								<property htmlValue="&lt;HTML&gt;&lt;BODY&gt;&lt;p style=&quot;margin-top: 0&quot;&gt;Strictly enforced, but enforcement may be delayed (e.g., waiting for resource with required skills).&lt;/p&gt;&lt;/BODY&gt;&lt;/HTML&gt;" name="documentation" type="htmlString" value="Strictly enforced, but enforcement may be delayed (e.g., waiting for resource with required skills)."/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360621"/>
-								<property name="pmLastModified" type="string" value="1421993360621"/>
+								<property name="pmLastModified" type="string" value="1421994031276"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1685,7 +1726,7 @@
 								<property htmlValue="&lt;HTML&gt;&lt;BODY&gt;&lt;p style=&quot;margin-top: 0&quot;&gt;Enforced, but exceptions allowed, with prior approval for actors with before-the-fact override authorization.&lt;/p&gt;&lt;/BODY&gt;&lt;/HTML&gt;" name="documentation" type="htmlString" value="Enforced, but exceptions allowed, with prior approval for actors with before-the-fact override authorization."/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360621"/>
-								<property name="pmLastModified" type="string" value="1421993360622"/>
+								<property name="pmLastModified" type="string" value="1421994031275"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1697,7 +1738,7 @@
 								<property htmlValue="&lt;HTML&gt;&lt;BODY&gt;&lt;p style=&quot;margin-top: 0&quot;&gt;If not approved after the fact, you may be subject to sanction or other consequences.&lt;/p&gt;&lt;/BODY&gt;&lt;/HTML&gt;" name="documentation" type="htmlString" value="If not approved after the fact, you may be subject to sanction or other consequences."/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360622"/>
-								<property name="pmLastModified" type="string" value="1421993360622"/>
+								<property name="pmLastModified" type="string" value="1421994031242"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1709,7 +1750,7 @@
 								<property htmlValue="&lt;HTML&gt;&lt;BODY&gt;&lt;p style=&quot;margin-top: 0&quot;&gt;Comment must be provided when the violation occurs.&lt;/p&gt;&lt;/BODY&gt;&lt;/HTML&gt;" name="documentation" type="htmlString" value="Comment must be provided when the violation occurs."/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360623"/>
-								<property name="pmLastModified" type="string" value="1421993360623"/>
+								<property name="pmLastModified" type="string" value="1421994031248"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1721,7 +1762,7 @@
 								<property htmlValue="&lt;HTML&gt;&lt;BODY&gt;&lt;p style=&quot;margin-top: 0&quot;&gt;Suggested, but not enforced&lt;/p&gt;&lt;/BODY&gt;&lt;/HTML&gt;" name="documentation" type="htmlString" value="Suggested, but not enforced"/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360625"/>
-								<property name="pmLastModified" type="string" value="1421993360626"/>
+								<property name="pmLastModified" type="string" value="1421994031281"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1746,7 +1787,7 @@
 								<property htmlValue="&lt;HTML&gt;&lt;BODY&gt;&lt;p style=&quot;margin-top: 0&quot;&gt;Things that are kept long-term, maintained, reused, and perhaps eventually replaced. They can be tangible, such as equipment and buildings, or intangible, such as patents and licenses.&lt;/p&gt;&lt;/BODY&gt;&lt;/HTML&gt;" name="documentation" type="htmlString" value="Things that are kept long-term, maintained, reused, and perhaps eventually replaced. They can be tangible, such as equipment and buildings, or intangible, such as patents and licenses."/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360628"/>
-								<property name="pmLastModified" type="string" value="1421993360628"/>
+								<property name="pmLastModified" type="string" value="1421994031276"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1758,7 +1799,7 @@
 								<property htmlValue="&lt;HTML&gt;&lt;BODY&gt;&lt;p style=&quot;margin-top: 0&quot;&gt;Things that are consumed and replenished, such as raw materials, parts, finished goods, and cash.&lt;/p&gt;&lt;/BODY&gt;&lt;/HTML&gt;" name="documentation" type="htmlString" value="Things that are consumed and replenished, such as raw materials, parts, finished goods, and cash."/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360629"/>
-								<property name="pmLastModified" type="string" value="1421993360629"/>
+								<property name="pmLastModified" type="string" value="1421994031249"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1770,7 +1811,7 @@
 								<property htmlValue="&lt;HTML&gt;&lt;BODY&gt;&lt;p style=&quot;margin-top: 0&quot;&gt;An Offering is a specification of a product or service - an intangible Fixed Asset.&lt;/p&gt;&lt;/BODY&gt;&lt;/HTML&gt;" name="documentation" type="htmlString" value="An Offering is a specification of a product or service - an intangible Fixed Asset."/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360629"/>
-								<property name="pmLastModified" type="string" value="1421993360629"/>
+								<property name="pmLastModified" type="string" value="1421994031249"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1796,7 +1837,7 @@
 								<property htmlValue="&lt;HTML&gt;&lt;BODY&gt;&lt;p style=&quot;margin-top: 0&quot;&gt;Some advantage or area of excellence within the enterprise that can impact its employment of Means or achievement of Ends.&lt;/p&gt;&lt;/BODY&gt;&lt;/HTML&gt;" name="documentation" type="htmlString" value="Some advantage or area of excellence within the enterprise that can impact its employment of Means or achievement of Ends."/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360631"/>
-								<property name="pmLastModified" type="string" value="1421993360632"/>
+								<property name="pmLastModified" type="string" value="1421994031277"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1808,7 +1849,7 @@
 								<property htmlValue="&lt;HTML&gt;&lt;BODY&gt;&lt;p style=&quot;margin-top: 0&quot;&gt;Some area of inadequacy within the enterprise that can impact its employment of Means or achievement of Ends.&lt;/p&gt;&lt;/BODY&gt;&lt;/HTML&gt;" name="documentation" type="htmlString" value="Some area of inadequacy within the enterprise that can impact its employment of Means or achievement of Ends."/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360632"/>
-								<property name="pmLastModified" type="string" value="1421993360632"/>
+								<property name="pmLastModified" type="string" value="1421994031248"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1820,7 +1861,7 @@
 								<property htmlValue="&lt;HTML&gt;&lt;BODY&gt;&lt;p style=&quot;margin-top: 0&quot;&gt;This category indicates that some Influencer can have a favorable impact on the organization's employment of Means or achievement of Ends.&lt;/p&gt;&lt;/BODY&gt;&lt;/HTML&gt;" name="documentation" type="htmlString" value="This category indicates that some Influencer can have a favorable impact on the organization's employment of Means or achievement of Ends."/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360633"/>
-								<property name="pmLastModified" type="string" value="1421993360633"/>
+								<property name="pmLastModified" type="string" value="1421994031272"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -1832,7 +1873,7 @@
 								<property htmlValue="&lt;HTML&gt;&lt;BODY&gt;&lt;p style=&quot;margin-top: 0&quot;&gt;This category indicates that some Influencer can have an unfavorable impact on the organization's employment of Means or achievement of Ends.&lt;/p&gt;&lt;/BODY&gt;&lt;/HTML&gt;" name="documentation" type="htmlString" value="This category indicates that some Influencer can have an unfavorable impact on the organization's employment of Means or achievement of Ends."/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360633"/>
-								<property name="pmLastModified" type="string" value="1421993360633"/>
+								<property name="pmLastModified" type="string" value="1421994031272"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 							</properties>
@@ -6426,7 +6467,7 @@
 								<property htmlValue="" name="documentation" type="htmlString" value=""/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360718"/>
-								<property name="pmLastModified" type="string" value="1421993360718"/>
+								<property name="pmLastModified" type="string" value="1421994031243"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 								<property name="realizeTo" type="models">
@@ -6448,7 +6489,7 @@
 								<property htmlValue="" name="documentation" type="htmlString" value=""/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360719"/>
-								<property name="pmLastModified" type="string" value="1421993360720"/>
+								<property name="pmLastModified" type="string" value="1421994031250"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 								<property name="realizeTo" type="models">
@@ -6470,7 +6511,7 @@
 								<property htmlValue="" name="documentation" type="htmlString" value=""/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360720"/>
-								<property name="pmLastModified" type="string" value="1421993360720"/>
+								<property name="pmLastModified" type="string" value="1421994031278"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 								<property name="realizeTo" type="models">
@@ -6498,7 +6539,7 @@
 								<property htmlValue="" name="documentation" type="htmlString" value=""/>
 								<property name="pmAuthor" type="string" value="niklaus"/>
 								<property name="pmCreateDateTime" type="string" value="1421993360720"/>
-								<property name="pmLastModified" type="string" value="1421993360721"/>
+								<property name="pmLastModified" type="string" value="1421994031278"/>
 								<property name="userIDLastNumericValue" type="int" value="0"/>
 								<property name="qualityScore" type="int" value="-1"/>
 								<property name="realizeTo" type="models">
@@ -6540,162 +6581,695 @@
 						<property name="modelType" type="string" value="ViewpointLookup"/>
 					</properties>
 				</vpumlModel>
+				<vpumlModel id="rUSA2NKAU0xuAw81" modelType="AutoAttributeTypeModelContainer">
+					<properties>
+						<property name="name" type="string" value="AutoAttributeTypeModelContainer"/>
+						<property name="modelType" type="string" value="AutoAttributeTypeModelContainer"/>
+						<property name="autoAttributes" type="models">
+							<vpumlModels>
+								<vpumlModel id="E0sA2NKAU0xuAw8Y" modelType="AutoAttributeTypeModel">
+									<properties>
+										<property name="name" type="string" value="TypedByAbstractClass"/>
+										<property name="modelType" type="string" value="AutoAttributeTypeModel"/>
+										<property name="type" type="string" value="AbstractClass"/>
+									</properties>
+								</vpumlModel>
+							</vpumlModels>
+						</property>
+					</properties>
+				</vpumlModel>
+				<ownedMember from="htbSWNKAU0xuAwWt" to="dFnSWNKAU0xuAwXC" xmi:id="EGYyWNKAU0xuAwZU" xmi:type="anchor">
+					<xmi:Extension extender="Visual Paradigm">
+						<qualityScore value="-1"/>
+					</xmi:Extension>
+				</ownedMember>
 			</vpumlChildModels>
 		</xmi:Extension>
-		<packagedElement isAbstract="false" isActive="false" isLeaf="false" name="Class1" visibility="public" xmi:id="T4qWqNKAU0xuAwOd" xmi:type="uml:Class">
+		<ownedMember name="UseCase" xmi:id="UseCase_UseCase_id" xmi:type="uml:Stereotype">
+			<xmi:Extension extender="Visual Paradigm">
+				<baseType value="UseCase"/>
+				<taggedValueDefinitions>
+					<taggedValueDefinition htmlValue="" id="jb0WqNKAU0xuAwNi" name="Level" type="2" value="">
+						<value value="Summary"/>
+						<value value="User"/>
+						<value value="Subfunction"/>
+					</taggedValueDefinition>
+					<taggedValueDefinition htmlValue="" id="Tb0WqNKAU0xuAwNj" name="Complexity" type="2" value="">
+						<value value="Low"/>
+						<value value="Medium"/>
+						<value value="High"/>
+					</taggedValueDefinition>
+					<taggedValueDefinition htmlValue="" id="zb0WqNKAU0xuAwNk" name="Use Case Status" type="2" value="">
+						<value value="Name Only"/>
+						<value value="Initial"/>
+						<value value="Base"/>
+						<value value="Complete"/>
+						<value value="Deferred"/>
+					</taggedValueDefinition>
+					<taggedValueDefinition htmlValue="" id="Lb0WqNKAU0xuAwNl" name="Implementation Status" type="2" value="">
+						<value value="Scheduled"/>
+						<value value="Started"/>
+						<value value="Partially Complete"/>
+						<value value="Complete"/>
+						<value value="Partially Deferred"/>
+					</taggedValueDefinition>
+					<taggedValueDefinition htmlValue="" id="Lb0WqNKAU0xuAwNm" name="Preconditions" type="4" value=""/>
+					<taggedValueDefinition htmlValue="" id="bb0WqNKAU0xuAwNn" name="Post-conditions" type="4" value=""/>
+					<taggedValueDefinition htmlValue="" id="7b0WqNKAU0xuAwNo" name="Author" type="0" value=""/>
+					<taggedValueDefinition htmlValue="" id="7b0WqNKAU0xuAwNp" name="Assumptions" type="4" value=""/>
+				</taggedValueDefinitions>
+				<qualityScore value="-1"/>
+			</xmi:Extension>
+		</ownedMember>
+		<ownedMember name="Case Story" xmi:id="UseCase_Case Story_id" xmi:type="uml:Stereotype">
+			<xmi:Extension extender="Visual Paradigm">
+				<baseType value="UseCase"/>
+				<taggedValueDefinitions>
+					<taggedValueDefinition htmlValue="" id="k70WqNKAU0xuAwNs" name="Level" type="2" value="">
+						<value value="Summary"/>
+						<value value="User"/>
+						<value value="Subfunction"/>
+					</taggedValueDefinition>
+					<taggedValueDefinition htmlValue="" id="U70WqNKAU0xuAwNt" name="Complexity" type="2" value="">
+						<value value="Low"/>
+						<value value="Medium"/>
+						<value value="High"/>
+					</taggedValueDefinition>
+					<taggedValueDefinition htmlValue="" id="070WqNKAU0xuAwNu" name="Use Case Status" type="2" value="">
+						<value value="Name Only"/>
+						<value value="Initial"/>
+						<value value="Base"/>
+						<value value="Complete"/>
+						<value value="Deferred"/>
+					</taggedValueDefinition>
+					<taggedValueDefinition htmlValue="" id="M70WqNKAU0xuAwNv" name="Implementation Status" type="2" value="">
+						<value value="Scheduled"/>
+						<value value="Started"/>
+						<value value="Partially Complete"/>
+						<value value="Complete"/>
+						<value value="Partially Deferred"/>
+					</taggedValueDefinition>
+					<taggedValueDefinition htmlValue="" id="M70WqNKAU0xuAwNw" name="Preconditions" type="4" value=""/>
+					<taggedValueDefinition htmlValue="" id="c70WqNKAU0xuAwNx" name="Post-conditions" type="4" value=""/>
+					<taggedValueDefinition htmlValue="" id="870WqNKAU0xuAwNy" name="Author" type="0" value=""/>
+					<taggedValueDefinition htmlValue="" id="870WqNKAU0xuAwNz" name="Assumptions" type="4" value=""/>
+				</taggedValueDefinitions>
+				<qualityScore value="-1"/>
+			</xmi:Extension>
+		</ownedMember>
+		<ownedMember name="requirement" xmi:id="Requirement_requirement_id" xmi:type="uml:Stereotype">
+			<xmi:Extension extender="Visual Paradigm">
+				<baseType value="Requirement"/>
+				<taggedValueDefinitions>
+					<taggedValueDefinition htmlValue="" id="570WqNKAU0xuAwN8" name="Text" type="3" value=""/>
+					<taggedValueDefinition htmlValue="" id="570WqNKAU0xuAwN9" name="ID" type="0" value=""/>
+					<taggedValueDefinition htmlValue="" id="F70WqNKAU0xuAwN." name="source" type="0" value=""/>
+					<taggedValueDefinition htmlValue="" id="l70WqNKAU0xuAwN_" name="kind" type="2" value="">
+						<value value="Functional"/>
+						<value value="Performance"/>
+						<value value="Interface"/>
+					</taggedValueDefinition>
+					<taggedValueDefinition htmlValue="" id="V70WqNKAU0xuAwOA" name="verifyMethod" type="2" value="">
+						<value value="Analysis"/>
+						<value value="Demonstration"/>
+						<value value="Inspection"/>
+						<value value="Test"/>
+					</taggedValueDefinition>
+					<taggedValueDefinition htmlValue="" id="170WqNKAU0xuAwOB" name="risk" type="2" value="">
+						<value value="High"/>
+						<value value="Medium"/>
+						<value value="Low"/>
+					</taggedValueDefinition>
+					<taggedValueDefinition htmlValue="" id="N70WqNKAU0xuAwOC" name="status" type="2" value="">
+						<value value="Proposed"/>
+						<value value="Approved"/>
+						<value value="Rejected"/>
+						<value value="Deferred"/>
+						<value value="Implemented"/>
+						<value value="Mandatory"/>
+						<value value="Obsolete"/>
+					</taggedValueDefinition>
+				</taggedValueDefinitions>
+				<qualityScore value="-1"/>
+			</xmi:Extension>
+		</ownedMember>
+		<ownedMember isAbstract="false" isActive="false" isLeaf="false" name="Class1" visibility="public" xmi:id="T4qWqNKAU0xuAwOd" xmi:type="uml:Class">
 			<xmi:Extension extender="Visual Paradigm">
 				<isRoot xmi:value="false"/>
 				<modelType value="Class"/>
 				<businessModel xmi:value="false"/>
 				<qualityScore value="-1"/>
 			</xmi:Extension>
-		</packagedElement>
-		<uml:Diagram diagramType="ClassDiagram" documentation="" name="Class Diagram1" toolName="Visual Paradigm" xmi:id="SgcWqNKAU0xuAwOP">
-			<xmi:Extension extender="Visual Paradigm">
-				<properties>
-					<ashowShapeStereotypeIconName value="true"/>
-					<ashowAllocatedFrom value="true"/>
-					<ashowAllocatedTo value="true"/>
-					<apmAuthor value="niklaus"/>
-					<apmCreateDateTime value="1421993369682"/>
-					<apmLastModified value="1421993859571"/>
-					<ashowPackageNameStyle value="0"/>
-					<ashowConnectorName value="0"/>
-					<apaintConnectorThroughLabel value="0"/>
-					<ashowActivityStateNodeCaption value="65535"/>
-					<aeditable value="true"/>
-					<afollowDiagramParentElement value="true"/>
-					<aautoFitShapesSize value="false"/>
-					<ashowTaggedValues value="false"/>
-					<ahideEmptyTaggedValues value="false"/>
-					<ashowStereotypes value="true"/>
-					<ashowPMIteration value="false"/>
-					<ashowPMPhase value="false"/>
-					<ashowPMDiscipline value="false"/>
-					<ashowPMVersion value="false"/>
-					<ashowPMPriority value="false"/>
-					<ashowPMStatus value="false"/>
-					<ashowPMDifficulty value="false"/>
-					<ashowPMAuthor value="false"/>
-					<ashowConstraints value="false"/>
-					<aalignToGrid value="false"/>
-					<agridVisible value="false"/>
-					<agridWidth value="10"/>
-					<agridHeight value="10"/>
-					<agridColor value="Cr:192,192,192,255"/>
-					<adiagramBackground value="Cr:255,255,255,255"/>
-					<aconnectorStyle value="1"/>
-					<aconnectorLineJumps value="0"/>
-					<aconnectorLineJumpsSize value="0"/>
-					<aconnectionPointStyle value="0"/>
-					<aconnectorLabelOrientation value="0"/>
-					<amodelElementNameAlignment value="4"/>
-					<ashapePresentationOption value="0"/>
-					<azoomRatio value="1.0"/>
-					<amaximized value="true"/>
-					<ax value="0"/>
-					<ay value="0"/>
-					<awidth value="1349"/>
-					<aheight value="778"/>
-					<aqualityScore value="-1"/>
-					<a_globalPaletteOption value="true"/>
-					<a_alwaysShowReferenceAndSubdiagramResource value="false"/>
-					<ainitializeDiagramForCreate value="true"/>
-					<arequestValidateSnapToGrid value="false"/>
-					<ashowDefaultPackage value="true"/>
-					<ashowAttributeGetterSetter value="false"/>
-					<ashowClassOwner value="2"/>
-					<ashowPackageOwner value="2"/>
-					<ashowTemplateInfoOfGeneralizationAndRealization value="false"/>
-					<asuppressImplied1MultiplicityForAttributeAndAssociationEnd value="false"/>
-					<ashowClassEmptyCompartments value="2"/>
-					<ashowAttributesCodeDetails value="2"/>
-					<ashowAttributesPropertyModifiers value="2"/>
-					<ashowAttributesType value="1"/>
-					<ashowOperationsParameters value="1"/>
-					<ashowOperationsReturnType value="1"/>
-					<ashowOperationsCodeDetails value="2"/>
-					<ashowParametersCodeDetails value="2"/>
-					<ashowEllipsisForUnshownClassMembers value="2"/>
-					<ageneralizationSetNotation value="2"/>
-					<ashowAssociationNavigationArrows value="3"/>
-				</properties>
-			</xmi:Extension>
-			<uml:Diagram.element>
-				<uml:DiagramElement geometry="236,73,98,109" preferredShapeType="Class" subject="T4qWqNKAU0xuAwOd" xmi:id="N4qWqNKAU0xuAwOc">
+			<ownedAttribute aggregation="none" isDerived="false" isDerivedUnion="false" isID="false" isLeaf="false" isReadOnly="false" isStatic="false" name="TypedAttributeWithDefaultValue" type="string_id" visibility="private" xmi:id="ZOSAaNKAU0xuAwPg" xmi:type="uml:Property">
+				<xmi:Extension extender="Visual Paradigm">
+					<attribute/>
+					<isVisble xmi:value="true"/>
+					<qualityScore value="-1"/>
+				</xmi:Extension>
+				<defaultValue value="initial_value" xmi:id="ZOSAaNKAU0xuAwPg_initialValue" xmi:type="uml:LiteralString"/>
+			</ownedAttribute>
+			<ownedAttribute aggregation="none" isDerived="false" isDerivedUnion="false" isID="false" isLeaf="false" isReadOnly="false" isStatic="false" name="MultiplicityAttribute" visibility="private" xmi:id="Jzj_WNKAU0xuAw7A" xmi:type="uml:Property">
+				<xmi:Extension extender="Visual Paradigm">
+					<attribute/>
+					<isVisble xmi:value="true"/>
+					<qualityScore value="-1"/>
+				</xmi:Extension>
+				<lowerValue value="1" xmi:id="Jzj_WNKAU0xuAw7A_multiplicity_lowerValue" xmi:type="uml:LiteralString"/>
+				<upperValue value="*" xmi:id="Jzj_WNKAU0xuAw7A_multiplicity_upperValue" xmi:type="uml:LiteralString"/>
+			</ownedAttribute>
+			<ownedAttribute aggregation="none" isDerived="false" isDerivedUnion="false" isID="false" isLeaf="false" isReadOnly="false" isStatic="true" name="StaticAttribute" visibility="private" xmi:id="rMyAaNKAU0xuAwPl" xmi:type="uml:Property">
+				<xmi:Extension extender="Visual Paradigm">
+					<attribute/>
+					<isVisble xmi:value="true"/>
+					<qualityScore value="-1"/>
+				</xmi:Extension>
+			</ownedAttribute>
+			<ownedAttribute aggregation="none" isDerived="false" isDerivedUnion="false" isID="false" isLeaf="false" isOrdered="true" isReadOnly="false" isStatic="false" isUnique="true" name="OrderedAttribute" visibility="private" xmi:id="OK6uWNKAU0xuAw0t" xmi:type="uml:Property">
+				<xmi:Extension extender="Visual Paradigm">
+					<attribute/>
+					<isVisble xmi:value="true"/>
+					<qualityScore value="-1"/>
+				</xmi:Extension>
+			</ownedAttribute>
+			<ownedAttribute aggregation="none" isDerived="false" isDerivedUnion="false" isID="false" isLeaf="false" isReadOnly="true" isStatic="false" name="ReadOnlyAttribute" visibility="private" xmi:id="JNzuWNKAU0xuAw1R" xmi:type="uml:Property">
+				<xmi:Extension extender="Visual Paradigm">
+					<attribute/>
+					<isVisble xmi:value="true"/>
+					<qualityScore value="-1"/>
+				</xmi:Extension>
+			</ownedAttribute>
+			<ownedAttribute aggregation="none" isDerived="true" isDerivedUnion="false" isID="false" isLeaf="false" isReadOnly="false" isStatic="false" name="DerivedAttribute" visibility="private" xmi:id="Nx3_WNKAU0xuAw7a" xmi:type="uml:Property">
+				<xmi:Extension extender="Visual Paradigm">
+					<attribute/>
+					<isVisble xmi:value="true"/>
+					<qualityScore value="-1"/>
+				</xmi:Extension>
+			</ownedAttribute>
+			<ownedAttribute aggregation="none" isDerived="false" isDerivedUnion="false" isID="false" isLeaf="false" isReadOnly="false" isStatic="false" name="TypedByAbstractClass" type="MCZAaNKAU0xuAwRH" visibility="private" xmi:id="IKkA2NKAU0xuAw8U" xmi:type="uml:Property">
+				<xmi:Extension extender="Visual Paradigm">
+					<attribute/>
+					<isVisble xmi:value="true"/>
+					<qualityScore value="-1"/>
+				</xmi:Extension>
+			</ownedAttribute>
+			<ownedAttribute aggregation="composite" isDerived="false" isDerivedUnion="false" isID="false" isLeaf="false" isReadOnly="false" isStatic="false" name="CompositeAttribute" visibility="private" xmi:id="iKmE2NKAU0xuAw9I" xmi:type="uml:Property">
+				<xmi:Extension extender="Visual Paradigm">
+					<attribute/>
+					<isVisble xmi:value="true"/>
+					<qualityScore value="-1"/>
+				</xmi:Extension>
+			</ownedAttribute>
+			<ownedAttribute aggregation="shared" isDerived="false" isDerivedUnion="false" isID="false" isLeaf="false" isReadOnly="false" isStatic="false" name="SharedAttribute" visibility="private" xmi:id="TsuE2NKAU0xuAw9Y" xmi:type="uml:Property">
+				<xmi:Extension extender="Visual Paradigm">
+					<attribute/>
+					<isVisble xmi:value="true"/>
+					<qualityScore value="-1"/>
+				</xmi:Extension>
+			</ownedAttribute>
+			<ownedOperation isAbstract="false" isLeaf="false" isOrdered="false" isQuery="false" isStatic="false" isUnique="true" name="OperationHasParams" visibility="public" xmi:id="vHtAaNKAU0xuAwR_" xmi:type="uml:Operation">
+				<ownedParameter kind="return" type="string_id" xmi:id="vHtAaNKAU0xuAwR__return" xmi:type="uml:Parameter"/>
+				<ownedParameter kind="in" name="inparam" type="int_id" xmi:id="Q99AaNKAU0xuAwSO" xmi:type="uml:Parameter">
+					<defaultValue value="100" xmi:id="Q99AaNKAU0xuAwSO_defaultValue" xmi:type="uml:LiteralString"/>
 					<xmi:Extension extender="Visual Paradigm">
-						<captionBounds value="0,0,98,16"/>
-						<captionInternalWidth value="-2147483648"/>
-						<captionInternalHeight value="-2147483648"/>
-						<captionVisible value="true"/>
-						<captionSide value="12"/>
-						<properties>
-							<azOrder value="0"/>
-							<abackground value="Cr:122,207,245,255"/>
-							<aforeground value="Cr:0,0,0,255"/>
-							<acreatorDiagramType value="ClassDiagram"/>
-							<aselectable value="true"/>
-							<arequestResetCaption value="false"/>
-							<arequestResetCaptionSize value="false"/>
-							<apresentationOption value="4"/>
-							<aprimitiveShapeType value="0"/>
-							<ashowStereotypeIconName value="0"/>
-							<ashowAllocatedFrom value="0"/>
-							<ashowAllocatedTo value="0"/>
-							<aoverrideAppearanceWithStereotypeIcon value="true"/>
-							<arequestSetSizeOption value="0"/>
-							<aparentConnectorHeaderLength value="40"/>
-							<aparentConnectorLineLength value="10"/>
-							<aconnectToPoint value="true"/>
-							<aparentConnectorDTheta value="0.0"/>
-							<aconnectionPointType value="2"/>
-							<amodelElementNameAlignment value="9"/>
-							<arequestDefaultSize value="false"/>
-							<arequestFitSize value="false"/>
-							<arequestFitSizeFromCenter value="false"/>
-							<adisplayAsRobustnessAnalysisIcon value="true"/>
-							<avisibilityStyle value="1"/>
-							<ashowAttributeType value="1"/>
-							<ashowOperationType value="1"/>
-							<ashowEnumerationLiteralType value="1"/>
-							<amSwTpPts value="true"/>
-							<alshRfAts value="true"/>
-							<amShDrAt value="false"/>
-							<akShDrOp value="false"/>
-							<akSwCsMbSt value="true"/>
-							<ashowClassMemberConstraints value="true"/>
-							<alShCmMl value="false"/>
-							<ashowOperationParameterDirection value="false"/>
-							<ashowOperationRaisedExceptions value="false"/>
-							<ashowParameterNameInOperationSignature value="true"/>
-							<ashowOperationTemplateParameters value="false"/>
-							<ashowOperationProperties value="false"/>
-							<awpMbs value="false"/>
-							<aattributeSortType value="0"/>
-							<aoperationSortType value="0"/>
-							<aenumerationLiteralSortType value="0"/>
-							<ashowInitialAttributeValue value="true"/>
-							<ashowOperationSignature value="true"/>
-							<ainterfaceBall value="false"/>
-							<ashowEmptyCompartments value="0"/>
-							<ashowEllipsisForUnshownMembers value="0"/>
-							<ashowAttributesCodeDetails value="0"/>
-							<ashowAttributesPropertyModifiers value="0"/>
-							<ashowOperationsCodeDetails value="0"/>
-							<ashowParametersCodeDetails value="0"/>
-							<ashowTypeOption value="0"/>
-							<ashowOwnerOption value="3"/>
-							<ashowAttributesType value="0"/>
-							<ashowOperationsParameters value="0"/>
-							<ashowOperationsReturnType value="0"/>
-							<asuppressImplied1MultiplicityForAttribute value="0"/>
-						</properties>
+						<qualityScore value="-1"/>
 					</xmi:Extension>
-					<elementFill color1="Cr:122,207,245,255" color2="" style="1" transparency="0" type="1"/>
-					<elementFont bold="false" color="Cr:0,0,0,255" italic="false" name="Dialog" size="11" style="0"/>
-					<elementLine color="Cr:0,0,0,255" style="1" transparency="0" weight="1.0"/>
-				</uml:DiagramElement>
-			</uml:Diagram.element>
-		</uml:Diagram>
+				</ownedParameter>
+				<ownedParameter kind="out" name="outparam" xmi:id="OqTAaNKAU0xuAwSQ" xmi:type="uml:Parameter">
+					<xmi:Extension extender="Visual Paradigm">
+						<qualityScore value="-1"/>
+					</xmi:Extension>
+				</ownedParameter>
+				<ownedParameter kind="inout" name="inoutparam" xmi:id="RkHAaNKAU0xuAwST" xmi:type="uml:Parameter">
+					<xmi:Extension extender="Visual Paradigm">
+						<qualityScore value="-1"/>
+					</xmi:Extension>
+				</ownedParameter>
+				<ownedParameter name="returnparam" type="boolean_id" xmi:id="XTXAaNKAU0xuAwSV" xmi:type="uml:Parameter">
+					<xmi:Extension extender="Visual Paradigm">
+						<qualityScore value="-1"/>
+					</xmi:Extension>
+				</ownedParameter>
+				<xmi:Extension extender="Visual Paradigm">
+					<returnTypeDocumentation xmi:value=""/>
+					<properties>
+						<property name="pmAuthor" type="string" value="niklaus"/>
+						<property name="pmCreateDateTime" type="string" value="1422003461693"/>
+						<property name="pmLastModified" type="string" value="1422078061538"/>
+						<property name="userIDLastNumericValue" type="int" value="0"/>
+						<property name="static" type="boolean" value="false"/>
+						<property name="qualityScore" type="int" value="-1"/>
+						<property name="typeModifier" type="stringSelection" value=""/>
+						<property name="connectToCodeModel" type="int" value="1"/>
+						<property name="visible" type="boolean" value="true"/>
+					</properties>
+					<qualityScore value="-1"/>
+				</xmi:Extension>
+			</ownedOperation>
+			<ownedOperation isAbstract="false" isLeaf="false" isOrdered="false" isQuery="true" isStatic="false" isUnique="true" name="QueryOperation" visibility="public" xmi:id="eeguWNKAU0xuAwzi" xmi:type="uml:Operation">
+				<ownedParameter kind="return" xmi:id="eeguWNKAU0xuAwzi_return" xmi:type="uml:Parameter"/>
+				<xmi:Extension extender="Visual Paradigm">
+					<returnTypeDocumentation xmi:value=""/>
+					<properties>
+						<property name="pmAuthor" type="string" value="niklaus"/>
+						<property name="pmCreateDateTime" type="string" value="1422077990814"/>
+						<property name="pmLastModified" type="string" value="1422092762758"/>
+						<property name="userIDLastNumericValue" type="int" value="0"/>
+						<property name="static" type="boolean" value="false"/>
+						<property name="qualityScore" type="int" value="-1"/>
+						<property name="typeModifier" type="stringSelection" value=""/>
+						<property name="connectToCodeModel" type="int" value="1"/>
+						<property name="visible" type="boolean" value="true"/>
+					</properties>
+					<qualityScore value="-1"/>
+				</xmi:Extension>
+			</ownedOperation>
+			<ownedOperation isAbstract="false" isLeaf="false" isOrdered="false" isQuery="false" isStatic="false" isUnique="true" name="OperationWithSpecification" visibility="public" xmi:id="7gIeWNKAU0xuAw17" xmi:type="uml:Operation">
+				<ownedParameter kind="return" xmi:id="7gIeWNKAU0xuAw17_return" xmi:type="uml:Parameter"/>
+				<xmi:Extension extender="Visual Paradigm">
+					<returnTypeDocumentation xmi:value=""/>
+					<properties>
+						<property name="pmAuthor" type="string" value="niklaus"/>
+						<property name="pmCreateDateTime" type="string" value="1422078263415"/>
+						<property name="pmLastModified" type="string" value="1422078316635"/>
+						<property name="userIDLastNumericValue" type="int" value="0"/>
+						<property name="static" type="boolean" value="false"/>
+						<property name="qualityScore" type="int" value="-1"/>
+						<property name="bodyCondition" type="string" value="This is specification"/>
+						<property name="typeModifier" type="stringSelection" value=""/>
+						<property name="connectToCodeModel" type="int" value="1"/>
+						<property name="visible" type="boolean" value="true"/>
+					</properties>
+					<qualityScore value="-1"/>
+				</xmi:Extension>
+			</ownedOperation>
+		</ownedMember>
+		<ownedMember isAbstract="true" isActive="false" isLeaf="false" name="AbstractClass" visibility="public" xmi:id="MCZAaNKAU0xuAwRH" xmi:type="uml:Class">
+			<xmi:Extension extender="Visual Paradigm">
+				<isRoot xmi:value="false"/>
+				<modelType value="Class"/>
+				<businessModel xmi:value="false"/>
+				<qualityScore value="-1"/>
+			</xmi:Extension>
+			<ownedOperation isAbstract="true" isLeaf="false" isOrdered="false" isQuery="false" isStatic="false" isUnique="true" name="AbstractOperation" visibility="public" xmi:id="dj1AaNKAU0xuAwRn" xmi:type="uml:Operation">
+				<ownedParameter kind="return" xmi:id="dj1AaNKAU0xuAwRn_return" xmi:type="uml:Parameter"/>
+				<xmi:Extension extender="Visual Paradigm">
+					<returnTypeDocumentation xmi:value=""/>
+					<properties>
+						<property name="pmAuthor" type="string" value="niklaus"/>
+						<property name="pmCreateDateTime" type="string" value="1422003453038"/>
+						<property name="pmLastModified" type="string" value="1422078037033"/>
+						<property name="userIDLastNumericValue" type="int" value="0"/>
+						<property name="static" type="boolean" value="false"/>
+						<property name="qualityScore" type="int" value="-1"/>
+						<property name="typeModifier" type="stringSelection" value=""/>
+						<property name="connectToCodeModel" type="int" value="1"/>
+						<property name="visible" type="boolean" value="true"/>
+					</properties>
+					<qualityScore value="-1"/>
+				</xmi:Extension>
+			</ownedOperation>
+		</ownedMember>
+		<ownedMember isAbstract="false" isActive="false" isLeaf="false" name="ConstrainedClass" visibility="public" xmi:id="htbSWNKAU0xuAwWt" xmi:type="uml:Class">
+			<xmi:Extension extender="Visual Paradigm">
+				<isRoot xmi:value="false"/>
+				<modelType value="Class"/>
+				<businessModel xmi:value="false"/>
+				<qualityScore value="-1"/>
+			</xmi:Extension>
+		</ownedMember>
+		<ownedRule constrainedElement="htbSWNKAU0xuAwWt" name="Constraint1" xmi:id="dFnSWNKAU0xuAwXC">
+			<specification body="1+1 === 2" xmi:type="uml:OpaqueExpression"/>
+			<xmi:Extension extender="Visual Paradigm">
+				<qualityScore value="-1"/>
+			</xmi:Extension>
+		</ownedRule>
+		<ownedMember name="int" visibility="public" xmi:id="int_id" xmi:type="uml:DataType"/>
+		<ownedMember name="string" visibility="public" xmi:id="string_id" xmi:type="uml:DataType"/>
+		<ownedMember name="boolean" visibility="public" xmi:id="boolean_id" xmi:type="uml:DataType"/>
 	</uml:Model>
+	<uml:Diagram diagramType="ClassDiagram" documentation="" name="Class Diagram1" toolName="Visual Paradigm" xmi:id="SgcWqNKAU0xuAwOP">
+		<xmi:Extension extender="Visual Paradigm">
+			<properties>
+				<ashowShapeStereotypeIconName value="true"/>
+				<ashowAllocatedFrom value="true"/>
+				<ashowAllocatedTo value="true"/>
+				<apmAuthor value="niklaus"/>
+				<apmCreateDateTime value="1421993369682"/>
+				<apmLastModified value="1422092819965"/>
+				<ashowPackageNameStyle value="0"/>
+				<ashowConnectorName value="0"/>
+				<apaintConnectorThroughLabel value="0"/>
+				<ashowActivityStateNodeCaption value="65535"/>
+				<aeditable value="true"/>
+				<afollowDiagramParentElement value="true"/>
+				<aautoFitShapesSize value="false"/>
+				<ashowTaggedValues value="false"/>
+				<ahideEmptyTaggedValues value="false"/>
+				<ashowStereotypes value="true"/>
+				<ashowPMIteration value="false"/>
+				<ashowPMPhase value="false"/>
+				<ashowPMDiscipline value="false"/>
+				<ashowPMVersion value="false"/>
+				<ashowPMPriority value="false"/>
+				<ashowPMStatus value="false"/>
+				<ashowPMDifficulty value="false"/>
+				<ashowPMAuthor value="false"/>
+				<ashowConstraints value="false"/>
+				<aalignToGrid value="false"/>
+				<agridVisible value="false"/>
+				<agridWidth value="10"/>
+				<agridHeight value="10"/>
+				<agridColor value="Cr:192,192,192,255"/>
+				<adiagramBackground value="Cr:255,255,255,255"/>
+				<aconnectorStyle value="1"/>
+				<aconnectorLineJumps value="0"/>
+				<aconnectorLineJumpsSize value="0"/>
+				<aconnectionPointStyle value="0"/>
+				<aconnectorLabelOrientation value="0"/>
+				<amodelElementNameAlignment value="4"/>
+				<ashapePresentationOption value="0"/>
+				<azoomRatio value="1.0"/>
+				<amaximized value="true"/>
+				<ax value="0"/>
+				<ay value="0"/>
+				<awidth value="1031"/>
+				<aheight value="789"/>
+				<aqualityScore value="-1"/>
+				<a_globalPaletteOption value="true"/>
+				<a_alwaysShowReferenceAndSubdiagramResource value="false"/>
+				<ainitializeDiagramForCreate value="true"/>
+				<arequestValidateSnapToGrid value="false"/>
+				<ashowDefaultPackage value="true"/>
+				<ashowAttributeGetterSetter value="false"/>
+				<ashowClassOwner value="2"/>
+				<ashowPackageOwner value="2"/>
+				<ashowTemplateInfoOfGeneralizationAndRealization value="false"/>
+				<asuppressImplied1MultiplicityForAttributeAndAssociationEnd value="false"/>
+				<ashowClassEmptyCompartments value="2"/>
+				<ashowAttributesCodeDetails value="2"/>
+				<ashowAttributesPropertyModifiers value="2"/>
+				<ashowAttributesType value="1"/>
+				<ashowOperationsParameters value="1"/>
+				<ashowOperationsReturnType value="1"/>
+				<ashowOperationsCodeDetails value="2"/>
+				<ashowParametersCodeDetails value="2"/>
+				<ashowEllipsisForUnshownClassMembers value="2"/>
+				<ageneralizationSetNotation value="2"/>
+				<ashowAssociationNavigationArrows value="3"/>
+			</properties>
+		</xmi:Extension>
+		<uml:Diagram.element>
+			<uml:DiagramElement fromDiagramElement="htbSWNKAU0xuAwWs" geometry="124,257;171,257;" preferredShapeType="Anchor" subject="EGYyWNKAU0xuAwZU" toDiagramElement="P6YyWNKAU0xuAwZS" xmi:id=".GYyWNKAU0xuAwZV">
+				<xmi:Extension extender="Visual Paradigm">
+					<captionBounds value="157,277,20,0"/>
+					<captionInternalWidth value="-2147483648"/>
+					<captionInternalHeight value="-2147483648"/>
+					<captionVisible value="true"/>
+					<captionSide value="1"/>
+					<properties>
+						<azOrder value="2"/>
+						<abackground value="Cr:122,207,245,255"/>
+						<aforeground value="Cr:0,0,0,255"/>
+						<acreatorDiagramType value="ClassDiagram"/>
+						<aselectable value="true"/>
+						<arequestResetCaption value="false"/>
+						<arequestResetCaptionSize value="false"/>
+						<aconnectorStyle value="3"/>
+						<aconnectorLineJumps value="4"/>
+						<aconnectorLabelOrientation value="4"/>
+						<afromShapeXDiff value="0"/>
+						<afromShapeYDiff value="0"/>
+						<atoShapeXDiff value="0"/>
+						<atoShapeYDiff value="0"/>
+						<afromConnectType value="0"/>
+						<atoConnectType value="0"/>
+						<auseFromShapeCenter value="true"/>
+						<auseToShapeCenter value="true"/>
+						<afromPinType value="1"/>
+						<atoPinType value="1"/>
+						<arequestRebuild value="false"/>
+						<ashowConnectorName value="2"/>
+						<apaintThroughLabel value="2"/>
+					</properties>
+				</xmi:Extension>
+				<elementFont bold="false" color="Cr:0,0,0,255" italic="false" name="Dialog" size="11" style="0"/>
+				<elementLine color="Cr:0,0,0,255" style="1" transparency="0" weight="1.0"/>
+			</uml:DiagramElement>
+			<uml:DiagramElement geometry="172,247,80,40" preferredShapeType="ConstraintElement" subject="dFnSWNKAU0xuAwXC" xmi:id="P6YyWNKAU0xuAwZS">
+				<xmi:Extension extender="Visual Paradigm">
+					<captionBounds value="0,0,80,40"/>
+					<captionInternalWidth value="-2147483648"/>
+					<captionInternalHeight value="-2147483648"/>
+					<captionVisible value="true"/>
+					<captionSide value="6"/>
+					<properties>
+						<azOrder value="0"/>
+						<abackground value="Cr:122,207,245,255"/>
+						<aforeground value="Cr:0,0,0,255"/>
+						<aselectable value="true"/>
+						<arequestResetCaption value="false"/>
+						<arequestResetCaptionSize value="false"/>
+						<apresentationOption value="4"/>
+						<aprimitiveShapeType value="0"/>
+						<ashowStereotypeIconName value="0"/>
+						<ashowAllocatedFrom value="0"/>
+						<ashowAllocatedTo value="0"/>
+						<aoverrideAppearanceWithStereotypeIcon value="true"/>
+						<arequestSetSizeOption value="0"/>
+						<aparentConnectorHeaderLength value="40"/>
+						<aparentConnectorLineLength value="10"/>
+						<aconnectToPoint value="true"/>
+						<aparentConnectorDTheta value="0.0"/>
+						<aconnectionPointType value="2"/>
+						<amodelElementNameAlignment value="9"/>
+						<arequestDefaultSize value="false"/>
+						<arequestFitSize value="false"/>
+						<arequestFitSizeFromCenter value="false"/>
+					</properties>
+				</xmi:Extension>
+				<elementFill color1="Cr:122,207,245,255" color2="" style="1" transparency="0" type="1"/>
+				<elementFont bold="false" color="Cr:0,0,0,255" italic="false" name="Dialog" size="11" style="0"/>
+				<elementLine color="Cr:0,0,0,255" style="1" transparency="0" weight="1.0"/>
+			</uml:DiagramElement>
+			<uml:DiagramElement geometry="19,247,104,40" preferredShapeType="Class" subject="htbSWNKAU0xuAwWt" xmi:id="htbSWNKAU0xuAwWs">
+				<xmi:Extension extender="Visual Paradigm">
+					<captionBounds value="0,0,104,16"/>
+					<captionInternalWidth value="-2147483648"/>
+					<captionInternalHeight value="-2147483648"/>
+					<captionVisible value="true"/>
+					<captionSide value="12"/>
+					<properties>
+						<azOrder value="2"/>
+						<abackground value="Cr:122,207,245,255"/>
+						<aforeground value="Cr:0,0,0,255"/>
+						<acreatorDiagramType value="ClassDiagram"/>
+						<aselectable value="true"/>
+						<arequestResetCaption value="false"/>
+						<arequestResetCaptionSize value="false"/>
+						<apresentationOption value="4"/>
+						<aprimitiveShapeType value="0"/>
+						<ashowStereotypeIconName value="0"/>
+						<ashowAllocatedFrom value="0"/>
+						<ashowAllocatedTo value="0"/>
+						<aoverrideAppearanceWithStereotypeIcon value="true"/>
+						<arequestSetSizeOption value="0"/>
+						<aparentConnectorHeaderLength value="40"/>
+						<aparentConnectorLineLength value="10"/>
+						<aconnectToPoint value="true"/>
+						<aparentConnectorDTheta value="0.0"/>
+						<aconnectionPointType value="2"/>
+						<amodelElementNameAlignment value="9"/>
+						<arequestDefaultSize value="false"/>
+						<arequestFitSize value="false"/>
+						<arequestFitSizeFromCenter value="false"/>
+						<adisplayAsRobustnessAnalysisIcon value="true"/>
+						<avisibilityStyle value="1"/>
+						<ashowAttributeType value="1"/>
+						<ashowOperationType value="1"/>
+						<ashowEnumerationLiteralType value="1"/>
+						<amSwTpPts value="true"/>
+						<alshRfAts value="true"/>
+						<amShDrAt value="false"/>
+						<akShDrOp value="false"/>
+						<akSwCsMbSt value="true"/>
+						<ashowClassMemberConstraints value="true"/>
+						<alShCmMl value="false"/>
+						<ashowOperationParameterDirection value="false"/>
+						<ashowOperationRaisedExceptions value="false"/>
+						<ashowParameterNameInOperationSignature value="true"/>
+						<ashowOperationTemplateParameters value="false"/>
+						<ashowOperationProperties value="false"/>
+						<awpMbs value="false"/>
+						<aattributeSortType value="0"/>
+						<aoperationSortType value="0"/>
+						<aenumerationLiteralSortType value="0"/>
+						<ashowInitialAttributeValue value="true"/>
+						<ashowOperationSignature value="true"/>
+						<ainterfaceBall value="false"/>
+						<ashowEmptyCompartments value="0"/>
+						<ashowEllipsisForUnshownMembers value="0"/>
+						<ashowAttributesCodeDetails value="0"/>
+						<ashowAttributesPropertyModifiers value="0"/>
+						<ashowOperationsCodeDetails value="0"/>
+						<ashowParametersCodeDetails value="0"/>
+						<ashowTypeOption value="0"/>
+						<ashowOwnerOption value="3"/>
+						<ashowAttributesType value="0"/>
+						<ashowOperationsParameters value="0"/>
+						<ashowOperationsReturnType value="0"/>
+						<asuppressImplied1MultiplicityForAttribute value="0"/>
+					</properties>
+				</xmi:Extension>
+				<elementFill color1="Cr:122,207,245,255" color2="" style="1" transparency="0" type="1"/>
+				<elementFont bold="false" color="Cr:0,0,0,255" italic="false" name="Dialog" size="11" style="0"/>
+				<elementLine color="Cr:0,0,0,255" style="1" transparency="0" weight="1.0"/>
+			</uml:DiagramElement>
+			<uml:DiagramElement geometry="295,239,109,48" preferredShapeType="Class" subject="MCZAaNKAU0xuAwRH" xmi:id="MCZAaNKAU0xuAwRG">
+				<xmi:Extension extender="Visual Paradigm">
+					<captionBounds value="0,0,109,16"/>
+					<captionInternalWidth value="-2147483648"/>
+					<captionInternalHeight value="-2147483648"/>
+					<captionVisible value="true"/>
+					<captionSide value="12"/>
+					<properties>
+						<azOrder value="4"/>
+						<abackground value="Cr:122,207,245,255"/>
+						<aforeground value="Cr:0,0,0,255"/>
+						<acreatorDiagramType value="ClassDiagram"/>
+						<aselectable value="true"/>
+						<arequestResetCaption value="false"/>
+						<arequestResetCaptionSize value="false"/>
+						<apresentationOption value="4"/>
+						<aprimitiveShapeType value="0"/>
+						<ashowStereotypeIconName value="0"/>
+						<ashowAllocatedFrom value="0"/>
+						<ashowAllocatedTo value="0"/>
+						<aoverrideAppearanceWithStereotypeIcon value="true"/>
+						<arequestSetSizeOption value="0"/>
+						<aparentConnectorHeaderLength value="40"/>
+						<aparentConnectorLineLength value="10"/>
+						<aconnectToPoint value="true"/>
+						<aparentConnectorDTheta value="0.0"/>
+						<aconnectionPointType value="2"/>
+						<amodelElementNameAlignment value="9"/>
+						<arequestDefaultSize value="false"/>
+						<arequestFitSize value="false"/>
+						<arequestFitSizeFromCenter value="false"/>
+						<adisplayAsRobustnessAnalysisIcon value="true"/>
+						<avisibilityStyle value="1"/>
+						<ashowAttributeType value="1"/>
+						<ashowOperationType value="1"/>
+						<ashowEnumerationLiteralType value="1"/>
+						<amSwTpPts value="true"/>
+						<alshRfAts value="true"/>
+						<amShDrAt value="false"/>
+						<akShDrOp value="false"/>
+						<akSwCsMbSt value="true"/>
+						<ashowClassMemberConstraints value="true"/>
+						<alShCmMl value="false"/>
+						<ashowOperationParameterDirection value="false"/>
+						<ashowOperationRaisedExceptions value="false"/>
+						<ashowParameterNameInOperationSignature value="true"/>
+						<ashowOperationTemplateParameters value="false"/>
+						<ashowOperationProperties value="false"/>
+						<awpMbs value="false"/>
+						<aattributeSortType value="0"/>
+						<aoperationSortType value="0"/>
+						<aenumerationLiteralSortType value="0"/>
+						<ashowInitialAttributeValue value="true"/>
+						<ashowOperationSignature value="true"/>
+						<ainterfaceBall value="false"/>
+						<ashowEmptyCompartments value="0"/>
+						<ashowEllipsisForUnshownMembers value="0"/>
+						<ashowAttributesCodeDetails value="0"/>
+						<ashowAttributesPropertyModifiers value="0"/>
+						<ashowOperationsCodeDetails value="0"/>
+						<ashowParametersCodeDetails value="0"/>
+						<ashowTypeOption value="0"/>
+						<ashowOwnerOption value="3"/>
+						<ashowAttributesType value="0"/>
+						<ashowOperationsParameters value="0"/>
+						<ashowOperationsReturnType value="0"/>
+						<asuppressImplied1MultiplicityForAttribute value="0"/>
+					</properties>
+				</xmi:Extension>
+				<elementFill color1="Cr:122,207,245,255" color2="" style="1" transparency="0" type="1"/>
+				<elementFont bold="false" color="Cr:0,0,0,255" italic="false" name="Dialog" size="11" style="0"/>
+				<elementLine color="Cr:0,0,0,255" style="1" transparency="0" weight="1.0"/>
+			</uml:DiagramElement>
+			<uml:DiagramElement geometry="19,20,482,208" preferredShapeType="Class" subject="T4qWqNKAU0xuAwOd" xmi:id="N4qWqNKAU0xuAwOc">
+				<xmi:Extension extender="Visual Paradigm">
+					<captionBounds value="0,0,482,16"/>
+					<captionInternalWidth value="-2147483648"/>
+					<captionInternalHeight value="-2147483648"/>
+					<captionVisible value="true"/>
+					<captionSide value="12"/>
+					<properties>
+						<azOrder value="6"/>
+						<abackground value="Cr:122,207,245,255"/>
+						<aforeground value="Cr:0,0,0,255"/>
+						<acreatorDiagramType value="ClassDiagram"/>
+						<aselectable value="true"/>
+						<arequestResetCaption value="false"/>
+						<arequestResetCaptionSize value="false"/>
+						<apresentationOption value="4"/>
+						<aprimitiveShapeType value="0"/>
+						<ashowStereotypeIconName value="0"/>
+						<ashowAllocatedFrom value="0"/>
+						<ashowAllocatedTo value="0"/>
+						<aoverrideAppearanceWithStereotypeIcon value="true"/>
+						<arequestSetSizeOption value="0"/>
+						<aparentConnectorHeaderLength value="40"/>
+						<aparentConnectorLineLength value="10"/>
+						<aconnectToPoint value="true"/>
+						<aparentConnectorDTheta value="0.0"/>
+						<aconnectionPointType value="2"/>
+						<amodelElementNameAlignment value="9"/>
+						<arequestDefaultSize value="false"/>
+						<arequestFitSize value="false"/>
+						<arequestFitSizeFromCenter value="false"/>
+						<adisplayAsRobustnessAnalysisIcon value="true"/>
+						<avisibilityStyle value="1"/>
+						<ashowAttributeType value="1"/>
+						<ashowOperationType value="1"/>
+						<ashowEnumerationLiteralType value="1"/>
+						<amSwTpPts value="true"/>
+						<alshRfAts value="true"/>
+						<amShDrAt value="false"/>
+						<akShDrOp value="false"/>
+						<akSwCsMbSt value="true"/>
+						<ashowClassMemberConstraints value="true"/>
+						<alShCmMl value="false"/>
+						<ashowOperationParameterDirection value="false"/>
+						<ashowOperationRaisedExceptions value="false"/>
+						<ashowParameterNameInOperationSignature value="true"/>
+						<ashowOperationTemplateParameters value="false"/>
+						<ashowOperationProperties value="false"/>
+						<awpMbs value="false"/>
+						<aattributeSortType value="0"/>
+						<aoperationSortType value="0"/>
+						<aenumerationLiteralSortType value="0"/>
+						<ashowInitialAttributeValue value="true"/>
+						<ashowOperationSignature value="true"/>
+						<ainterfaceBall value="false"/>
+						<ashowEmptyCompartments value="0"/>
+						<ashowEllipsisForUnshownMembers value="0"/>
+						<ashowAttributesCodeDetails value="0"/>
+						<ashowAttributesPropertyModifiers value="0"/>
+						<ashowOperationsCodeDetails value="0"/>
+						<ashowParametersCodeDetails value="0"/>
+						<ashowTypeOption value="0"/>
+						<ashowOwnerOption value="3"/>
+						<ashowAttributesType value="0"/>
+						<ashowOperationsParameters value="0"/>
+						<ashowOperationsReturnType value="0"/>
+						<asuppressImplied1MultiplicityForAttribute value="0"/>
+					</properties>
+				</xmi:Extension>
+				<elementFill color1="Cr:122,207,245,255" color2="" style="1" transparency="0" type="1"/>
+				<elementFont bold="false" color="Cr:0,0,0,255" italic="false" name="Dialog" size="11" style="0"/>
+				<elementLine color="Cr:0,0,0,255" style="1" transparency="0" weight="1.0"/>
+			</uml:DiagramElement>
+		</uml:Diagram.element>
+	</uml:Diagram>
 </xmi:XMI>
