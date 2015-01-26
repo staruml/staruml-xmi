@@ -62,6 +62,17 @@ define(function (require, exports, module) {
      */
     var elements = {};
 
+    /**
+     * Object Id Map
+     * @type {Object<string,Object>}
+     */
+    var idMap = {};
+
+    /**
+     * Post-processors
+     * @type {Array.<function(Object)>}
+     */
+    var postprocessors = [];
 
     /**
      * Find child node by name
@@ -183,10 +194,11 @@ define(function (require, exports, module) {
                 var fun = elements[_type];
                 if (fun) {
                     var elem = fun(child);
-                    if (elem) {
+                    if (typeof elem !== "undefined" && elem !== null) {
                         if (parentId) {
                             elem._parent = { "$ref": parentId };
                         }
+                        idMap[elem._id] = elem;
                         return elem;
                     }
                 }
@@ -214,10 +226,11 @@ define(function (require, exports, module) {
                 var fun = elements[_type];
                 if (fun) {
                     var elem = fun(child);
-                    if (elem) {
+                    if (typeof elem !== "undefined" && elem !== null) {
                         if (parentId) {
                             elem._parent = { "$ref": parentId };
                         }
+                        idMap[elem._id] = elem;
                         jsonArray.push(elem);
                     }
                 }
@@ -252,11 +265,43 @@ define(function (require, exports, module) {
 
 
     /**
-     * Clear all reading data
+     * Execute All Post-processors
+     */
+    function postprocess() {
+        var i, len;
+        for (i = 0, len = postprocessors.length; i < len; i++) {
+            var key, processor = postprocessors[i];
+            for (key in idMap) {
+                if (idMap.hasOwnProperty(key)) {
+                    var elem = idMap[key];
+                    processor(elem);
+                }
+            }
+        }
+    }
+
+    /**
+     * Clear loaded objects
      */
     function clear() {
-        enumerations = {};
-        elements = {};
+        idMap = {};
+    }
+
+    /**
+     * Get object by Id
+     * @param {string} id
+     * @return {Object}
+     */
+    function get(id) {
+        return idMap[id];
+    }
+
+    /**
+     * Get idMap
+     * @return {Object}
+     */
+    function getIdMap() {
+        return idMap;
     }
 
     /**
@@ -271,7 +316,6 @@ define(function (require, exports, module) {
 
         FileUtils.readAsText(file)
             .done(function (data) {
-
             // try {
                 // Parse XMI
                 var parser = new DOMParser();
@@ -290,7 +334,7 @@ define(function (require, exports, module) {
                         }
                     }
                 }
-                // Reader.postprocess();
+                postprocess();
 
                 // Load XMI
                 var XMIData = {
@@ -313,6 +357,7 @@ define(function (require, exports, module) {
             // }
             })
             .fail(function (err) {
+                console.error(err);
                 result.reject(err);
             })
             .always(function () {
@@ -323,6 +368,7 @@ define(function (require, exports, module) {
 
     exports.enumerations     = enumerations;
     exports.elements         = elements;
+    exports.postprocessors   = postprocessors;
 
     exports.readString       = readString;
     exports.readBoolean      = readBoolean;
@@ -333,7 +379,10 @@ define(function (require, exports, module) {
     exports.readElementArray = readElementArray;
     exports.readRef          = readRef;
 
+    exports.postprocess      = postprocess;
     exports.clear            = clear;
+    exports.get              = get;
+    exports.getIdMap         = getIdMap;
     exports.loadFromFile     = loadFromFile;
 
 });
