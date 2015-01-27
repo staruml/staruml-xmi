@@ -210,6 +210,11 @@ define(function (require, exports, module) {
         return json;
     };
 
+    Reader.elements["uml:ConnectableElement"] = function (node) {
+        var json = Reader.elements["uml:TypedElement"](node);
+        return json;
+    };
+
     // Features ................................................................
 
     Reader.elements["uml:Feature"] = function (node) {
@@ -228,6 +233,7 @@ define(function (require, exports, module) {
 
     Reader.elements["uml:Property"] = function (node) {
         var json = Reader.elements["uml:StructuralFeature"](node);
+        _.extend(json, Reader.elements["uml:ConnectableElement"](node));
         json["_type"] = "UMLAttribute";
         json["isDerived"] = Reader.readBoolean(node, "isDerived", false);
         // isDerivedUnion
@@ -348,11 +354,30 @@ define(function (require, exports, module) {
             g["source"] = { "$ref": json._id };
             addTo(json, "ownedElements", g);
         });
+        appendTo(json, "ownedElements", Reader.readElementArray(node, "collaborationUse"));
+        return json;
+    };
+
+    Reader.elements["uml:StructuredClassifier"] = function (node) {
+        var json = Reader.elements["uml:Classifier"](node);
+        appendTo(json, "ownedElements", Reader.readElementArray(node, "ownedConnector"));
+        return json;
+    };
+
+    Reader.elements["uml:EncapsulatedClassifier"] = function (node) {
+        var json = Reader.elements["uml:StructuredClassifier"](node);
+        appendTo(json, "attributes", Reader.readElementArray(node, "ownedPort"));
+        return json;
+    };
+
+    Reader.elements["uml:BehavioredClassifier"] = function (node) {
+        var json = Reader.elements["uml:Classifier"](node);
         return json;
     };
 
     Reader.elements["uml:Class"] = function (node) {
         var json = Reader.elements["uml:Classifier"](node);
+        _.extend(json, Reader.elements["uml:EncapsulatedClassifier"](node));
         json["_type"] = "UMLClass";
         return json;
     };
@@ -494,6 +519,50 @@ define(function (require, exports, module) {
         return jsonClass;
     };
 
+    // Composite Structure .....................................................
+
+    Reader.elements["uml:ConnectorEnd"] = function (node) {
+        var json = Reader.elements["uml:MultiplicityElement"](node);
+        json["_type"] = "UMLConnectorEnd";
+        json["reference"] = Reader.readRef(node, "role");
+        return json;
+    };
+
+    Reader.elements["uml:Connector"] = function (node) {
+        var json = Reader.elements["uml:Feature"](node);
+        json["_type"] = "UMLConnector";
+        var _ends = Reader.readElementArray(node, "end");
+        if (_ends && _ends.length >= 2) {
+            json["end1"] = _ends[0];
+            json["end2"] = _ends[1];
+        }
+        return json;
+    };
+
+    Reader.elements["uml:Port"] = function (node) {
+        var json = Reader.elements["uml:Property"](node);
+        json["_type"] = "UMLPort";
+        json["isBehavior"] = Reader.readBoolean(node, "isBehavior", false);
+        json["isService"] = Reader.readBoolean(node, "isService", false);
+        return json;
+    };
+
+    Reader.elements["uml:Collaboration"] = function (node) {
+        var json = Reader.elements["uml:BehavioredClassifier"](node);
+        json["_type"] = "UMLCollaboration";
+        return json;
+    };
+
+    Reader.elements["uml:CollaborationUse"] = function (node) {
+        var json = Reader.elements["uml:NamedElement"](node);
+        json["_type"] = "UMLCollaborationUse";
+        json["type"] = Reader.readRef(node, "type");
+
+        console.log(JSON.stringify(json, null, 2));
+
+        return json;
+    };
+    Reader.elements["collaborationOccurrence"] = Reader.elements["uml:CollaborationUse"]; // for VP
 
     // Post-processors .........................................................
 
@@ -531,6 +600,28 @@ define(function (require, exports, module) {
                 elem.end2._parent = { "$ref": elem._id };
                 elem.end2.navigable = false;
                 elem.end2.reference = elem.end2.type;
+            }
+        }
+    });
+
+    // process RoleBindings of CollaborationUse
+    // TODO: RoleBindings are not properly loaded of Visual Paradigm XMI
+    Reader.postprocessors.push(function (elem) {
+        if (elem._type === "UMLDependency") {
+            var e1, e2;
+            if (elem.source.$ref) {
+                e1 = Reader.get(elem.source.$ref);
+            }
+            if (elem.target.$ref) {
+                e2 = Reader.get(elem.target.$ref);
+            }
+            if (e1 && e2) {
+                if ((MetaModelManager.isKindOf(e1._type, "UMLCollaborationUse") &&
+                    (MetaModelManager.isKindOf(e2._type, "UMLAttribute"))) ||
+                    (MetaModelManager.isKindOf(e1._type, "UMLCollaborationUse") &&
+                    (MetaModelManager.isKindOf(e2._type, "UMLAttribute")))) {
+                    elem._type = "UMLRoleBinding";
+                }
             }
         }
     });
