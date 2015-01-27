@@ -235,6 +235,7 @@ define(function (require, exports, module) {
         json["defaultValue"] = Reader.readElement(node, "defaultValue") || "";
         // Read as an AssociationEnd
         json["navigable"] = Reader.readBoolean(node, "isNavigable", false);
+        json["qualifiers"] = Reader.readElementArray(node, "qualifier") || [];
         return json;
     };
 
@@ -318,6 +319,7 @@ define(function (require, exports, module) {
     Reader.elements["uml:InstanceSpecification"] = function (node) {
         var json = Reader.elements["uml:NamedElement"](node);
         json["specification"] = Reader.readElement(node, "specification");
+        json["_type"] = "UMLObject";
         // TODO: slots
         // TODO: classifier
         return json;
@@ -431,8 +433,9 @@ define(function (require, exports, module) {
         var json = Reader.elements["uml:Relationship"](node);
         _.extend(json, Reader.elements["uml:Classifier"](node));
         json["_type"] = "UMLAssociation";
-        var _ends = Reader.readElementArray(node, "ownedEnd");
-        if (_ends && _ends.length > 1) {
+        var _ends    = Reader.readElementArray(node, "ownedEnd"),
+            _endRefs = Reader.readRefArray(node, "memberEnd");
+        if (_ends && _ends.length >= 2) {
             _ends[0]._type = "UMLAssociationEnd";
             _ends[1]._type = "UMLAssociationEnd";
             _ends[0].reference = _ends[0].type;
@@ -442,9 +445,55 @@ define(function (require, exports, module) {
             _ends[1].aggregation = _agg;
             json["end1"] = _ends[0];
             json["end2"] = _ends[1];
+        } else if (_ends && _ends.length === 1) {
+            _ends[0]._type = "UMLAssociationEnd";
+            _ends[0].reference = _ends[0].type;
+            json["end1"] = _ends[0];
+            if (_endRefs && _endRefs.length > 0) {
+                json["end2"] = _endRefs[0];
+            }
+        } else {
+            if (_endRefs && _endRefs.length >= 2) {
+                json["end1"] = _endRefs[0];
+                json["end2"] = _endRefs[1];
+            }
         }
         return json;
     };
+
+    Reader.elements["uml:AssociationClass"] = function (node) {
+        // Read for Class
+        var jsonClass = Reader.elements["uml:Class"](node);
+        jsonClass["_type"] = "UMLClass";
+        // Read for Association
+        var jsonAsso = Reader.elements["uml:Association"](node);
+        jsonAsso["_type"] = "UMLAssociation";
+        jsonAsso["_id"] = IdGenerator.generateGuid();
+        jsonAsso["_parent"] = { "$ref": jsonClass._id };
+        if (jsonAsso.end1) {
+            jsonAsso.end1._parent = { "$ref": jsonAsso._id };
+        }
+        if (jsonAsso.end2) {
+            jsonAsso.end2._parent = { "$ref": jsonAsso._id };
+        }
+        Reader.put(jsonAsso);
+        // Object for AssociationClassLink
+        var jsonLink = {
+            _id: IdGenerator.generateGuid(),
+            _type: "UMLAssociationClassLink",
+            _parent: { "$ref": jsonClass._id },
+            associationSide: { "$ref": jsonAsso._id },
+            classSide: { "$ref": jsonClass._id }
+        };
+        Reader.put(jsonLink);
+        // Add Asso and Link to Class.
+        jsonClass.__association = jsonAsso;
+        jsonClass.__link = jsonLink;
+        addTo(jsonClass, "ownedElements", jsonAsso);
+        addTo(jsonClass, "ownedElements", jsonLink);
+        return jsonClass;
+    };
+
 
     // Post-processors .........................................................
 
@@ -462,5 +511,28 @@ define(function (require, exports, module) {
         }
     });
 
+    // process 'memberEnd' of Association
+    Reader.postprocessors.push(function (elem) {
+        if (elem._type === "UMLAssociation") {
+            if (elem.end1 && elem.end1.$ref) {
+                elem.end1 = Reader.get(elem.end1.$ref);
+                var parent1 = Reader.get(elem.end1._parent.$ref);
+                parent1.attributes = _.without(parent1.attributes, elem.end1);
+                elem.end1._type = "UMLAssociationEnd";
+                elem.end1._parent = { "$ref": elem._id };
+                elem.end1.navigable = false;
+                elem.end1.reference = elem.end1.type;
+            }
+            if (elem.end2 && elem.end2.$ref) {
+                elem.end2 = Reader.get(elem.end2.$ref);
+                var parent2 = Reader.get(elem.end2._parent.$ref);
+                parent2.attributes = _.without(parent2.attributes, elem.end2);
+                elem.end2._type = "UMLAssociationEnd";
+                elem.end2._parent = { "$ref": elem._id };
+                elem.end2.navigable = false;
+                elem.end2.reference = elem.end2.type;
+            }
+        }
+    });
 
 });

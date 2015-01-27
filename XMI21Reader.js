@@ -263,6 +263,25 @@ define(function (require, exports, module) {
         return null;
     }
 
+    /**
+     * Read reference array
+     * @param {XMLNode} node
+     * @param {string} name
+     * @return {Array.<object>} $ref object
+     */
+    function readRefArray(node, name) {
+        var jsonArray = [];
+        for (var i = 0, len = node.childNodes.length; i < len; i++) {
+            var child = node.childNodes[i];
+            if (child.nodeType === ELEMENT_NODE && child.nodeName === name) {
+                var refid = child.getAttribute("xmi:idref");
+                if (refid) {
+                    jsonArray.push({ "$ref": refid });
+                }
+            }
+        }
+        return jsonArray;
+    }
 
     /**
      * Execute All Post-processors
@@ -302,6 +321,14 @@ define(function (require, exports, module) {
      */
     function getIdMap() {
         return idMap;
+    }
+
+    /**
+     * Put newly created object which have a new ID
+     * @param {Object} obj
+     */
+    function put(obj) {
+        idMap[obj._id] = obj;
     }
 
     /**
@@ -378,10 +405,12 @@ define(function (require, exports, module) {
     exports.readElement      = readElement;
     exports.readElementArray = readElementArray;
     exports.readRef          = readRef;
+    exports.readRefArray     = readRefArray;
 
     exports.postprocess      = postprocess;
     exports.clear            = clear;
     exports.get              = get;
+    exports.put              = put;
     exports.getIdMap         = getIdMap;
     exports.loadFromFile     = loadFromFile;
 
