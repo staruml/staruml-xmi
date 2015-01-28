@@ -139,6 +139,13 @@ define(function (require, exports, module) {
         return null;
     };
 
+    Reader.elements["uml:OpaqueExpression"] = function (node) {
+        var json = Reader.elements["uml:ValueSpecification"](node);
+        var val = Reader.readString(node, "body", "");
+        return val;
+    };
+
+
     // Core ....................................................................
 
     Reader.elements["uml:MultiplicityElement"] = function (node) {
@@ -326,14 +333,21 @@ define(function (require, exports, module) {
         var json = Reader.elements["uml:NamedElement"](node);
         json["specification"] = Reader.readElement(node, "specification");
         json["_type"] = "UMLObject";
-        // TODO: slots
-        // TODO: classifier
+        json["classifier"] = Reader.readRef(node, "classifier");
+        json["slots"] = Reader.readElementArray(node, "slot");
+        // TODO: Link is represented as InstanceSpecification with extensions in VP
         return json;
     };
 
+    Reader.elements["uml:Slot"] = function (node) {
+        var json = Reader.elements["uml:Element"](node);
+        json["_type"] = "UMLSlot";
+        json["value"] = Reader.readElement(node, "value") || "";
+        json["definingFeature"] = Reader.readRef(node, "definingFeature");
+        return json;
+    };
 
     // Types ...................................................................
-
 
     Reader.elements["uml:Type"] = function (node) {
         var json = Reader.elements["uml:PackageableElement"](node);
@@ -355,6 +369,7 @@ define(function (require, exports, module) {
             addTo(json, "ownedElements", g);
         });
         appendTo(json, "ownedElements", Reader.readElementArray(node, "collaborationUse"));
+        appendTo(json, "ownedElements", Reader.readElementArray(node, "nestedClassifier"));
         return json;
     };
 
@@ -557,12 +572,78 @@ define(function (require, exports, module) {
         var json = Reader.elements["uml:NamedElement"](node);
         json["_type"] = "UMLCollaborationUse";
         json["type"] = Reader.readRef(node, "type");
-
-        console.log(JSON.stringify(json, null, 2));
-
         return json;
     };
     Reader.elements["collaborationOccurrence"] = Reader.elements["uml:CollaborationUse"]; // for VP
+
+    // Components ..............................................................
+
+    Reader.elements["uml:Component"] = function (node) {
+        var json = Reader.elements["uml:Class"](node);
+        json["_type"] = "UMLComponent";
+        json["isIndirectlyInstantiated"] = Reader.readBoolean(node, "isIndirectlyInstantiated", false);
+        return json;
+    };
+
+    Reader.elements["uml:ComponentRealization"] = function (node) {
+        var json = Reader.elements["uml:Realization"](node);
+        json["_type"] = "UMLComponentRealization";
+        return json;
+    };
+
+    // Deployments .............................................................
+
+    Reader.elements["uml:DeploymentTarget"] = function (node) {
+        var json = Reader.elements["uml:NamedElement"](node);
+        appendTo(json, "ownedElements", Reader.readElementArray(node, "deployment"));
+        return json;
+    };
+
+    Reader.elements["uml:DeployedArtifact"] = function (node) {
+        var json = Reader.elements["uml:NamedElement"](node);
+        return json;
+    };
+
+    Reader.elements["uml:Artifact"] = function (node) {
+        var json = Reader.elements["uml:Classifier"](node);
+        _.extend(json, Reader.elements["uml:DeployedArtifact"](node));
+        json["_type"] = "UMLArtifact";
+        json["fileName"] = Reader.readString(node, "fileName", "");
+        return json;
+    };
+
+    Reader.elements["uml:Node"] = function (node) {
+        var json = Reader.elements["uml:Class"](node);
+        _.extend(json, Reader.elements["uml:DeploymentTarget"](node));
+        json["_type"] = "UMLNode";
+        return json;
+    };
+
+    Reader.elements["uml:CommunicationPath"] = function (node) {
+        var json = Reader.elements["uml:Association"](node);
+        json["_type"] = "UMLCommunicationPath";
+        return json;
+    };
+
+    Reader.elements["uml:Device"] = function (node) {
+        var json = Reader.elements["uml:Node"](node);
+        json["_type"] = "UMLNode";
+        json["stereotype"] = "device";
+        return json;
+    };
+
+    Reader.elements["uml:ExecutionEnvironment"] = function (node) {
+        var json = Reader.elements["uml:Node"](node);
+        json["_type"] = "UMLNode";
+        json["stereotype"] = "executionEnvironment";
+        return json;
+    };
+
+    Reader.elements["uml:Deployment"] = function (node) {
+        var json = Reader.elements["uml:Dependency"](node);
+        json["_type"] = "UMLDeployment";
+        return json;
+    };
 
     // Post-processors .........................................................
 
@@ -622,6 +703,39 @@ define(function (require, exports, module) {
                     (MetaModelManager.isKindOf(e2._type, "UMLAttribute")))) {
                     elem._type = "UMLRoleBinding";
                 }
+            }
+        }
+    });
+
+    // process Deployment
+    Reader.postprocessors.push(function (elem) {
+        if (elem._type === "UMLDeployment") {
+            var _temp = elem.source;
+            elem.source = elem.target;
+            elem.target = _temp;
+        }
+    });
+
+    // process InstanceSpecification
+    Reader.postprocessors.push(function (elem) {
+        if (elem._type === "UMLObject" && elem.classifier) {
+            var _classifier = Reader.get(elem.classifier.$ref);
+            if (_classifier._type === "UMLNode") {
+                elem._type = "UMLNodeInstance";
+            } else if (_classifier._type === "UMLComponent") {
+                elem._type = "UMLComponentInstance";
+            } else if (_classifier._type === "UMLArtifact") {
+                elem._type = "UMLArtifactInstance";
+            }
+        }
+    });
+
+    // process Slot
+    Reader.postprocessors.push(function (elem) {
+        if (elem._type === "UMLSlot") {
+            if ((!elem.name || elem.name.trim().length === 0) && elem.definingFeature) {
+                var _feature = Reader.get(elem.definingFeature.$ref);
+                elem.name = _feature.name;
             }
         }
     });
