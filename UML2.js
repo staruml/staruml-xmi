@@ -693,6 +693,21 @@ define(function (require, exports, module) {
         return json;
     };
 
+    // Profiles ................................................................
+
+    Reader.elements["uml:Profile"] = function (node) {
+        var json = Reader.elements["uml:Package"](node);
+        json["_type"] = "UMLProfile";
+        return json;
+    };
+
+    Reader.elements["uml:Stereotype"] = function (node) {
+        var json = Reader.elements["uml:Class"](node);
+        json["_type"] = "UMLStereotype";
+        return json;
+    };
+
+
     // Post-processors .........................................................
 
     // process ComponentRealization
