@@ -645,6 +645,54 @@ define(function (require, exports, module) {
         return json;
     };
 
+    // Use Case ................................................................
+
+    Reader.elements["uml:ExtensionPoint"] = function (node) {
+        var json = Reader.elements["uml:RedefinableElement"](node);
+        json["_type"] = "UMLExtensionPoint";
+        return json;
+    };
+
+    Reader.elements["uml:Actor"] = function (node) {
+        var json = Reader.elements["uml:BehavioredClassifier"](node);
+        json["_type"] = "UMLActor";
+        return json;
+    };
+
+    Reader.elements["uml:UseCase"] = function (node) {
+        var json = Reader.elements["uml:BehavioredClassifier"](node);
+        json["_type"] = "UMLUseCase";
+        json["extensionPoints"] = Reader.readElementArray(node, "extensionPoint");
+        var _includes = Reader.readElementArray(node, "include");
+        _.each(_includes, function (g) {
+            g["source"] = { "$ref": json._id };
+            addTo(json, "ownedElements", g);
+        });
+        var _extends = Reader.readElementArray(node, "extend");
+        _.each(_extends, function (g) {
+            g["source"] = { "$ref": json._id };
+            addTo(json, "ownedElements", g);
+        });
+        return json;
+    };
+
+    Reader.elements["uml:Extend"] = function (node) {
+        var json = Reader.elements["uml:DirectedRelationship"](node);
+        _.extend(json, Reader.elements["uml:NamedElement"](node));
+        json["_type"] = "UMLExtend";
+        json["target"] = Reader.readRef(node, "extendedCase");
+        addTo(json, "extensionLocations", Reader.readRef(node, "extensionLocation"));
+        return json;
+    };
+
+    Reader.elements["uml:Include"] = function (node) {
+        var json = Reader.elements["uml:DirectedRelationship"](node);
+        _.extend(json, Reader.elements["uml:NamedElement"](node));
+        json["_type"] = "UMLInclude";
+        json["target"] = Reader.readRef(node, "addition");
+        return json;
+    };
+
     // Post-processors .........................................................
 
     // process ComponentRealization
@@ -737,6 +785,14 @@ define(function (require, exports, module) {
                 var _feature = Reader.get(elem.definingFeature.$ref);
                 elem.name = _feature.name;
             }
+        }
+    });
+
+    // process Extend
+    Reader.postprocessors.push(function (elem) {
+        if (elem._type === "UMLExtend" && elem.__extensionLocation) {
+            var loc = Reader.get(elem.__extensionLocation.$ref);
+            elem.location = loc.name;
         }
     });
 
