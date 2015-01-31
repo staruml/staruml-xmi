@@ -77,6 +77,21 @@ define(function (require, exports, module) {
         "return" : UML.DK_RETURN
     };
 
+    Reader.enumerations["uml:InteractionOperatorKind"] = {
+        "alt"      : UML.IOK_ALT,
+        "opt"      : UML.IOK_OPT,
+        "par"      : UML.IOK_PAR,
+        "loop"     : UML.IOK_LOOP,
+        "critical" : UML.IOK_CRITICAL,
+        "neg"      : UML.IOK_NEG,
+        "assert"   : UML.IOK_ASSERT,
+        "strict"   : UML.IOK_STRICT,
+        "seq"      : UML.IOK_SEQ,
+        "ignore"   : UML.IOK_IGNORE,
+        "consider" : UML.IOK_CONSIDER,
+        "break"    : UML.IOK_BREAK
+    };
+
     // Kernel ..................................................................
 
     Reader.elements["uml:Element"] = function (node) {
@@ -387,12 +402,14 @@ define(function (require, exports, module) {
 
     Reader.elements["uml:BehavioredClassifier"] = function (node) {
         var json = Reader.elements["uml:Classifier"](node);
+        json["behaviors"] = Reader.readElementArray(node, "ownedBehavior");
         return json;
     };
 
     Reader.elements["uml:Class"] = function (node) {
         var json = Reader.elements["uml:Classifier"](node);
         _.extend(json, Reader.elements["uml:EncapsulatedClassifier"](node));
+        _.extend(json, Reader.elements["uml:BehavioredClassifier"](node));
         json["_type"] = "UMLClass";
         return json;
     };
@@ -708,6 +725,152 @@ define(function (require, exports, module) {
     };
 
 
+    // Common Behavior .........................................................
+
+    Reader.elements["uml:Event"] = function (node) {
+        var json = Reader.elements["uml:PackageableElement"](node);
+        return json;
+    };
+
+    Reader.elements["uml:MessageEvent"] = function (node) {
+        var json = Reader.elements["uml:Event"](node);
+        return json;
+    };
+
+    Reader.elements["uml:TimeEvent"] = function (node) {
+        var json = Reader.elements["uml:Event"](node);
+        return json;
+    };
+
+    Reader.elements["uml:ChangeEvent"] = function (node) {
+        var json = Reader.elements["uml:Event"](node);
+        return json;
+    };
+
+    Reader.elements["uml:Action"] = function (node) {
+        var json = Reader.elements["uml:NamedElement"](node);
+        json["_type"] = "UMLAction";
+        return json;
+    };
+
+    Reader.elements["uml:InvocationAction"] = function (node) {
+        var json = Reader.elements["uml:Action"](node);
+        return json;
+    };
+
+    Reader.elements["uml:CallAction"] = function (node) {
+        var json = Reader.elements["uml:InvocationAction"](node);
+        return json;
+    };
+
+    Reader.elements["uml:CallBehaviorAction"] = function (node) {
+        var json = Reader.elements["uml:CallAction"](node);
+        json["_type"] = "UMLCallBehaviorAction";
+        json["behavior"] = Reader.readRef(node, "behavior");
+        return json;
+    };
+
+    Reader.elements["uml:CallOperationAction"] = function (node) {
+        var json = Reader.elements["uml:CallAction"](node);
+        json["_type"] = "UMLCallOperationAction";
+        json["operation"] = Reader.readRef(node, "operation");
+        return json;
+    };
+
+    Reader.elements["uml:SendSignalAction"] = function (node) {
+        var json = Reader.elements["uml:InvocationAction"](node);
+        json["_type"] = "UMLSendSignalAction";
+        json["signal"] = Reader.readRef(node, "signal");
+        return json;
+    };
+
+    // Interactions ............................................................
+
+    Reader.elements["uml:Behavior"] = function (node) {
+        var json = Reader.elements["uml:Class"](node);
+        json["isReentrant"] = Reader.readBoolean(node, "isReentrant", false);
+        return json;
+    };
+
+    Reader.elements["uml:InteractionFragment"] = function (node) {
+        var json = Reader.elements["uml:NamedElement"](node);
+        return json;
+    };
+
+    Reader.elements["uml:Interaction"] = function (node) {
+        var json = Reader.elements["uml:InteractionFragment"](node);
+        _.extend(json, Reader.elements["uml:Behavior"](node));
+        json["_type"] = "UMLInteraction";
+        json["fragments"] = Reader.readElementArray(node, "fragment");
+        json["participants"] = Reader.readElementArray(node, "lifeline");
+        json["messages"] = Reader.readElementArray(node, "message");
+        return json;
+    };
+
+    Reader.elements["uml:StateInvariant"] = function (node) {
+        var json = Reader.elements["uml:InteractionFragment"](node);
+        json["_type"] = "UMLStateInvariant";
+        return json;
+    };
+
+    Reader.elements["uml:OccurrenceSpecification"] = function (node) {
+        var json = Reader.elements["uml:InteractionFragment"](node);
+        return json;
+    };
+
+    // NOTE: EventOccurrence is only for VP (not in UML Spec)
+    Reader.elements["uml:EventOccurrence"] = function (node) {
+        var json = Reader.elements["uml:OccurrenceSpecification"](node);
+        json["_type"] = "EventOccurrence";
+        json["covered"] = Reader.readRef(node, "covered");
+        json["message"] = Reader.readRef(node, "message");
+        return json;
+    };
+
+    Reader.elements["uml:CombinedFragment"] = function (node) {
+        var json = Reader.elements["uml:InteractionFragment"](node);
+        json["_type"] = "UMLCombinedFragment";
+        json["interactionOperator"] = Reader.readEnum(node, "interactionOperator", "uml:InteractionOperatorKind", UML.IOK_SEQ);
+        json["operands"] = Reader.readElementArray(node, "ownedMember");
+        return json;
+    };
+
+    Reader.elements["uml:InteractionOperand"] = function (node) {
+        var json = Reader.elements["uml:InteractionFragment"](node);
+        json["_type"] = "UMLInteractionOperand";
+        return json;
+    };
+
+    Reader.elements["uml:Lifeline"] = function (node) {
+        var json = Reader.elements["uml:NamedElement"](node);
+        json["_type"] = "UMLLifeline";
+        json["represent"] = Reader.readRef(node, "represents");
+        return json;
+    };
+
+    Reader.elements["uml:Message"] = function (node) {
+        var json = Reader.elements["uml:NamedElement"](node);
+        json["_type"] = "UMLMessage";
+        json["receiveEvent"] = Reader.readRef(node, "receiveEvent");
+        json["sendEvent"] = Reader.readRef(node, "sendEvent");
+        json["connector"] = Reader.readRef(node, "connector");
+        var _signature = Reader.readElement(node, "signature");
+        if (_signature && _signature._type === "UMLCallOperationAction") {
+            json["signature"] = _signature.operation;
+        }
+        if (_signature && _signature._type === "UMLSendSignalAction") {
+            json["signature"] = _signature.signal;
+        }
+        return json;
+    };
+
+    // TODO: InteractionUse
+    // TODO: Continuation
+    // TODO: StateInvariant
+    // TODO: Gate
+    // TODO: Constraint
+    // TODO: EA Test
+
     // Post-processors .........................................................
 
     // process ComponentRealization
@@ -808,6 +971,61 @@ define(function (require, exports, module) {
         if (elem._type === "UMLExtend" && elem.__extensionLocation) {
             var loc = Reader.get(elem.__extensionLocation.$ref);
             elem.location = loc.name;
+        }
+    });
+
+    // process Interaction
+    Reader.postprocessors.push(function (elem) {
+        if (elem._type === "UMLInteraction") {
+            var parent = Reader.get(elem._parent.$ref);
+            if (MetaModelManager.isKindOf(parent._type, "UMLClassifier")) {
+                appendTo(parent, "attributes", elem.attributes || []);
+                appendTo(parent, "operations", elem.operations || []);
+            } else {
+                parent.ownedElements = _.without(parent.ownedElements, elem);
+                var collaboration = {
+                    _id: IdGenerator.generateGuid(),
+                    _parent: { "$ref": parent._id },
+                    _type: "UMLCollaboration",
+                    ownedElements: [ elem ],
+                    attributes: elem.attributes || [],
+                    operations: elem.operations || []
+                };
+                parent.ownedElements.push(collaboration);
+            }
+            _.each(elem.messages, function (msg) {
+                if (msg.sendEvent) {
+                    var _from = Reader.get(msg.sendEvent.$ref);
+                    if (_from._type === "EventOccurrence") {
+                        msg.source = _from.covered;
+                    }
+                } else {
+                    var _endpoint = {
+                        _id: IdGenerator.generateGuid(),
+                        _type: "UMLEndpoint",
+                        _parent: { "$ref": elem._id },
+                    };
+                    elem.participants.push(_endpoint);
+                    msg.source = { "$ref": _endpoint._id };
+                }
+                if (msg.receiveEvent) {
+                    var _to = Reader.get(msg.receiveEvent.$ref);
+                    if (_to._type === "EventOccurrence") {
+                        msg.target = _to.covered;
+                    }
+                } else {
+                    var _endpoint = {
+                        _id: IdGenerator.generateGuid(),
+                        _type: "UMLEndpoint",
+                        _parent: { "$ref": elem._id },
+                    };
+                    elem.participants.push(_endpoint);
+                    msg.target = { "$ref": _endpoint._id };
+                }
+            });
+            elem.fragments = _.reject(elem.fragments, function (f) {
+                return (f._type === "EventOccurrence");
+            });
         }
     });
 
