@@ -49,7 +49,7 @@ define(function (require, exports, module) {
         }
         var arr = json[field];
         _.each(elements, function (elem) {
-            if (!_.contains(arr, elem)) {
+            if (!_.contains(arr, elem) && !_.some(arr, function (item) { return item._id === elem._id })) {
                 arr.push(elem);
             }
         });
@@ -92,11 +92,25 @@ define(function (require, exports, module) {
         "break"    : UML.IOK_BREAK
     };
 
+    Reader.enumerations["uml:MessageSort"] = {
+        "synchCall"     : UML.MS_SYNCHCALL,
+        "asynchCall"    : UML.MS_ASYNCHCALL,
+        "asynchSignal"  : UML.MS_ASYNCHSIGNAL,
+        "createMessage" : UML.MS_CREATEMESSAGE,
+        "deleteMessage" : UML.MS_DELETEMESSAGE,
+        "reply"         : UML.MS_REPLY
+    };
+
     // Kernel ..................................................................
 
     Reader.elements["uml:Element"] = function (node) {
         var json = { tags: [] };
-        json["_id"] = Reader.readString(node, "xmi:id", IdGenerator.generateGuid());
+        var _id = Reader.readString(node, "xmi:id");
+        if (!_id) {
+            _id = IdGenerator.generateGuid();
+            node.setAttribute("xmi:id", _id);
+        }
+        json["_id"] = _id;
         return json;
     };
 
@@ -160,7 +174,6 @@ define(function (require, exports, module) {
         return val;
     };
 
-
     // Core ....................................................................
 
     Reader.elements["uml:MultiplicityElement"] = function (node) {
@@ -210,6 +223,7 @@ define(function (require, exports, module) {
         appendTo(json, "ownedElements", Reader.readElementArray(node, "packagedElement"));
         // TODO: ownedType
         // TODO: nestedPackage
+        appendTo(json, "ownedElements", Reader.readElementArray(node, "ownedConnector")); // for EA
         return json;
     };
 
@@ -236,6 +250,8 @@ define(function (require, exports, module) {
         var json = Reader.elements["uml:TypedElement"](node);
         return json;
     };
+
+    // TODO: Constraint
 
     // Features ................................................................
 
@@ -408,8 +424,13 @@ define(function (require, exports, module) {
 
     Reader.elements["uml:Class"] = function (node) {
         var json = Reader.elements["uml:Classifier"](node);
-        _.extend(json, Reader.elements["uml:EncapsulatedClassifier"](node));
-        _.extend(json, Reader.elements["uml:BehavioredClassifier"](node));
+        var _encapsulated = Reader.elements["uml:EncapsulatedClassifier"](node);
+        var _behaviored   = Reader.elements["uml:BehavioredClassifier"](node);
+        _.extend(json, _encapsulated);
+        _.extend(json, _behaviored);
+        appendTo(json, "ownedElements", _encapsulated.ownedElements);
+        appendTo(json, "ownedElements", _behaviored.ownedElements);
+        appendTo(json, "attributes", _encapsulated.attributes);
         json["_type"] = "UMLClass";
         return json;
     };
@@ -724,7 +745,6 @@ define(function (require, exports, module) {
         return json;
     };
 
-
     // Common Behavior .........................................................
 
     Reader.elements["uml:Event"] = function (node) {
@@ -784,6 +804,11 @@ define(function (require, exports, module) {
         return json;
     };
 
+    Reader.elements["uml:MessageEnd"] = function (node) {
+        var json = Reader.elements["uml:NamedElement"](node);
+        return json;
+    };
+
     // Interactions ............................................................
 
     Reader.elements["uml:Behavior"] = function (node) {
@@ -794,6 +819,7 @@ define(function (require, exports, module) {
 
     Reader.elements["uml:InteractionFragment"] = function (node) {
         var json = Reader.elements["uml:NamedElement"](node);
+        json["_formalGates"] = Reader.readElementArray(node, "formalGate");
         return json;
     };
 
@@ -801,8 +827,9 @@ define(function (require, exports, module) {
         var json = Reader.elements["uml:InteractionFragment"](node);
         _.extend(json, Reader.elements["uml:Behavior"](node));
         json["_type"] = "UMLInteraction";
+        appendTo(json, "participants", Reader.readElementArray(node, "lifeline"));
+        appendTo(json, "participants", Reader.readElementArray(node, "formalGate"));
         json["fragments"] = Reader.readElementArray(node, "fragment");
-        json["participants"] = Reader.readElementArray(node, "lifeline");
         json["messages"] = Reader.readElementArray(node, "message");
         return json;
     };
@@ -815,14 +842,21 @@ define(function (require, exports, module) {
 
     Reader.elements["uml:OccurrenceSpecification"] = function (node) {
         var json = Reader.elements["uml:InteractionFragment"](node);
+        json["_type"] = "OccurrenceSpecification";
+        json["covered"] = Reader.readRef(node, "covered");
+        return json;
+    };
+
+    Reader.elements["uml:ExecutionSpecification"] = function (node) {
+        var json = Reader.elements["uml:InteractionFragment"](node);
+        json["_type"] = "ExecutionSpecification";
         return json;
     };
 
     // NOTE: EventOccurrence is only for VP (not in UML Spec)
     Reader.elements["uml:EventOccurrence"] = function (node) {
         var json = Reader.elements["uml:OccurrenceSpecification"](node);
-        json["_type"] = "EventOccurrence";
-        json["covered"] = Reader.readRef(node, "covered");
+        json["_type"] = "OccurrenceSpecification";
         json["message"] = Reader.readRef(node, "message");
         return json;
     };
@@ -831,7 +865,8 @@ define(function (require, exports, module) {
         var json = Reader.elements["uml:InteractionFragment"](node);
         json["_type"] = "UMLCombinedFragment";
         json["interactionOperator"] = Reader.readEnum(node, "interactionOperator", "uml:InteractionOperatorKind", UML.IOK_SEQ);
-        json["operands"] = Reader.readElementArray(node, "ownedMember");
+        appendTo(json, "operands", Reader.readElementArray(node, "ownedMember")); // for VP
+        appendTo(json, "operands", Reader.readElementArray(node, "operand"));
         return json;
     };
 
@@ -864,12 +899,37 @@ define(function (require, exports, module) {
         return json;
     };
 
-    // TODO: InteractionUse
-    // TODO: Continuation
-    // TODO: StateInvariant
-    // TODO: Gate
-    // TODO: Constraint
-    // TODO: EA Test
+    Reader.elements["uml:InteractionUse"] = function (node) {
+        var json = Reader.elements["uml:InteractionFragment"](node);
+        json["_type"] = "UMLInteractionUse";
+        json["refersTo"] = Reader.readRef(node, "refersTo");
+        // TODO: arguments
+        // TODO: returnValue
+        // TODO: returnValueRecipient
+        return json;
+    };
+    Reader.elements["uml:InteractionOccurrence"] = Reader.elements["uml:InteractionUse"]; // for VP
+
+    Reader.elements["uml:Continuation"] = function (node) {
+        var json = Reader.elements["uml:InteractionFragment"](node);
+        json["_type"] = "UMLContinuation";
+        // TODO: covered?
+        return json;
+    };
+
+    Reader.elements["uml:StateInvariant"] = function (node) {
+        var json = Reader.elements["uml:InteractionFragment"](node);
+        json["_type"] = "UMLStateInvariant";
+        json["covered"] = Reader.readRef(node, "covered");
+        // TODO: invariant
+        return json;
+    };
+
+    Reader.elements["uml:Gate"] = function (node) {
+        var json = Reader.elements["uml:MessageEnd"](node);
+        json["_type"] = "UMLGate";
+        return json;
+    };
 
     // Post-processors .........................................................
 
@@ -889,7 +949,7 @@ define(function (require, exports, module) {
 
     // process 'memberEnd' of Association
     Reader.postprocessors.push(function (elem) {
-        if (elem._type === "UMLAssociation") {
+        if (MetaModelManager.isKindOf(elem._type, "UMLAssociation")) {
             if (elem.end1 && elem.end1.$ref) {
                 elem.end1 = Reader.get(elem.end1.$ref);
                 var parent1 = Reader.get(elem.end1._parent.$ref);
@@ -994,10 +1054,12 @@ define(function (require, exports, module) {
                 parent.ownedElements.push(collaboration);
             }
             _.each(elem.messages, function (msg) {
-                if (msg.sendEvent) {
+                if (msg.sendEvent && msg.sendEvent.$ref && Reader.get(msg.sendEvent.$ref)) {
                     var _from = Reader.get(msg.sendEvent.$ref);
-                    if (_from._type === "EventOccurrence") {
+                    if (_from._type === "OccurrenceSpecification") {
                         msg.source = _from.covered;
+                    } else {
+                        msg.source = { "$ref": _from._id };
                     }
                 } else {
                     var _endpoint = {
@@ -1008,10 +1070,12 @@ define(function (require, exports, module) {
                     elem.participants.push(_endpoint);
                     msg.source = { "$ref": _endpoint._id };
                 }
-                if (msg.receiveEvent) {
+                if (msg.receiveEvent && msg.receiveEvent.$ref && Reader.get(msg.receiveEvent.$ref)) {
                     var _to = Reader.get(msg.receiveEvent.$ref);
-                    if (_to._type === "EventOccurrence") {
+                    if (_to._type === "OccurrenceSpecification") {
                         msg.target = _to.covered;
+                    } else {
+                        msg.target = { "$ref": _to._id };
                     }
                 } else {
                     var _endpoint = {
@@ -1024,8 +1088,21 @@ define(function (require, exports, module) {
                 }
             });
             elem.fragments = _.reject(elem.fragments, function (f) {
-                return (f._type === "EventOccurrence");
+                return (f._type === "OccurrenceSpecification");
             });
+        }
+    });
+
+    // process InteractionFragment's formalGates (for EA)
+    Reader.postprocessors.push(function (elem) {
+        if (elem._type === "UMLInteractionOperand") {
+            if (Array.isArray(elem._formalGates) && elem._formalGates.length > 0) {
+                var _cb  = Reader.get(elem._parent.$ref);
+                var _int = Reader.get(_cb._parent.$ref);
+                if (_int._type === "UMLInteraction") {
+                    appendTo(_int, "participants", elem._formalGates);
+                }
+            }
         }
     });
 
