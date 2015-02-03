@@ -101,6 +101,27 @@ define(function (require, exports, module) {
         "reply"         : UML.MS_REPLY
     };
 
+
+    Reader.enumerations["uml:PseudostateKind"] = {
+        'initial'        : UML.PSK_INITIAL,
+        'deepHistory'    : UML.PSK_DEEPHISTORY,
+        'shallowHistory' : UML.PSK_SHALLOWHISTORY,
+        'join'           : UML.PSK_JOIN,
+        'fork'           : UML.PSK_FORK,
+        'junction'       : UML.PSK_JUNCTION,
+        'choice'         : UML.PSK_CHOICE,
+        'entryPoint'     : UML.PSK_ENTRYPOINT,
+        'exitPoint'      : UML.PSK_EXITPOINT,
+        'terminate'      : UML.PSK_TERMINATE,
+        'final'          : UML.PSK_TERMINATE // for VP
+    };
+
+    Reader.enumerations["uml:TransitionKind"] = {
+        'internal' : UML.TK_INTERNAL,
+        'local'    : UML.TK_LOCAL,
+        'external' : UML.TK_EXTERNAL
+    };
+
     // Kernel ..................................................................
 
     Reader.elements["uml:Element"] = function (node) {
@@ -931,6 +952,78 @@ define(function (require, exports, module) {
         return json;
     };
 
+    // State Machines ..........................................................
+
+    Reader.elements["uml:StateMachine"] = function (node) {
+        var json = Reader.elements["uml:Behavior"](node);
+        json["_type"] = "UMLStateMachine";
+        json["regions"] = Reader.readElementArray(node, "region");
+        return json;
+    };
+
+    Reader.elements["uml:Vertex"] = function (node) {
+        var json = Reader.elements["uml:NamedElement"](node);
+        return json;
+    };
+
+    Reader.elements["uml:Region"] = function (node) {
+        var json = Reader.elements["uml:Namespace"](node);
+        json["_type"] = "UMLRegion";
+        json["vertices"] = Reader.readElementArray(node, "vertex");
+        appendTo(json, "vertices", Reader.readElementArray(node, "ownedMember"));
+        appendTo(json, "vertices", Reader.readElementArray(node, "subvertex")); // for VP
+        json["transitions"] = Reader.readElementArray(node, "transition");
+        return json;
+    };
+
+    Reader.elements["uml:Pseudostate"] = function (node) {
+        var json = Reader.elements["uml:Vertex"](node);
+        json["_type"] = "UMLPseudostate";
+        json["kind"] = Reader.readEnum(node, "kind", "uml:PseudostateKind", UML.PSK_INITIAL);
+        return json;
+    };
+
+    Reader.elements["uml:ConnectionPointReference"] = function (node) {
+        var json = Reader.elements["uml:Vertex"](node);
+        json["_type"] = "UMLConnectionPointReference";
+        return json;
+    };
+
+    Reader.elements["uml:State"] = function (node) {
+        var json = Reader.elements["uml:Namespace"](node);
+        _.extend(json, Reader.elements["uml:Vertex"](node));
+        json["_type"] = "UMLState";
+        json["regions"] = Reader.readElementArray(node, "region");
+        json["entryActivities"] = Reader.readElementArray(node, "entry");
+        json["doActivities"] = Reader.readElementArray(node, "doActivity");
+        json["exitActivities"] = Reader.readElementArray(node, "exit");
+        return json;
+    };
+
+    Reader.elements["uml:FinalState"] = function (node) {
+        var json = Reader.elements["uml:State"](node);
+        json["_type"] = "UMLFinalState";
+        return json;
+    };
+
+    Reader.elements["uml:Transition"] = function (node) {
+        var json = Reader.elements["uml:Namespace"](node);
+        json["_type"] = "UMLTransition";
+        json["kind"] = Reader.readEnum(node, "kind", "uml:TransitionKind", UML.TK_INTERNAL);
+        json["source"] = Reader.readRef(node, "source");
+        json["target"] = Reader.readRef(node, "target");
+        return json;
+    };
+
+    // Activities ..............................................................
+
+    Reader.elements["uml:Activity"] = function (node) {
+        var json = Reader.elements["uml:Behavior"](node);
+        json["_type"] = "UMLActivity";
+        return json;
+    };
+
+
     // Post-processors .........................................................
 
     // process ComponentRealization
@@ -1101,6 +1194,39 @@ define(function (require, exports, module) {
                 var _int = Reader.get(_cb._parent.$ref);
                 if (_int._type === "UMLInteraction") {
                     appendTo(_int, "participants", elem._formalGates);
+                }
+            }
+        }
+    });
+
+    // process Vertex (for VP)
+    Reader.postprocessors.push(function (elem) {
+        if (MetaModelManager.isKindOf(elem._type, "UMLVertex") || MetaModelManager.isKindOf(elem._type, "UMLTransition")) {
+            var parent = Reader.get(elem._parent.$ref);
+            if (parent._type !== "UMLRegion") {
+                if (!parent._stateMachine) {
+                    parent._stateMachine = {
+                        _id: IdGenerator.generateGuid(),
+                        _type: "UMLStateMachine",
+                        regions: [
+                            {
+                                _id: IdGenerator.generateGuid(),
+                                _type: "UMLRegion",
+                                vertices: [],
+                                transitions: []
+                            }
+                        ]
+                    }
+                    parent.ownedElements.push(parent._stateMachine);
+                }
+                if (MetaModelManager.isKindOf(elem._type, "UMLVertex")) {
+                    parent._stateMachine.regions[0].vertices.push(elem);
+                    parent.ownedElements = _.without(parent.ownedElements, elem);
+                    elem._parent = { "$ref": parent._stateMachine.regions[0]._id };
+                } else if (MetaModelManager.isKindOf(elem._type, "UMLTransition")) {
+                    parent._stateMachine.regions[0].transitions.push(elem);
+                    parent.ownedElements = _.without(parent.ownedElements, elem);
+                    elem._parent = { "$ref": parent._stateMachine.regions[0]._id };
                 }
             }
         }
