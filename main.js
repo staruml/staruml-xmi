@@ -32,13 +32,14 @@ define(function (require, exports, module) {
         FileSystem     = app.getModule("filesystem/FileSystem");
 
     var XMI21Reader    = require("XMI21Reader"),
-        UML2           = require("UML2");
+        XMI21Writer    = require("XMI21Writer"),
+        UML2Import     = require("UML2Import"),
+        UML2Export     = require("UML2Export");
 
-    var CMD_XMI_IMPORT     = 'xmi.import',
-        CMD_XMI_EXPORT_V11 = 'xmi.export.v1.1',
-        CMD_XMI_EXPORT_V20 = 'xmi.export.v2.0';
+    var CMD_XMI_IMPORT_V21 = 'xmi.import.v2.1',
+        CMD_XMI_EXPORT_V21 = 'xmi.export.v2.1';
 
-    function _handleXMIImport(fullPath) {
+    function _handleXMI21Import(fullPath) {
         var result = new $.Deferred();
         if (fullPath) {
             XMI21Reader.loadFromFile(fullPath).then(result.resolve, result.reject);
@@ -54,24 +55,19 @@ define(function (require, exports, module) {
         return result.promise();
     }
 
-    function _handleXMI11Export() {
-    }
-
-    function _handleXMI20Export() {
+    function _handleXMI21Export() {
     }
 
     // Register Commands
-    CommandManager.register("XMI Import...",  CMD_XMI_IMPORT, _handleXMIImport);
-    CommandManager.register("XMI Export (XMI 1.1, UML 1.4)...",  CMD_XMI_EXPORT_V11, _handleXMI11Export);
-    CommandManager.register("XMI Export (XMI 2.0, UML 2.0)...",  CMD_XMI_EXPORT_V20, _handleXMI20Export);
+    CommandManager.register("XMI Import (v2.1)...",  CMD_XMI_IMPORT_V21, _handleXMI21Import);
+    CommandManager.register("XMI Export (v2.1)...",  CMD_XMI_EXPORT_V21, _handleXMI21Export);
 
     // Setup Menus
     var menuItem = MenuManager.getMenuItem(Commands.FILE_IMPORT);
     menuItem.addMenuDivider();
-    menuItem.addMenuItem(CMD_XMI_IMPORT);
+    menuItem.addMenuItem(CMD_XMI_IMPORT_V21);
     menuItem = MenuManager.getMenuItem(Commands.FILE_EXPORT);
     menuItem.addMenuDivider();
-    menuItem.addMenuItem(CMD_XMI_EXPORT_V11);
-    menuItem.addMenuItem(CMD_XMI_EXPORT_V20);
+    menuItem.addMenuItem(CMD_XMI_EXPORT_V21);
 
 });

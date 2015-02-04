@@ -1020,9 +1020,250 @@ define(function (require, exports, module) {
     Reader.elements["uml:Activity"] = function (node) {
         var json = Reader.elements["uml:Behavior"](node);
         json["_type"] = "UMLActivity";
+        json["nodes"] = Reader.readElementArray(node, "node");
+        json["edges"] = Reader.readElementArray(node, "edge");
+        json["groups"] = Reader.readElementArray(node, "group");
         return json;
     };
 
+    Reader.elements["uml:Pin"] = function (node) {
+        var json = Reader.elements["uml:TypedElement"](node);
+        _.extend(json, Reader.elements["uml:MultiplicityElement"](node));
+        return json;
+    };
+
+    Reader.elements["uml:InputPin"] = function (node) {
+        var json = Reader.elements["uml:Pin"](node);
+        json["_type"] = "UMLInputPin";
+        return json;
+    };
+
+    Reader.elements["uml:OutputPin"] = function (node) {
+        var json = Reader.elements["uml:Pin"](node);
+        json["_type"] = "UMLOutputPin";
+        return json;
+    };
+
+    Reader.elements["uml:ValuePin"] = function (node) {
+        var json = Reader.elements["uml:InputPin"](node);
+        json["_type"] = "UMLInputPin";
+        return json;
+    };
+
+    Reader.elements["uml:ActivityNode"] = function (node) {
+        var json = Reader.elements["uml:NamedElement"](node);
+        return json;
+    };
+
+    Reader.elements["uml:Action"] = function (node) {
+        var json = Reader.elements["uml:ActivityNode"](node);
+        json["_type"] = "UMLAction";
+        json["inputs"] = Reader.readElementArray(node, "argument");
+        appendTo(json, "inputs", Reader.readElementArray(node, "input"));
+        json["outputs"] = Reader.readElementArray(node, "result");
+        appendTo(json, "outputs", Reader.readElementArray(node, "output"));
+        return json;
+    };
+
+    Reader.elements["uml:OpaqueAction"] = function (node) {
+        var json = Reader.elements["uml:Action"](node);
+        json["_type"] = "UMLAction";
+        json["kind"] = UML.ACK_OPAQUE;
+        return json;
+    };
+
+    Reader.elements["uml:InvocationAction"] = function (node) {
+        var json = Reader.elements["uml:Action"](node);
+        return json;
+    };
+
+    Reader.elements["uml:CallAction"] = function (node) {
+        var json = Reader.elements["uml:InvocationAction"](node);
+        json["isSynchronous"] = Reader.readBoolean(node, "isSynchronous", false);
+        return json;
+    };
+
+    Reader.elements["uml:CallBehaviorAction"] = function (node) {
+        var json = Reader.elements["uml:CallAction"](node);
+        json["_type"] = "UMLAction";
+        json["target"] = Reader.readRef(node, "behavior");
+        return json;
+    };
+
+    Reader.elements["uml:CallOperationAction"] = function (node) {
+        var json = Reader.elements["uml:CallAction"](node);
+        json["_type"] = "UMLAction";
+        json["target"] = Reader.readRef(node, "operation");
+        return json;
+    };
+
+    Reader.elements["uml:SendSignalAction"] = function (node) {
+        var json = Reader.elements["uml:InvocationAction"](node);
+        json["_type"] = "UMLAction";
+        json["kind"] = UML.ACK_SENDSIGNAL;
+        json["target"] = Reader.readRef(node, "signal");
+        return json;
+    };
+
+    Reader.elements["uml:BroadcastSignalAction"] = function (node) {
+        var json = Reader.elements["uml:InvocationAction"](node);
+        json["_type"] = "UMLAction";
+        return json;
+    };
+
+    Reader.elements["uml:SendObjectAction"] = function (node) {
+        var json = Reader.elements["uml:InvocationAction"](node);
+        json["_type"] = "UMLAction";
+        return json;
+    };
+
+    Reader.elements["uml:CreateObjectAction"] = function (node) {
+        var json = Reader.elements["uml:Action"](node);
+        json["_type"] = "UMLAction";
+        json["kind"] = UML.ACK_CREATE;
+        return json;
+    };
+
+    Reader.elements["uml:DestroyObjectAction"] = function (node) {
+        var json = Reader.elements["uml:Action"](node);
+        json["_type"] = "UMLAction";
+        json["kind"] = UML.ACK_DESTROY;
+        return json;
+    };
+
+    Reader.elements["uml:StructuralFeatureAction"] = function (node) {
+        var json = Reader.elements["uml:Action"](node);
+        json["_type"] = "UMLAction";
+        return json;
+    };
+
+    Reader.elements["uml:ReadStructuralFeatureAction"] = function (node) {
+        var json = Reader.elements["uml:StructuralFeatureAction"](node);
+        json["_type"] = "UMLAction";
+        json["kind"] = UML.ACK_READ;
+        return json;
+    };
+
+    Reader.elements["uml:WriteStructuralFeatureAction"] = function (node) {
+        var json = Reader.elements["uml:StructuralFeatureAction"](node);
+        json["_type"] = "UMLAction";
+        json["kind"] = UML.ACK_WRITE;
+        return json;
+    };
+
+    Reader.elements["uml:ClearStructuralFeatureAction"] = function (node) {
+        var json = Reader.elements["uml:StructuralFeatureAction"](node);
+        json["_type"] = "UMLAction";
+        return json;
+    };
+
+    Reader.elements["uml:AddStructuralFeatureAction"] = function (node) {
+        var json = Reader.elements["uml:WriteStructuralFeatureAction"](node);
+        json["_type"] = "UMLAction";
+        return json;
+    };
+
+    Reader.elements["uml:RemoveStructuralFeatureAction"] = function (node) {
+        var json = Reader.elements["uml:WriteStructuralFeatureAction"](node);
+        json["_type"] = "UMLAction";
+        return json;
+    };
+
+    Reader.elements["uml:AcceptEventAction"] = function (node) {
+        var json = Reader.elements["uml:Action"](node);
+        json["_type"] = "UMLAction";
+        json["kind"] = UML.ACK_ACCEPTEVENT;
+        return json;
+    };
+
+    Reader.elements["uml:ActivityGroup"] = function (node) {
+        var json = Reader.elements["uml:NamedElement"](node);
+        return json;
+    };
+
+    Reader.elements["uml:ActivityPartition"] = function (node) {
+        var json = Reader.elements["uml:ActivityGroup"](node);
+        json["_type"] = "UMLActivityPartition";
+        return json;
+    };
+
+    Reader.elements["uml:ObjectNode"] = function (node) {
+        var json = Reader.elements["uml:ActivityNode"](node);
+        json["_type"] = "UMLObjectNode";
+        return json;
+    };
+
+    Reader.elements["uml:ControlNode"] = function (node) {
+        var json = Reader.elements["uml:ActivityNode"](node);
+        json["_type"] = "UMLControlNode";
+        return json;
+    };
+
+    Reader.elements["uml:FinalNode"] = function (node) {
+        var json = Reader.elements["uml:ControlNode"](node);
+        return json;
+    };
+
+    Reader.elements["uml:ActivityFinalNode"] = function (node) {
+        var json = Reader.elements["uml:FinalNode"](node);
+        json["_type"] = "UMLActivityFinalNode";
+        return json;
+    };
+
+    Reader.elements["uml:FlowFinalNode"] = function (node) {
+        var json = Reader.elements["uml:FinalNode"](node);
+        json["_type"] = "UMLFlowFinalNode";
+        return json;
+    };
+
+    Reader.elements["uml:InitialNode"] = function (node) {
+        var json = Reader.elements["uml:ControlNode"](node);
+        json["_type"] = "UMLInitialNode";
+        return json;
+    };
+
+    Reader.elements["uml:ForkNode"] = function (node) {
+        var json = Reader.elements["uml:ControlNode"](node);
+        json["_type"] = "UMLForkNode";
+        return json;
+    };
+
+    Reader.elements["uml:JoinNode"] = function (node) {
+        var json = Reader.elements["uml:ControlNode"](node);
+        json["_type"] = "UMLJoinNode";
+        return json;
+    };
+
+    Reader.elements["uml:MergeNode"] = function (node) {
+        var json = Reader.elements["uml:ControlNode"](node);
+        json["_type"] = "UMLMergeNode";
+        return json;
+    };
+
+    Reader.elements["uml:DecisionNode"] = function (node) {
+        var json = Reader.elements["uml:ControlNode"](node);
+        json["_type"] = "UMLDecisionNode";
+        return json;
+    };
+
+    Reader.elements["uml:ActivityEdge"] = function (node) {
+        var json = Reader.elements["uml:RedefinableElement"](node);
+        json["source"] = Reader.readRef(node, "source");
+        json["target"] = Reader.readRef(node, "target");
+        return json;
+    };
+
+    Reader.elements["uml:ControlFlow"] = function (node) {
+        var json = Reader.elements["uml:ActivityEdge"](node);
+        json["_type"] = "UMLControlFlow";
+        return json;
+    };
+
+    Reader.elements["uml:ObjectFlow"] = function (node) {
+        var json = Reader.elements["uml:ActivityEdge"](node);
+        json["_type"] = "UMLObjectFlow";
+        return json;
+    };
 
     // Post-processors .........................................................
 
