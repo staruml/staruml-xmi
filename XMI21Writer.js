@@ -27,26 +27,162 @@
 define(function (require, exports, module) {
     "use strict";
 
+    var Repository        = app.getModule("core/Repository"),
+        FileUtils         = app.getModule("file/FileUtils"),
+        FileSystem        = app.getModule("filesystem/FileSystem"),
+        ProjectManager    = app.getModule("engine/ProjectManager");
+
+
+    /**
+     * XMLWriter
+     * @constructor
+     */
+    function XMLWriter(indentString) {
+
+        /** @member {Array.<string>} lines */
+        this.lines = [];
+
+        /** @member {string} indentString */
+        this.indentString = (indentString ? indentString : "\t"); // default tab
+
+        /** @member {Array.<string>} indentations */
+        this.indentations = [];
+    }
+
+    /**
+     * Indent
+     */
+    XMLWriter.prototype.indent = function () {
+        this.indentations.push(this.indentString);
+    };
+
+    /**
+     * Outdent
+     */
+    XMLWriter.prototype.outdent = function () {
+        this.indentations.splice(this.indentations.length-1, 1);
+    };
+
+    /**
+     * Write a line
+     * @param {string} line
+     */
+    XMLWriter.prototype.writeLine = function (line) {
+        if (line) {
+            this.lines.push(this.indentations.join("") + line);
+        } else {
+            this.lines.push("");
+        }
+    };
+
+    /**
+     * Return as all string data
+     * @return {string}
+     */
+    XMLWriter.prototype.getData = function () {
+        return this.lines.join("\n");
+    };
+
+
+    /**
+     * Map for Element Readers
+     */
     var elements = {};
 
-    function writeElement(elem, tagName) {
+    /**
+     * Set xmi:type
+     * @param {object} json
+     * @param {string} typeName
+     */
+    function setType(json, typeName) {
+        json['xmi:type'] = typeName;
     }
 
-    function writeElementArray() {
+    /**
+     * Write string value as an attribute
+     * @param {object} json
+     * @param {string} name
+     * @param {?} value
+     */
+    function writeString(json, name, value) {
+        json[name] = value;
     }
 
-    /*
-    Writer.elements["UMLModel"] = function (elem) {
-        Writer.elements["UMLPackage"](elem);
-        Writer.writeString(elem.name, 'name');
+
+    function addTo(json, name, value) {
+        if (!Array.isArray(json[name])) {
+            json[name] = [];
+        }
+        json[name].push(value);
     }
 
-    Writer.elements["UMLModel"] = function (elem) {
-        var json = Writer.elements["UMLPackage"](elem);
-        Writer.writeString(json, 'xmi:id', elem._id);
-        Writer.writeElementArray(json, 'packagedElement', elem.ownedElements);
-        return json;
+    function convertJsonToXML(json, xmlWriter, tagName) {
+        tagName = tagName || json['xmi:type'];
+
+        var line = '<' + tagName;
+
+        // Convert attributes
+        _.each(json, function (val, key) {
+            if (!_.isObject(val)) {
+                line += ' ' + key + '="' + val + '"';
+            }
+        });
+        line += '>';
+        xmlWriter.writeLine(line);
+        xmlWriter.indent();
+
+        // Convert children
+        _.each(json, function (val, key) {
+            if (_.isArray(val)) {
+
+            } else if (_.isObject(val)) {
+
+            }
+        });
+
+        xmlWriter.outdent();
+        xmlWriter.writeLine('</' + tagName + '>');
     }
-    */
+
+
+    /**
+     * Save to file
+     *
+     * @param {string} filename
+     * @return {$.Promise}
+     */
+    function saveToFile(filename) {
+        var project = ProjectManager.getProject(),
+            roots   = [];
+
+        // Build intermediate JSON representations
+        _.each(project.ownedElements, function (elem) {
+            if (elements[elem.getClassName()]) {
+                var json = elements[elem.getClassName()](elem);
+                roots.push(json);
+            }
+        });
+
+        // Convert to XML
+        var xmlWriter = new XMLWriter();
+        xmlWriter.writeLine('<?xml version="1.0" encoding="UTF-8"?>');
+        xmlWriter.writeLine('<xmi:XMI xmi:version="2.1" xmlns:uml="http://schema.omg.org/spec/UML/2.0" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1">');
+        xmlWriter.indent();
+        _.each(roots, function (root) {
+            convertJsonToXML(root, xmlWriter);
+        });
+        xmlWriter.outdent();
+        xmlWriter.writeLine('</xmi:XMI>');
+
+
+        console.log(xmlWriter.getData());
+    }
+
+    exports.elements = elements;
+
+    exports.setType     = setType;
+    exports.writeString = writeString;
+
+    exports.saveToFile  = saveToFile;
 
 });

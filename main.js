@@ -55,7 +55,8 @@ define(function (require, exports, module) {
         return result.promise();
     }
 
-    function _handleXMI21Export() {
+    function _handleXMI21Export(fullPath) {
+        XMI21Writer.saveToFile(fullPath);
     }
 
     // Register Commands
