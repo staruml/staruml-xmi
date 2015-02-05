@@ -83,11 +83,34 @@ define(function (require, exports, module) {
         return this.lines.join("\n");
     };
 
+    /**
+     * Map for Enumeration Writers
+     */
+    var enumerations = {};
 
     /**
-     * Map for Element Readers
+     * Map for Element Writers
      */
     var elements = {};
+
+    function addTo(json, name, value) {
+        if (!Array.isArray(json[name])) {
+            json[name] = [];
+        }
+        json[name].push(value);
+    }
+
+    function appendTo(json, name, elements) {
+        if (!Array.isArray(json[name])) {
+            json[name] = [];
+        }
+        var arr = json[name];
+        _.each(elements, function (elem) {
+            if (!_.contains(arr, elem) && !_.some(arr, function (item) { return item._id === elem._id })) {
+                arr.push(elem);
+            }
+        });
+    }
 
     /**
      * Set xmi:type
@@ -108,12 +131,33 @@ define(function (require, exports, module) {
         json[name] = value;
     }
 
-
-    function addTo(json, name, value) {
-        if (!Array.isArray(json[name])) {
-            json[name] = [];
+    /**
+     * Write enumeration
+     * @param {object} json
+     * @param {string} name
+     * @param {?} value
+     */
+    function writeEnum(json, name, type, value) {
+        var fun = enumerations[type];
+        if (fun) {
+            json[name] = fun(value);
         }
-        json[name].push(value);
+    }
+
+    /**
+     * Write an array of elements
+     * @param {object} json
+     * @param {string} name
+     * @param {Array.<Element>} value
+     */
+    function writeElementArray(json, name, elems) {
+        _.each(elems, function (elem) {
+            var fun = elements[elem.getClassName()];
+            if (fun) {
+                var node = fun(elem);
+                addTo(json, name, node);
+            }
+        });
     }
 
     function convertJsonToXML(json, xmlWriter, tagName) {
@@ -134,9 +178,11 @@ define(function (require, exports, module) {
         // Convert children
         _.each(json, function (val, key) {
             if (_.isArray(val)) {
-
+                _.each(val, function (item) {
+                    convertJsonToXML(item, xmlWriter, key);
+                });
             } else if (_.isObject(val)) {
-
+                convertJsonToXML(val, xmlWriter, key);
             }
         });
 
@@ -178,11 +224,14 @@ define(function (require, exports, module) {
         console.log(xmlWriter.getData());
     }
 
-    exports.elements = elements;
+    exports.enumerations      = enumerations;
+    exports.elements          = elements;
 
-    exports.setType     = setType;
-    exports.writeString = writeString;
+    exports.setType           = setType;
+    exports.writeString       = writeString;
+    exports.writeEnum         = writeEnum;
+    exports.writeElementArray = writeElementArray;
 
-    exports.saveToFile  = saveToFile;
+    exports.saveToFile        = saveToFile;
 
 });
