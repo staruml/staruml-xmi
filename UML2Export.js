@@ -29,6 +29,7 @@ define(function (require, exports, module) {
 
     var IdGenerator      = app.getModule("core/IdGenerator"),
         MetaModelManager = app.getModule("core/MetaModelManager"),
+        Repository       = app.getModule("core/Repository"),
         UML              = app.getModule("uml/UML");
 
     var Writer = require("XMI21Writer");
@@ -44,10 +45,14 @@ define(function (require, exports, module) {
     Writer.elements["Model"] = function (elem) {
         var json = Writer.elements["Element"](elem);
         Writer.writeString(json, 'name', elem.name);
+        var _ownedElements = _.reject(elem.ownedElements, function (e) {
+            // Generalizations will be included in Classifier as 'generalization'
+            return e instanceof type.UMLGeneralization;
+        });
         if (elem instanceof type.UMLPackage) {
-            Writer.writeElementArray(json, 'packagedElement', elem.ownedElements);
+            Writer.writeElementArray(json, 'packagedElement', _ownedElements);
         } else {
-            Writer.writeElementArray(json, 'ownedMember', elem.ownedElements);
+            Writer.writeElementArray(json, 'ownedMember', _ownedElements);
         }
         return json;
     };
@@ -130,7 +135,7 @@ define(function (require, exports, module) {
         var json = Writer.elements["ExtensibleModel"](elem);
         // TODO: stereotype
         Writer.writeEnum(json, 'visibility', 'UMLVisibilityKind', elem.visibility);
-        if (elem.templateParameters.length > 0) {
+        if (elem.templateParameters && elem.templateParameters.length > 0) {
             json["ownedTemplateSignature"] = {
                 "xmi:id": IdGenerator.generateGuid(),
                 "xmi:type": (elem instanceof type.UMLClassifier ? "uml:RedefinableTemplateSignature" : "uml:TemplateSignature")
@@ -244,33 +249,30 @@ define(function (require, exports, module) {
         Writer.writeBoolean(json, 'isAbstract', elem.isAbstract);
         Writer.writeBoolean(json, 'isFinalSpecialization', elem.isFinalSpecialization);
         Writer.writeBoolean(json, 'isLeaf', elem.isLeaf);
+        var _generalizations = Repository.getRelationshipsOf(elem, function (r) {
+            return (r instanceof type.UMLGeneralization) && (r.source === elem);
+        });
+        Writer.writeElementArray(json, 'generalization', _generalizations);
+
         return json;
     };
 
     Writer.elements["UMLDirectedRelationship"] = function (elem) {
         var json = Writer.elements["DirectedRelationship"](elem);
-        _.extend(json, Writer.elements["UMLModelElement"]);
+        _.extend(json, Writer.elements["UMLModelElement"](elem));
         return json;
     };
 
     Writer.elements["UMLRelationshipEnd"] = function (elem) {
         var json = Writer.elements["RelationshipEnd"](elem);
-        _.extend(json, Writer.elements["UMLModelElement"]);
+        _.extend(json, Writer.elements["UMLAttribute"](elem));
         // TODO: navigable
-        // TODO: aggregation
-        // TODO: multiplicity
-        // TODO: defaultValue
-        // TODO: isReadOnly
-        // TODO: isOrdered
-        // TODO: isUnique
-        // TODO: isDerived
-        // TODO: isID
         return json;
     };
 
     Writer.elements["UMLUndirectedRelationship"] = function (elem) {
         var json = Writer.elements["UndirectedRelationship"](elem);
-        _.extend(json, Writer.elements["UMLModelElement"]);
+        _.extend(json, Writer.elements["UMLModelElement"](elem));
         return json;
     };
 
@@ -295,6 +297,7 @@ define(function (require, exports, module) {
     Writer.elements["UMLClass"] = function (elem) {
         var json = Writer.elements["UMLClassifier"](elem);
         Writer.setType(json, 'uml:Class');
+        Writer.writeBoolean(json, 'isActive', elem.isActive);
         return json;
     };
 
@@ -334,5 +337,63 @@ define(function (require, exports, module) {
         Writer.setType(json, 'uml:Signal');
         return json;
     };
+
+    Writer.elements["UMLDependency"] = function (elem) {
+        var json = Writer.elements["UMLDirectedRelationship"](elem);
+        Writer.setType(json, 'uml:Dependency');
+        Writer.writeRef(json, 'client', elem.source);
+        Writer.writeRef(json, 'supplier', elem.target);
+        // TODO: mapping
+        return json;
+    };
+
+    Writer.elements["UMLAbstraction"] = function (elem) {
+        var json = Writer.elements["UMLDependency"](elem);
+        Writer.setType(json, 'uml:Abstraction');
+        return json;
+    };
+
+    Writer.elements["UMLRealization"] = function (elem) {
+        var json = Writer.elements["UMLAbstraction"](elem);
+        Writer.setType(json, 'uml:Realization');
+        return json;
+    };
+
+    Writer.elements["UMLInterfaceRealization"] = function (elem) {
+        var json = Writer.elements["UMLRealization"](elem);
+        Writer.setType(json, 'uml:InterfaceRealization');
+        return json;
+    };
+
+    Writer.elements["UMLGeneralization"] = function (elem) {
+        var json = Writer.elements["UMLDirectedRelationship"](elem);
+        Writer.setType(json, 'uml:Generalization');
+        Writer.writeRef(json, 'general', elem.target);
+        return json;
+    };
+
+    Writer.elements["UMLAssociationEnd"] = function (elem) {
+        var json = Writer.elements["UMLRelationshipEnd"](elem);
+        Writer.setType(json, 'uml:Property');
+        Writer.writeRef(json, 'type', elem.reference);
+        // TODO: qualifiers
+        return json;
+    };
+
+    Writer.elements["UMLAssociation"] = function (elem) {
+        var json = Writer.elements["UMLUndirectedRelationship"](elem);
+        Writer.setType(json, 'uml:Association');
+        Writer.writeBoolean(json, 'isDerived', elem.isDerived);
+        var _ends = [_.clone(elem.end1), _.clone(elem.end2)];
+        var _agg = _ends[0].aggregation;
+        _ends[0].aggregation = _ends[1].aggregation;
+        _ends[1].aggregation = _agg;
+        Writer.writeElementArray(json, 'ownedEnd', _ends);
+        Writer.writeRefArray(json, 'memberEnd', _ends);
+        return json;
+    };
+
+    // TODO: UMLAssociationClassLink
+
 
 });

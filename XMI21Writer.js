@@ -163,7 +163,7 @@ define(function (require, exports, module) {
      * Write an array of elements
      * @param {object} json
      * @param {string} name
-     * @param {Array.<Element>} value
+     * @param {Array.<Element>} elems
      */
     function writeElementArray(json, name, elems) {
         _.each(elems, function (elem) {
@@ -172,6 +172,29 @@ define(function (require, exports, module) {
                 var node = fun(elem);
                 addTo(json, name, node);
             }
+        });
+    }
+
+    /**
+     * Write a reference to an element
+     * @param {object} json
+     * @param {string} name
+     * @param {Element} elem
+     */
+    function writeRef(json, name, elem) {
+        json[name] = elem._id;
+    }
+
+    /**
+     * Write an array of references
+     * @param {object} json
+     * @param {string} name
+     * @param {Array.<Element>} elems
+     */
+    function writeRefArray(json, name, elems) {
+        _.each(elems, function (elem) {
+            var node = { "xmi:idref" : elem._id };
+            addTo(json, name, node);
         });
     }
 
@@ -189,7 +212,6 @@ define(function (require, exports, module) {
             "value"    : value
         };
     }
-
 
     function convertJsonToXML(json, xmlWriter, tagName) {
         tagName = tagName || json['xmi:type'];
@@ -273,6 +295,8 @@ define(function (require, exports, module) {
     exports.writeBoolean      = writeBoolean;
     exports.writeEnum         = writeEnum;
     exports.writeElementArray = writeElementArray;
+    exports.writeRef          = writeRef;
+    exports.writeRefArray     = writeRefArray;
     exports.writeValueSpec    = writeValueSpec;
 
     exports.saveToFile        = saveToFile;
