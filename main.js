@@ -28,7 +28,9 @@ define(function (require, exports, module) {
 
     var Commands       = app.getModule("command/Commands"),
         CommandManager = app.getModule("command/CommandManager"),
+        ProjectManager = app.getModule("engine/ProjectManager"),
         MenuManager    = app.getModule("menu/MenuManager"),
+        FileUtils      = app.getModule("file/FileUtils"),
         FileSystem     = app.getModule("filesystem/FileSystem");
 
     var XMI21Reader    = require("XMI21Reader"),
@@ -39,6 +41,8 @@ define(function (require, exports, module) {
     var CMD_XMI_IMPORT_V21 = 'xmi.import.v2.1',
         CMD_XMI_EXPORT_V21 = 'xmi.export.v2.1';
 
+    var USER_CANCELED = { userCanceled: true };
+
     function _handleXMI21Import(fullPath) {
         var result = new $.Deferred();
         if (fullPath) {
@@ -46,7 +50,11 @@ define(function (require, exports, module) {
         } else {
             FileSystem.showOpenDialog(false, false, "Select a XMI File (.xmi)", null, ["xmi"], function (err, files) {
                 if (!err) {
-                    XMI21Reader.loadFromFile(files[0]).then(result.resolve, result.reject);
+                    if (files && files.length > 0) {
+                        XMI21Reader.loadFromFile(files[0]).then(result.resolve, result.reject);
+                    } else {
+                        result.reject(USER_CANCELED);
+                    }
                 } else {
                     result.reject(err);
                 }
@@ -56,7 +64,20 @@ define(function (require, exports, module) {
     }
 
     function _handleXMI21Export(fullPath) {
-        XMI21Writer.saveToFile(fullPath);
+        var result = new $.Deferred();
+        if (fullPath) {
+            XMI21Writer.saveToFile(fullPath).then(result.resolve, result.reject);
+        } else {
+            var _filename = FileUtils.convertToWindowsFilename(ProjectManager.getProject().name);
+            FileSystem.showSaveDialog("Export Project As XMI", null, _filename + ".xmi", function (err, selectedPath) {
+                if (!err) {
+                    XMI21Writer.saveToFile(selectedPath).then(result.resolve, result.reject);
+                } else {
+                    result.reject(err);
+                }
+            });
+        }
+        return result.promise();
     }
 
     // Register Commands

@@ -27,7 +27,8 @@
 define(function (require, exports, module) {
     "use strict";
 
-    var Repository        = app.getModule("core/Repository"),
+    var IdGenerator       = app.getModule("core/IdGenerator"),
+        Repository        = app.getModule("core/Repository"),
         FileUtils         = app.getModule("file/FileUtils"),
         FileSystem        = app.getModule("filesystem/FileSystem"),
         ProjectManager    = app.getModule("engine/ProjectManager");
@@ -43,7 +44,7 @@ define(function (require, exports, module) {
         this.lines = [];
 
         /** @member {string} indentString */
-        this.indentString = (indentString ? indentString : "\t"); // default tab
+        this.indentString = indentString || "\t"; // default tab
 
         /** @member {Array.<string>} indentations */
         this.indentations = [];
@@ -60,7 +61,7 @@ define(function (require, exports, module) {
      * Outdent
      */
     XMLWriter.prototype.outdent = function () {
-        this.indentations.splice(this.indentations.length-1, 1);
+        this.indentations.splice(this.indentations.length - 1, 1);
     };
 
     /**
@@ -106,7 +107,7 @@ define(function (require, exports, module) {
         }
         var arr = json[name];
         _.each(elements, function (elem) {
-            if (!_.contains(arr, elem) && !_.some(arr, function (item) { return item._id === elem._id })) {
+            if (!_.contains(arr, elem) && !_.some(arr, function (item) { return item._id === elem._id; })) {
                 arr.push(elem);
             }
         });
@@ -122,13 +123,27 @@ define(function (require, exports, module) {
     }
 
     /**
-     * Write string value as an attribute
+     * Write a string value as an attribute
      * @param {object} json
      * @param {string} name
-     * @param {?} value
+     * @param {string} value
      */
     function writeString(json, name, value) {
         json[name] = value;
+    }
+
+    /**
+     * Write a boolean value as an attribute
+     * @param {object} json
+     * @param {string} name
+     * @param {boolean} value
+     */
+    function writeBoolean(json, name, value) {
+        if (value) {
+            json[name] = "true";
+        } else {
+            json[name] = "false";
+        }
     }
 
     /**
@@ -159,6 +174,22 @@ define(function (require, exports, module) {
             }
         });
     }
+
+    /**
+     * Write a value specification
+     * @param {object} json
+     * @param {string} name
+     * @param {string} valueType
+     * @param {boolean} value
+     */
+    function writeValueSpec(json, name, valueType, value) {
+        json[name] = {
+            "xmi:id"   : IdGenerator.generateGuid(),
+            "xmi:type" : valueType,
+            "value"    : value
+        };
+    }
+
 
     function convertJsonToXML(json, xmlWriter, tagName) {
         tagName = tagName || json['xmi:type'];
@@ -198,30 +229,40 @@ define(function (require, exports, module) {
      * @return {$.Promise}
      */
     function saveToFile(filename) {
-        var project = ProjectManager.getProject(),
-            roots   = [];
+        var result = new $.Deferred();
+        try {
+            // Build intermediate JSON representations
+            var project = ProjectManager.getProject();
+            var root = {
+                    "xmi:id"          : IdGenerator.generateGuid(),
+                    "xmi:type"        : "uml:Model",
+                    "name"            : "RootModel",
+                    "packagedElement" : []
+                };
+            writeElementArray(root, "packagedElement", project.ownedElements);
 
-        // Build intermediate JSON representations
-        _.each(project.ownedElements, function (elem) {
-            if (elements[elem.getClassName()]) {
-                var json = elements[elem.getClassName()](elem);
-                roots.push(json);
-            }
-        });
-
-        // Convert to XML
-        var xmlWriter = new XMLWriter();
-        xmlWriter.writeLine('<?xml version="1.0" encoding="UTF-8"?>');
-        xmlWriter.writeLine('<xmi:XMI xmi:version="2.1" xmlns:uml="http://schema.omg.org/spec/UML/2.0" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1">');
-        xmlWriter.indent();
-        _.each(roots, function (root) {
+            // Convert to XML
+            var xmlWriter = new XMLWriter();
+            xmlWriter.writeLine('<?xml version="1.0" encoding="UTF-8"?>');
+            xmlWriter.writeLine('<xmi:XMI xmi:version="2.1" xmlns:uml="http://schema.omg.org/spec/UML/2.0" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1">');
+            xmlWriter.indent();
             convertJsonToXML(root, xmlWriter);
-        });
-        xmlWriter.outdent();
-        xmlWriter.writeLine('</xmi:XMI>');
+            xmlWriter.outdent();
+            xmlWriter.writeLine('</xmi:XMI>');
 
-
-        console.log(xmlWriter.getData());
+            // Save to File
+            var file = FileSystem.getFileForPath(filename);
+            FileUtils.writeText(file, xmlWriter.getData(), true)
+                .done(function () {
+                    result.resolve(filename);
+                })
+                .fail(function (err) {
+                    result.reject(err);
+                });
+        } catch (err) {
+            result.reject(err);
+        }
+        return result.promise();
     }
 
     exports.enumerations      = enumerations;
@@ -229,8 +270,10 @@ define(function (require, exports, module) {
 
     exports.setType           = setType;
     exports.writeString       = writeString;
+    exports.writeBoolean      = writeBoolean;
     exports.writeEnum         = writeEnum;
     exports.writeElementArray = writeElementArray;
+    exports.writeValueSpec    = writeValueSpec;
 
     exports.saveToFile        = saveToFile;
 
