@@ -436,6 +436,12 @@ define(function (require, exports, module) {
         return json;
     };
 
+    Writer.elements["UMLComponentRealization"] = function (elem) {
+        var json = Writer.elements["UMLRealization"](elem);
+        Writer.setType(json, 'uml:ComponentRealization');
+        return json;
+    };
+
     Writer.elements["UMLGeneralization"] = function (elem) {
         var json = Writer.elements["UMLDirectedRelationship"](elem);
         Writer.setType(json, 'uml:Generalization');
@@ -465,6 +471,73 @@ define(function (require, exports, module) {
     };
 
     // TODO: UMLAssociationClassLink
+
+    // Instances ...............................................................
+
+    Writer.elements["UMLSlot"] = function (elem) {
+        var json = Writer.elements["UMLModelElement"](elem);
+        Writer.setType(json, 'uml:Slot');
+        Writer.writeRef(json, 'definingFeature', elem.definingFeature);
+        Writer.writeValueSpec(json, 'value', 'uml:OpaqueExpression', elem.value);
+        return json;
+    };
+
+    Writer.elements["UMLInstance"] = function (elem) {
+        var json = Writer.elements["UMLModelElement"](elem);
+        Writer.writeElementArray(json, 'slot', elem.slots);
+        Writer.writeRefArray(json, 'classifier', [ elem.classifier ]);
+        return json;
+    };
+
+    Writer.elements["UMLObject"] = function (elem) {
+        var json = Writer.elements["UMLInstance"](elem);
+        Writer.setType(json, 'uml:InstanceSpecification');
+        return json;
+    };
+
+    Writer.elements["UMLArtifactInstance"] = function (elem) {
+        var json = Writer.elements["UMLInstance"](elem);
+        Writer.setType(json, 'uml:InstanceSpecification');
+        return json;
+    };
+
+    Writer.elements["UMLComponentInstance"] = function (elem) {
+        var json = Writer.elements["UMLInstance"](elem);
+        Writer.setType(json, 'uml:InstanceSpecification');
+        return json;
+    };
+
+    Writer.elements["UMLNodeInstance"] = function (elem) {
+        var json = Writer.elements["UMLInstance"](elem);
+        Writer.setType(json, 'uml:InstanceSpecification');
+        return json;
+    };
+
+    Writer.elements["UMLLink"] = function (elem) {
+        var json = Writer.elements["UMLUndirectedRelationship"](elem);
+        Writer.setType(json, 'uml:InstanceSpecification');
+        if (elem.association) {
+            Writer.writeRefArray(json, 'classifier', [ elem.association ]);
+        }
+        Writer.writeExtension(json, {
+            "linkEnd1": { "value": elem.end1.reference._id },
+            "linkEnd2": { "value": elem.end2.reference._id }
+        });
+        return json;
+    };
+
+
+    // Composite Structure .....................................................
+
+    // -
+
+    // Components ..............................................................
+
+    // - Artifact
+    // - Component
+    // - Subsystem
+
+    // Deployments .............................................................
 
 
     // Profiles ................................................................
