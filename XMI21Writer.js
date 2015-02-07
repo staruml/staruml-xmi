@@ -94,6 +94,18 @@ define(function (require, exports, module) {
      */
     var elements = {};
 
+    /**
+     * Nodes to be added later
+     */
+    var deferedNodes = [];
+
+
+    /**
+     * Add a value to an array field
+     * @param {object} json
+     * @param {string} name
+     * @param {?} value
+     */
     function addTo(json, name, value) {
         if (!Array.isArray(json[name])) {
             json[name] = [];
@@ -101,6 +113,12 @@ define(function (require, exports, module) {
         json[name].push(value);
     }
 
+    /**
+     * Append elements to an array field
+     * @param {object} json
+     * @param {string} name
+     * @param {Array.<Element>} elements
+     */
     function appendTo(json, name, elements) {
         if (!Array.isArray(json[name])) {
             json[name] = [];
@@ -111,6 +129,16 @@ define(function (require, exports, module) {
                 arr.push(elem);
             }
         });
+    }
+
+    /**
+     * Add a node to deferedNodes
+     * @param{object} node
+     */
+    function addToDeferedNode(node) {
+        if (node["xmi:id"] && !_.some(deferedNodes, function (n) { return (n["xmi:id"] === node["xmi:id"]); })) {
+            deferedNodes.push(node);
+        }
     }
 
     /**
@@ -203,16 +231,45 @@ define(function (require, exports, module) {
      * @param {object} json
      * @param {string} name
      * @param {string} valueType
-     * @param {boolean} value
+     * @param {string} value
      */
     function writeValueSpec(json, name, valueType, value) {
-        json[name] = {
-            "xmi:id"   : IdGenerator.generateGuid(),
-            "xmi:type" : valueType,
-            "value"    : value
-        };
+        if (valueType === "uml:OpaqueExpression") {
+            json[name] = {
+                "xmi:id"   : IdGenerator.generateGuid(),
+                "xmi:type" : valueType,
+                "body"     : value
+            };
+        } else {
+            json[name] = {
+                "xmi:id"   : IdGenerator.generateGuid(),
+                "xmi:type" : valueType,
+                "value"    : value
+            };
+        }
     }
 
+    /**
+     * Write xmi:Extension
+     * @param {object} json
+     * @param {object} valueMap
+     */
+    function writeExtension(json, valueMap) {
+        var node = {
+            "extender": "StarUML"
+        };
+        _.each(valueMap, function (value, key) {
+            node[key] = value;
+        });
+        addTo(json, 'xmi:Extension', node);
+    }
+
+    /**
+     * Convert JSON to XML
+     * @param{object} json
+     * @param{XMLWriter} xmlWriter
+     * @param{string} tagName
+     */
     function convertJsonToXML(json, xmlWriter, tagName) {
         tagName = tagName || json['xmi:type'];
 
@@ -262,12 +319,16 @@ define(function (require, exports, module) {
                     "packagedElement" : []
                 };
             writeElementArray(root, "packagedElement", project.ownedElements);
+            _.each(deferedNodes, function (node) {
+                addTo(root, 'packagedElement', node);
+            });
 
             // Convert to XML
             var xmlWriter = new XMLWriter();
             xmlWriter.writeLine('<?xml version="1.0" encoding="UTF-8"?>');
             xmlWriter.writeLine('<xmi:XMI xmi:version="2.1" xmlns:uml="http://schema.omg.org/spec/UML/2.0" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1">');
             xmlWriter.indent();
+            xmlWriter.writeLine('<xmi:Documentation exporter="StarUML" exporterVersion="2.0"/>');
             convertJsonToXML(root, xmlWriter);
             xmlWriter.outdent();
             xmlWriter.writeLine('</xmi:XMI>');
@@ -279,9 +340,11 @@ define(function (require, exports, module) {
                     result.resolve(filename);
                 })
                 .fail(function (err) {
+                    console.error(err);
                     result.reject(err);
                 });
         } catch (err) {
+            console.error(err);
             result.reject(err);
         }
         return result.promise();
@@ -289,7 +352,11 @@ define(function (require, exports, module) {
 
     exports.enumerations      = enumerations;
     exports.elements          = elements;
+    exports.deferedNodes      = deferedNodes;
 
+    exports.addTo             = addTo;
+    exports.appendTo          = appendTo;
+    exports.addToDeferedNode  = addToDeferedNode;
     exports.setType           = setType;
     exports.writeString       = writeString;
     exports.writeBoolean      = writeBoolean;
@@ -298,6 +365,7 @@ define(function (require, exports, module) {
     exports.writeRef          = writeRef;
     exports.writeRefArray     = writeRefArray;
     exports.writeValueSpec    = writeValueSpec;
+    exports.writeExtension    = writeExtension;
 
     exports.saveToFile        = saveToFile;
 

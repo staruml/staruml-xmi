@@ -28,6 +28,7 @@ define(function (require, exports, module) {
     "use strict";
 
     var IdGenerator      = app.getModule("core/IdGenerator"),
+        Core             = app.getModule("core/Core"),
         MetaModelManager = app.getModule("core/MetaModelManager"),
         Repository       = app.getModule("core/Repository"),
         UML              = app.getModule("uml/UML");
@@ -46,21 +47,62 @@ define(function (require, exports, module) {
         var json = Writer.elements["Element"](elem);
         Writer.writeString(json, 'name', elem.name);
         var _ownedElements = _.reject(elem.ownedElements, function (e) {
-            // Generalizations will be included in Classifier as 'generalization'
-            return e instanceof type.UMLGeneralization;
+            return (e instanceof type.UMLGeneralization) ||  // Generalizations will be included in Classifier as 'generalization'
+                   (e instanceof type.UMLConstraint);        // Constraints will be included as 'ownedRule'
         });
         if (elem instanceof type.UMLPackage) {
             Writer.writeElementArray(json, 'packagedElement', _ownedElements);
         } else {
             Writer.writeElementArray(json, 'ownedMember', _ownedElements);
         }
+        // Write ownedRule (UMLConstraint)
+        var _ownedRules = _.filter(elem.ownedElements, function (e) {
+            return (e instanceof type.UMLConstraint);
+        });
+        Writer.writeElementArray(json, 'ownedRule', _ownedRules);
         return json;
     };
 
     Writer.elements["ExtensibleModel"] = function (elem) {
         var json = Writer.elements["Model"](elem);
-        // TODO: documentation
-        // TODO: tags
+        // Write documentation as xmi:Extension
+        var _writeExtension = false,
+            _extensionNode  = {};
+        if (elem.documentation && elem.documentation.trim().length > 0) {
+            _writeExtension = true;
+            _extensionNode.documentation = { value: elem.documentation.trim() };
+        }
+        // Write tags as xmi:Extension
+        if (elem.tags && elem.tags.length > 0) {
+            _writeExtension = true;
+            _extensionNode.tag = [];
+            _.each(elem.tags, function (tag) {
+                var _tag = {};
+                switch (tag.kind) {
+                case Core.TK_STRING:
+                    _tag[tag.name] = tag.value;
+                    _extensionNode.tag.push(_tag);
+                    break;
+                case Core.TK_REFERENCE:
+                    if (tag.reference && tag.reference._id) {
+                        _tag[tag.name] = tag.reference._id;
+                        _extensionNode.tag.push(_tag);
+                    }
+                    break;
+                case Core.TK_BOOLEAN:
+                    _tag[tag.name] = tag.checked;
+                    _extensionNode.tag.push(_tag);
+                    break;
+                case Core.TK_NUMBER:
+                    _tag[tag.name] = tag.number;
+                    _extensionNode.tag.push(_tag);
+                    break;
+                }
+            });
+        }
+        if (_writeExtension) {
+            Writer.writeExtension(json, _extensionNode);
+        }
         return json;
     };
 
@@ -133,7 +175,12 @@ define(function (require, exports, module) {
 
     Writer.elements["UMLModelElement"] = function (elem) {
         var json = Writer.elements["ExtensibleModel"](elem);
-        // TODO: stereotype
+        // Write stereotype (it's not Standard, but it's the most convenient way to read
+        if (_.isObject(elem.stereotype) && elem.stereotype._id) {
+            Writer.writeExtension(json, { "stereotype": { "value": elem.stereotype._id }});
+        } else if (_.isString(elem.stereotype)) {
+            Writer.writeExtension(json, { "stereotype": { "value": elem.stereotype }});
+        }
         Writer.writeEnum(json, 'visibility', 'UMLVisibilityKind', elem.visibility);
         if (elem.templateParameters && elem.templateParameters.length > 0) {
             json["ownedTemplateSignature"] = {
@@ -147,8 +194,14 @@ define(function (require, exports, module) {
 
     Writer.elements["UMLConstraint"] = function (elem) {
         var json = Writer.elements["UMLModelElement"](elem);
-        // specification
-        // containedElements
+        if (elem.constrainedElements && elem.constrainedElements.length > 0) {
+            Writer.writeRefArray(json, 'constrainedElement', elem.constrainedElements);
+        } else {
+            Writer.writeRefArray(json, 'constrainedElement', [elem._parent]);
+        }
+        if (elem.specification && elem.specification.length > 0) {
+            Writer.writeValueSpec(json, 'specification', "uml:OpaqueExpression", elem.specification);
+        }
         Writer.setType(json, 'uml:Constraint');
         return json;
     };
@@ -174,7 +227,17 @@ define(function (require, exports, module) {
 
     Writer.elements["UMLStructuralFeature"] = function (elem) {
         var json = Writer.elements["UMLFeature"](elem);
-        // TODO: type
+        if (_.isObject(elem.type) && elem.type._id) {
+            Writer.writeRef(json, 'type', elem.type);
+        } else if (_.isString(elem.type) && elem.type.trim().length > 0) {
+            var _typeNode = {
+                "xmi:id"   : elem.type + "_id",
+                "xmi:type" : "uml:DataType",
+                "name"     : elem.type
+            };
+            Writer.addToDeferedNode(_typeNode);
+            Writer.writeString(json, 'type', _typeNode["xmi:id"]);
+        }
         if (elem.multiplicity) {
             if (elem.multiplicity.indexOf("..") > 0) {
                 var terms = elem.multiplicity.split("..");
@@ -225,7 +288,7 @@ define(function (require, exports, module) {
         var json = Writer.elements["UMLFeature"](elem);
         Writer.writeElementArray(json, 'ownedParameter', elem.parameters);
         Writer.writeEnum(json, 'concurrency', 'UMLCallConcurrencyKind', elem.concurrency);
-        // TODO: raisedExceptions
+        Writer.writeRefArray(json, 'raisedException', elem.raisedExceptions);
         return json;
     };
 
@@ -233,10 +296,18 @@ define(function (require, exports, module) {
         var json = Writer.elements["UMLBehavioralFeature"](elem);
         Writer.writeBoolean(json, 'isQuery', elem.isQuery);
         Writer.writeBoolean(json, 'isAbstract', elem.isAbstract);
-        // TODO: specification
-        // TODO: preconditions
-        // TODO: bodyConditions
-        // TODO: postconditions
+        if (elem.specification && elem.specification.trim().length > 0) {
+            Writer.writeExtension(json, { specification: { value: elem.specification } });
+        }
+        if (elem.preconditions && elem.preconditions.length > 0) {
+            Writer.writeElementArray(json, 'precondition', elem.preconditions);
+        }
+        if (elem.postconditions && elem.postconditions.length > 0) {
+            Writer.writeElementArray(json, 'postcondition', elem.postconditions);
+        }
+        if (elem.bodyConditions && elem.bodyConditions.length > 0) {
+            Writer.writeElementArray(json, 'bodyCondition', elem.bodyConditions);
+        }
         Writer.setType(json, 'uml:Operation');
         return json;
     };
@@ -395,5 +466,53 @@ define(function (require, exports, module) {
 
     // TODO: UMLAssociationClassLink
 
+
+    // Profiles ................................................................
+
+    Writer.elements["UMLProfile"] = function (elem) {
+        var json = Writer.elements["UMLPackage"](elem);
+        Writer.setType(json, 'uml:Profile');
+        return json;
+    };
+
+    Writer.elements["UMLStereotype"] = function (elem) {
+        var json = Writer.elements["UMLClass"](elem);
+        Writer.setType(json, 'uml:Stereotype');
+        // Write UMLExtension
+        var _extensions = Repository.getRelationshipsOf(elem, function (r) {
+            return (r instanceof type.UMLExtension) && (r.source === elem);
+        });
+        if (_extensions.length > 0) {
+            var _extension = {
+                "xmi:id"    : IdGenerator.generateGuid(),
+                "xmi:type"  : "uml:Extension",
+                "memberEnd" : [],
+                "ownedEnd"  : [
+                    {
+                        "xmi:id"   : IdGenerator.generateGuid(),
+                        "xmi:type" : "uml:ExtensionEnd",
+                        "type"     : elem._id
+                    }
+                ]
+            };
+            Writer.addTo(json, 'ownedMember', _extension);
+            _.each(_extensions, function (ex) {
+                var _type = "Class";
+                if (ex.target && ex.target.name && ex.target.name.substring(0, 3) === "UML") {
+                    _type = ex.target.name.substring(3, ex.target.name.length);
+                }
+                var node = {
+                    "xmi:id"      : ex._id,
+                    "xmi:type"    : "uml:Property",
+                    "name"        : "base_" + _type,
+                    "association" : _extension["xmi:id"],
+                    "type"        : { "href" : "http://schema.omg.org/spec/UML/2.0/uml.xml#" + _type }
+                };
+                Writer.addTo(json, 'ownedAttribute', node);
+            });
+            Writer.writeRefArray(_extension, 'memberEnd', _extensions);
+        }
+        return json;
+    };
 
 });

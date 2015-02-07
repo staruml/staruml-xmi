@@ -49,7 +49,7 @@ define(function (require, exports, module) {
         }
         var arr = json[field];
         _.each(elements, function (elem) {
-            if (!_.contains(arr, elem) && !_.some(arr, function (item) { return item._id === elem._id })) {
+            if (!_.contains(arr, elem) && !_.some(arr, function (item) { return item._id === elem._id; })) {
                 arr.push(elem);
             }
         });
@@ -1388,6 +1388,7 @@ define(function (require, exports, module) {
                 parent.ownedElements.push(collaboration);
             }
             _.each(elem.messages, function (msg) {
+                var _endpoint;
                 if (msg.sendEvent && msg.sendEvent.$ref && Reader.get(msg.sendEvent.$ref)) {
                     var _from = Reader.get(msg.sendEvent.$ref);
                     if (_from._type === "OccurrenceSpecification") {
@@ -1396,7 +1397,7 @@ define(function (require, exports, module) {
                         msg.source = { "$ref": _from._id };
                     }
                 } else {
-                    var _endpoint = {
+                    _endpoint = {
                         _id: IdGenerator.generateGuid(),
                         _type: "UMLEndpoint",
                         _parent: { "$ref": elem._id },
@@ -1412,7 +1413,7 @@ define(function (require, exports, module) {
                         msg.target = { "$ref": _to._id };
                     }
                 } else {
-                    var _endpoint = {
+                    _endpoint = {
                         _id: IdGenerator.generateGuid(),
                         _type: "UMLEndpoint",
                         _parent: { "$ref": elem._id },
@@ -1457,7 +1458,7 @@ define(function (require, exports, module) {
                                 transitions: []
                             }
                         ]
-                    }
+                    };
                     parent.ownedElements.push(parent._stateMachine);
                 }
                 if (MetaModelManager.isKindOf(elem._type, "UMLVertex")) {

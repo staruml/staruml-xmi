@@ -7383,6 +7383,24 @@
 					</xmi:Extension>
 				</ownedMember>
 			</ownedMember>
+			<ownedMember isAbstract="false" isActive="false" isLeaf="false" name="StereotypedClass" visibility="public" xmi:id="swlCRtKAU0xuAxZq" xmi:type="uml:Class">
+				<xmi:Extension extender="Visual Paradigm">
+					<isRoot xmi:value="false"/>
+					<modelType value="Class"/>
+					<businessModel xmi:value="false"/>
+					<qualityScore value="-1"/>
+					<appliedStereotype xmi:value="Class_newStereotype_id"/>
+				</xmi:Extension>
+			</ownedMember>
+			<ownedMember isAbstract="false" isActive="false" isLeaf="false" name="BoundaryClass" visibility="public" xmi:id="VgzCRtKAU0xuAxaI" xmi:type="uml:Class">
+				<xmi:Extension extender="Visual Paradigm">
+					<isRoot xmi:value="false"/>
+					<modelType value="Class"/>
+					<businessModel xmi:value="false"/>
+					<qualityScore value="-1"/>
+					<appliedStereotype xmi:value="Class_boundary_id"/>
+				</xmi:Extension>
+			</ownedMember>
 		</ownedMember>
 		<ownedMember isAbstract="false" isLeaf="false" name="CompositeStructureModel" xmi:id="zDKjVNKAU0xuAwhO" xmi:type="uml:Model">
 			<xmi:Extension extender="Visual Paradigm">
@@ -9128,6 +9146,18 @@
 				</xmi:Extension>
 			</ownedMember>
 		</ownedMember>
+		<ownedMember name="newStereotype" xmi:id="Class_newStereotype_id" xmi:type="uml:Stereotype">
+			<xmi:Extension extender="Visual Paradigm">
+				<baseType value="Class"/>
+				<qualityScore value="-1"/>
+			</xmi:Extension>
+		</ownedMember>
+		<ownedMember name="boundary" xmi:id="Class_boundary_id" xmi:type="uml:Stereotype">
+			<xmi:Extension extender="Visual Paradigm">
+				<baseType value="Class"/>
+				<qualityScore value="-1"/>
+			</xmi:Extension>
+		</ownedMember>
 		<ownedMember client="hqUYpNKAU0xuAwfa" supplier="av0YpNKAU0xuAwfk" xmi:id="hPcYpNKAU0xuAwfq" xmi:type="uml:Dependency">
 			<xmi:Extension extender="Visual Paradigm">
 				<qualityScore value="-1"/>
@@ -10385,7 +10415,7 @@
 				<ashowAllocatedTo value="true"/>
 				<apmAuthor value="niklaus"/>
 				<apmCreateDateTime value="1421993369682"/>
-				<apmLastModified value="1422960319824"/>
+				<apmLastModified value="1423282872231"/>
 				<ashowPackageNameStyle value="0"/>
 				<ashowConnectorName value="0"/>
 				<apaintConnectorThroughLabel value="0"/>
@@ -10419,11 +10449,11 @@
 				<amodelElementNameAlignment value="4"/>
 				<ashapePresentationOption value="0"/>
 				<azoomRatio value="1.0"/>
-				<amaximized value="false"/>
+				<amaximized value="true"/>
 				<ax value="0"/>
 				<ay value="0"/>
-				<awidth value="0"/>
-				<aheight value="0"/>
+				<awidth value="937"/>
+				<aheight value="1024"/>
 				<aqualityScore value="-1"/>
 				<aparentModel value="dyARlNKAU0xuAwat"/>
 				<a_globalPaletteOption value="true"/>
@@ -10458,7 +10488,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="12"/>
 					<properties>
-						<azOrder value="2"/>
+						<azOrder value="14"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<acreatorDiagramType value="ClassDiagram"/>
@@ -10738,7 +10768,7 @@
 					<captionVisible value="false"/>
 					<captionSide value="7"/>
 					<properties>
-						<azOrder value="12"/>
+						<azOrder value="16"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -10775,7 +10805,7 @@
 					<captionVisible value="false"/>
 					<captionSide value="7"/>
 					<properties>
-						<azOrder value="14"/>
+						<azOrder value="18"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -10848,7 +10878,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="12"/>
 					<properties>
-						<azOrder value="18"/>
+						<azOrder value="20"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<acreatorDiagramType value="ClassDiagram"/>
@@ -10921,7 +10951,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="12"/>
 					<properties>
-						<azOrder value="20"/>
+						<azOrder value="22"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<acreatorDiagramType value="ClassDiagram"/>
@@ -11251,7 +11281,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="12"/>
 					<properties>
-						<azOrder value="32"/>
+						<azOrder value="30"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<acreatorDiagramType value="ClassDiagram"/>
@@ -11324,7 +11354,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="12"/>
 					<properties>
-						<azOrder value="34"/>
+						<azOrder value="32"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<acreatorDiagramType value="ClassDiagram"/>
@@ -11397,7 +11427,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="12"/>
 					<properties>
-						<azOrder value="36"/>
+						<azOrder value="34"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<acreatorDiagramType value="ClassDiagram"/>
@@ -11506,7 +11536,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="12"/>
 					<properties>
-						<azOrder value="40"/>
+						<azOrder value="36"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<acreatorDiagramType value="ClassDiagram"/>
@@ -11579,7 +11609,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="12"/>
 					<properties>
-						<azOrder value="42"/>
+						<azOrder value="38"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<acreatorDiagramType value="ClassDiagram"/>
@@ -11652,7 +11682,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="12"/>
 					<properties>
-						<azOrder value="44"/>
+						<azOrder value="40"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<acreatorDiagramType value="ClassDiagram"/>
@@ -11799,7 +11829,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="1"/>
 					<properties>
-						<azOrder value="48"/>
+						<azOrder value="42"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -11871,7 +11901,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="12"/>
 					<properties>
-						<azOrder value="50"/>
+						<azOrder value="44"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<acreatorDiagramType value="ClassDiagram"/>
@@ -11944,7 +11974,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="12"/>
 					<properties>
-						<azOrder value="52"/>
+						<azOrder value="46"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<acreatorDiagramType value="ClassDiagram"/>
@@ -12085,7 +12115,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="12"/>
 					<properties>
-						<azOrder value="56"/>
+						<azOrder value="48"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<acreatorDiagramType value="ClassDiagram"/>
@@ -12158,7 +12188,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="12"/>
 					<properties>
-						<azOrder value="58"/>
+						<azOrder value="50"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<acreatorDiagramType value="ClassDiagram"/>
@@ -12231,7 +12261,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="12"/>
 					<properties>
-						<azOrder value="60"/>
+						<azOrder value="52"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<acreatorDiagramType value="ClassDiagram"/>
@@ -12372,7 +12402,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="12"/>
 					<properties>
-						<azOrder value="64"/>
+						<azOrder value="54"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<acreatorDiagramType value="ClassDiagram"/>
@@ -12445,7 +12475,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="12"/>
 					<properties>
-						<azOrder value="66"/>
+						<azOrder value="56"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -12585,7 +12615,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="12"/>
 					<properties>
-						<azOrder value="70"/>
+						<azOrder value="58"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -12657,7 +12687,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="12"/>
 					<properties>
-						<azOrder value="72"/>
+						<azOrder value="60"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -12765,7 +12795,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="6"/>
 					<properties>
-						<azOrder value="76"/>
+						<azOrder value="62"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -12801,7 +12831,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="12"/>
 					<properties>
-						<azOrder value="78"/>
+						<azOrder value="64"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<acreatorDiagramType value="ClassDiagram"/>
@@ -12874,7 +12904,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="12"/>
 					<properties>
-						<azOrder value="80"/>
+						<azOrder value="66"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<acreatorDiagramType value="ClassDiagram"/>
@@ -12947,7 +12977,153 @@
 					<captionVisible value="true"/>
 					<captionSide value="12"/>
 					<properties>
-						<azOrder value="82"/>
+						<azOrder value="68"/>
+						<abackground value="Cr:122,207,245,255"/>
+						<aforeground value="Cr:0,0,0,255"/>
+						<acreatorDiagramType value="ClassDiagram"/>
+						<aselectable value="true"/>
+						<arequestResetCaption value="false"/>
+						<arequestResetCaptionSize value="false"/>
+						<apresentationOption value="4"/>
+						<aprimitiveShapeType value="0"/>
+						<ashowStereotypeIconName value="0"/>
+						<ashowAllocatedFrom value="0"/>
+						<ashowAllocatedTo value="0"/>
+						<aoverrideAppearanceWithStereotypeIcon value="true"/>
+						<arequestSetSizeOption value="0"/>
+						<aparentConnectorHeaderLength value="40"/>
+						<aparentConnectorLineLength value="10"/>
+						<aconnectToPoint value="true"/>
+						<aparentConnectorDTheta value="0.0"/>
+						<aconnectionPointType value="2"/>
+						<amodelElementNameAlignment value="9"/>
+						<arequestDefaultSize value="false"/>
+						<arequestFitSize value="false"/>
+						<arequestFitSizeFromCenter value="false"/>
+						<adisplayAsRobustnessAnalysisIcon value="true"/>
+						<avisibilityStyle value="1"/>
+						<ashowAttributeType value="1"/>
+						<ashowOperationType value="1"/>
+						<ashowEnumerationLiteralType value="1"/>
+						<amSwTpPts value="true"/>
+						<alshRfAts value="true"/>
+						<amShDrAt value="false"/>
+						<akShDrOp value="false"/>
+						<akSwCsMbSt value="true"/>
+						<ashowClassMemberConstraints value="true"/>
+						<alShCmMl value="false"/>
+						<ashowOperationParameterDirection value="false"/>
+						<ashowOperationRaisedExceptions value="false"/>
+						<ashowParameterNameInOperationSignature value="true"/>
+						<ashowOperationTemplateParameters value="false"/>
+						<ashowOperationProperties value="false"/>
+						<awpMbs value="false"/>
+						<aattributeSortType value="0"/>
+						<aoperationSortType value="0"/>
+						<aenumerationLiteralSortType value="0"/>
+						<ashowInitialAttributeValue value="true"/>
+						<ashowOperationSignature value="true"/>
+						<ainterfaceBall value="false"/>
+						<ashowEmptyCompartments value="0"/>
+						<ashowEllipsisForUnshownMembers value="0"/>
+						<ashowAttributesCodeDetails value="0"/>
+						<ashowAttributesPropertyModifiers value="0"/>
+						<ashowOperationsCodeDetails value="0"/>
+						<ashowParametersCodeDetails value="0"/>
+						<ashowTypeOption value="0"/>
+						<ashowOwnerOption value="3"/>
+						<ashowAttributesType value="0"/>
+						<ashowOperationsParameters value="0"/>
+						<ashowOperationsReturnType value="0"/>
+						<asuppressImplied1MultiplicityForAttribute value="0"/>
+					</properties>
+				</xmi:Extension>
+				<elementFill color1="Cr:122,207,245,255" color2="" style="1" transparency="0" type="1"/>
+				<elementFont bold="false" color="Cr:0,0,0,255" italic="false" name="Dialog" size="11" style="0"/>
+				<elementLine color="Cr:0,0,0,255" style="1" transparency="0" weight="1.0"/>
+			</uml:DiagramElement>
+			<uml:DiagramElement geometry="226,680,110,40" preferredShapeType="Class" subject="swlCRtKAU0xuAxZq" xmi:id="swlCRtKAU0xuAxZp">
+				<xmi:Extension extender="Visual Paradigm">
+					<captionBounds value="0,0,110,32"/>
+					<captionInternalWidth value="-2147483648"/>
+					<captionInternalHeight value="-2147483648"/>
+					<captionVisible value="true"/>
+					<captionSide value="12"/>
+					<properties>
+						<azOrder value="2"/>
+						<abackground value="Cr:122,207,245,255"/>
+						<aforeground value="Cr:0,0,0,255"/>
+						<acreatorDiagramType value="ClassDiagram"/>
+						<aselectable value="true"/>
+						<arequestResetCaption value="false"/>
+						<arequestResetCaptionSize value="false"/>
+						<apresentationOption value="4"/>
+						<aprimitiveShapeType value="0"/>
+						<ashowStereotypeIconName value="0"/>
+						<ashowAllocatedFrom value="0"/>
+						<ashowAllocatedTo value="0"/>
+						<aoverrideAppearanceWithStereotypeIcon value="true"/>
+						<arequestSetSizeOption value="0"/>
+						<aparentConnectorHeaderLength value="40"/>
+						<aparentConnectorLineLength value="10"/>
+						<aconnectToPoint value="true"/>
+						<aparentConnectorDTheta value="0.0"/>
+						<aconnectionPointType value="2"/>
+						<amodelElementNameAlignment value="9"/>
+						<arequestDefaultSize value="false"/>
+						<arequestFitSize value="false"/>
+						<arequestFitSizeFromCenter value="false"/>
+						<adisplayAsRobustnessAnalysisIcon value="true"/>
+						<avisibilityStyle value="1"/>
+						<ashowAttributeType value="1"/>
+						<ashowOperationType value="1"/>
+						<ashowEnumerationLiteralType value="1"/>
+						<amSwTpPts value="true"/>
+						<alshRfAts value="true"/>
+						<amShDrAt value="false"/>
+						<akShDrOp value="false"/>
+						<akSwCsMbSt value="true"/>
+						<ashowClassMemberConstraints value="true"/>
+						<alShCmMl value="false"/>
+						<ashowOperationParameterDirection value="false"/>
+						<ashowOperationRaisedExceptions value="false"/>
+						<ashowParameterNameInOperationSignature value="true"/>
+						<ashowOperationTemplateParameters value="false"/>
+						<ashowOperationProperties value="false"/>
+						<awpMbs value="false"/>
+						<aattributeSortType value="0"/>
+						<aoperationSortType value="0"/>
+						<aenumerationLiteralSortType value="0"/>
+						<ashowInitialAttributeValue value="true"/>
+						<ashowOperationSignature value="true"/>
+						<ainterfaceBall value="false"/>
+						<ashowEmptyCompartments value="0"/>
+						<ashowEllipsisForUnshownMembers value="0"/>
+						<ashowAttributesCodeDetails value="0"/>
+						<ashowAttributesPropertyModifiers value="0"/>
+						<ashowOperationsCodeDetails value="0"/>
+						<ashowParametersCodeDetails value="0"/>
+						<ashowTypeOption value="0"/>
+						<ashowOwnerOption value="3"/>
+						<ashowAttributesType value="0"/>
+						<ashowOperationsParameters value="0"/>
+						<ashowOperationsReturnType value="0"/>
+						<asuppressImplied1MultiplicityForAttribute value="0"/>
+					</properties>
+				</xmi:Extension>
+				<elementFill color1="Cr:122,207,245,255" color2="" style="1" transparency="0" type="1"/>
+				<elementFont bold="false" color="Cr:0,0,0,255" italic="false" name="Dialog" size="11" style="0"/>
+				<elementLine color="Cr:0,0,0,255" style="1" transparency="0" weight="1.0"/>
+			</uml:DiagramElement>
+			<uml:DiagramElement geometry="365,684,80,40" preferredShapeType="Class" subject="VgzCRtKAU0xuAxaI" xmi:id="VgzCRtKAU0xuAxaH">
+				<xmi:Extension extender="Visual Paradigm">
+					<captionBounds value="355,724,101,16"/>
+					<captionInternalWidth value="-2147483648"/>
+					<captionInternalHeight value="-2147483648"/>
+					<captionVisible value="true"/>
+					<captionSide value="4"/>
+					<properties>
+						<azOrder value="0"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<acreatorDiagramType value="ClassDiagram"/>
@@ -13022,7 +13198,7 @@
 				<ashowAllocatedTo value="true"/>
 				<apmAuthor value="niklaus"/>
 				<apmCreateDateTime value="1422589111067"/>
-				<apmLastModified value="1423030766678"/>
+				<apmLastModified value="1422960319824"/>
 				<ashowPackageNameStyle value="0"/>
 				<ashowConnectorName value="0"/>
 				<apaintConnectorThroughLabel value="0"/>
@@ -13060,8 +13236,8 @@
 				<amaximized value="false"/>
 				<ax value="0"/>
 				<ay value="0"/>
-				<awidth value="1133"/>
-				<aheight value="1024"/>
+				<awidth value="0"/>
+				<aheight value="0"/>
 				<aqualityScore value="-1"/>
 				<aparentModel value="DPdXHNKAU0xuAwWO"/>
 				<a_globalPaletteOption value="true"/>
@@ -13175,7 +13351,7 @@
 					<captionVisible value="false"/>
 					<captionSide value="7"/>
 					<properties>
-						<azOrder value="0"/>
+						<azOrder value="6"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -13251,7 +13427,7 @@
 					<captionVisible value="false"/>
 					<captionSide value="7"/>
 					<properties>
-						<azOrder value="6"/>
+						<azOrder value="10"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -13327,7 +13503,7 @@
 					<captionVisible value="false"/>
 					<captionSide value="7"/>
 					<properties>
-						<azOrder value="2"/>
+						<azOrder value="14"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -13403,7 +13579,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="1"/>
 					<properties>
-						<azOrder value="4"/>
+						<azOrder value="18"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:192,192,192,255"/>
 						<aselectable value="true"/>
@@ -13480,7 +13656,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="1"/>
 					<properties>
-						<azOrder value="8"/>
+						<azOrder value="22"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:192,192,192,255"/>
 						<aselectable value="true"/>
@@ -13557,7 +13733,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="6"/>
 					<properties>
-						<azOrder value="10"/>
+						<azOrder value="26"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -13633,7 +13809,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="12"/>
 					<properties>
-						<azOrder value="12"/>
+						<azOrder value="30"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<acreatorDiagramType value="InteractionDiagram"/>
@@ -13671,7 +13847,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="12"/>
 					<properties>
-						<azOrder value="14"/>
+						<azOrder value="32"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -13707,7 +13883,7 @@
 					<captionVisible value="false"/>
 					<captionSide value="7"/>
 					<properties>
-						<azOrder value="16"/>
+						<azOrder value="34"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -13743,7 +13919,7 @@
 					<captionVisible value="false"/>
 					<captionSide value="7"/>
 					<properties>
-						<azOrder value="18"/>
+						<azOrder value="36"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -13779,7 +13955,7 @@
 					<captionVisible value="false"/>
 					<captionSide value="7"/>
 					<properties>
-						<azOrder value="20"/>
+						<azOrder value="38"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -13815,7 +13991,7 @@
 					<captionVisible value="false"/>
 					<captionSide value="7"/>
 					<properties>
-						<azOrder value="22"/>
+						<azOrder value="40"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -13851,7 +14027,7 @@
 					<captionVisible value="false"/>
 					<captionSide value="7"/>
 					<properties>
-						<azOrder value="24"/>
+						<azOrder value="42"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -13887,7 +14063,7 @@
 					<captionVisible value="false"/>
 					<captionSide value="7"/>
 					<properties>
-						<azOrder value="26"/>
+						<azOrder value="44"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -13923,7 +14099,7 @@
 					<captionVisible value="false"/>
 					<captionSide value="7"/>
 					<properties>
-						<azOrder value="28"/>
+						<azOrder value="46"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -13959,7 +14135,7 @@
 					<captionVisible value="false"/>
 					<captionSide value="7"/>
 					<properties>
-						<azOrder value="30"/>
+						<azOrder value="48"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -13995,7 +14171,7 @@
 					<captionVisible value="false"/>
 					<captionSide value="7"/>
 					<properties>
-						<azOrder value="32"/>
+						<azOrder value="50"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -14031,7 +14207,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="1"/>
 					<properties>
-						<azOrder value="35"/>
+						<azOrder value="52"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -14069,7 +14245,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="1"/>
 					<properties>
-						<azOrder value="37"/>
+						<azOrder value="54"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -14107,7 +14283,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="1"/>
 					<properties>
-						<azOrder value="39"/>
+						<azOrder value="56"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -16193,7 +16369,7 @@
 				<ashowAllocatedTo value="true"/>
 				<apmAuthor value="niklaus"/>
 				<apmCreateDateTime value="1422972900759"/>
-				<apmLastModified value="1423030787725"/>
+				<apmLastModified value="1422977360706"/>
 				<ashowPackageNameStyle value="0"/>
 				<ashowConnectorName value="0"/>
 				<apaintConnectorThroughLabel value="0"/>
@@ -16228,11 +16404,11 @@
 				<amodelElementNameAlignment value="4"/>
 				<ashapePresentationOption value="0"/>
 				<azoomRatio value="1.0"/>
-				<amaximized value="true"/>
+				<amaximized value="false"/>
 				<ax value="0"/>
 				<ay value="0"/>
-				<awidth value="1133"/>
-				<aheight value="1024"/>
+				<awidth value="0"/>
+				<aheight value="0"/>
 				<aqualityScore value="-1"/>
 				<aparentModel value="ukTT8tKAU0xuAwVv"/>
 				<a_globalPaletteOption value="true"/>
@@ -16975,7 +17151,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="1"/>
 					<properties>
-						<azOrder value="0"/>
+						<azOrder value="42"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -17016,7 +17192,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="1"/>
 					<properties>
-						<azOrder value="2"/>
+						<azOrder value="44"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -17057,7 +17233,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="1"/>
 					<properties>
-						<azOrder value="4"/>
+						<azOrder value="46"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<acreatorDiagramType value="ActivityDiagram"/>
@@ -17095,7 +17271,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="1"/>
 					<properties>
-						<azOrder value="6"/>
+						<azOrder value="48"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<acreatorDiagramType value="ActivityDiagram"/>
@@ -17133,7 +17309,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="6"/>
 					<properties>
-						<azOrder value="8"/>
+						<azOrder value="50"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -17171,7 +17347,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="6"/>
 					<properties>
-						<azOrder value="10"/>
+						<azOrder value="52"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -17209,7 +17385,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="6"/>
 					<properties>
-						<azOrder value="12"/>
+						<azOrder value="54"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -17247,7 +17423,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="12"/>
 					<properties>
-						<azOrder value="14"/>
+						<azOrder value="56"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -17285,7 +17461,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="6"/>
 					<properties>
-						<azOrder value="16"/>
+						<azOrder value="58"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -17327,7 +17503,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="8"/>
 					<properties>
-						<azOrder value="18"/>
+						<azOrder value="60"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -17352,7 +17528,6 @@
 						<ahorizontal value="false"/>
 					</properties>
 					<parentDiagramElement idref="qGcr8tKAU0xuAwc."/>
-					<swimlane idref="qGcr8tKAU0xuAwc."/>
 				</xmi:Extension>
 				<elementFill color1="Cr:255,255,255,0" color2="" style="1" transparency="100" type="1"/>
 				<elementFont bold="false" color="Cr:0,0,0,255" italic="false" name="Dialog" size="11" style="0"/>
@@ -17366,7 +17541,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="6"/>
 					<properties>
-						<azOrder value="20"/>
+						<azOrder value="62"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -17409,7 +17584,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="8"/>
 					<properties>
-						<azOrder value="22"/>
+						<azOrder value="64"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -17434,7 +17609,6 @@
 						<ahorizontal value="false"/>
 					</properties>
 					<parentDiagramElement idref="qGcr8tKAU0xuAwc."/>
-					<swimlane idref="qGcr8tKAU0xuAwc."/>
 				</xmi:Extension>
 				<elementFill color1="Cr:255,255,255,0" color2="" style="1" transparency="100" type="1"/>
 				<elementFont bold="false" color="Cr:0,0,0,255" italic="false" name="Dialog" size="11" style="0"/>
@@ -17448,7 +17622,7 @@
 					<captionVisible value="false"/>
 					<captionSide value="7"/>
 					<properties>
-						<azOrder value="24"/>
+						<azOrder value="66"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -17494,7 +17668,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="12"/>
 					<properties>
-						<azOrder value="26"/>
+						<azOrder value="68"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -17530,7 +17704,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="6"/>
 					<properties>
-						<azOrder value="28"/>
+						<azOrder value="70"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -17566,7 +17740,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="6"/>
 					<properties>
-						<azOrder value="30"/>
+						<azOrder value="72"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -17603,7 +17777,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="4"/>
 					<properties>
-						<azOrder value="32"/>
+						<azOrder value="74"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -17639,7 +17813,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="6"/>
 					<properties>
-						<azOrder value="34"/>
+						<azOrder value="76"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -17675,7 +17849,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="1"/>
 					<properties>
-						<azOrder value="36"/>
+						<azOrder value="78"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<acreatorDiagramType value="ActivityDiagram"/>
@@ -17713,7 +17887,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="1"/>
 					<properties>
-						<azOrder value="39"/>
+						<azOrder value="80"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<acreatorDiagramType value="ActivityDiagram"/>
@@ -17752,7 +17926,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="1"/>
 					<properties>
-						<azOrder value="41"/>
+						<azOrder value="82"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<acreatorDiagramType value="ActivityDiagram"/>
@@ -17790,7 +17964,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="1"/>
 					<properties>
-						<azOrder value="43"/>
+						<azOrder value="84"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<acreatorDiagramType value="ActivityDiagram"/>
@@ -17828,7 +18002,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="1"/>
 					<properties>
-						<azOrder value="45"/>
+						<azOrder value="86"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
@@ -17864,7 +18038,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="1"/>
 					<properties>
-						<azOrder value="47"/>
+						<azOrder value="88"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<acreatorDiagramType value="ActivityDiagram"/>
@@ -17901,7 +18075,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="1"/>
 					<properties>
-						<azOrder value="49"/>
+						<azOrder value="90"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<acreatorDiagramType value="ActivityDiagram"/>
@@ -17938,7 +18112,7 @@
 					<captionVisible value="true"/>
 					<captionSide value="6"/>
 					<properties>
-						<azOrder value="51"/>
+						<azOrder value="92"/>
 						<abackground value="Cr:122,207,245,255"/>
 						<aforeground value="Cr:0,0,0,255"/>
 						<aselectable value="true"/>
