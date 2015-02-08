@@ -188,6 +188,20 @@ define(function (require, exports, module) {
     }
 
     /**
+     * Write an element
+     * @param {object} json
+     * @param {string} name
+     * @param {Element} elem
+     */
+    function writeElement(json, name, elem) {
+        var fun = elements[elem.getClassName()];
+        if (fun) {
+            var node = fun(elem);
+            addTo(json, name, node);
+        }
+    }
+
+    /**
      * Write an array of elements
      * @param {object} json
      * @param {string} name
@@ -365,6 +379,7 @@ define(function (require, exports, module) {
     exports.writeString       = writeString;
     exports.writeBoolean      = writeBoolean;
     exports.writeEnum         = writeEnum;
+    exports.writeElement      = writeElement;
     exports.writeElementArray = writeElementArray;
     exports.writeRef          = writeRef;
     exports.writeRefArray     = writeRefArray;

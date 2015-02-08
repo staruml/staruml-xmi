@@ -46,20 +46,22 @@ define(function (require, exports, module) {
     Writer.elements["Model"] = function (elem) {
         var json = Writer.elements["Element"](elem);
         Writer.writeString(json, 'name', elem.name);
-        var _ownedElements = _.reject(elem.ownedElements, function (e) {
-            return (e instanceof type.UMLGeneralization) ||  // Generalizations will be included in Classifier as 'generalization'
-                   (e instanceof type.UMLConstraint);        // Constraints will be included as 'ownedRule'
+        _.each(elem.ownedElements, function (e) {
+            if (e instanceof type.UMLGeneralization) {
+                // Generalizations will be included in Classifier as 'generalization'
+            } else if (e instanceof type.UMLConstraint) {
+                // Constraints will be included as 'ownedRule'
+                Writer.writeElement(json, 'ownedRule', e);
+            } else if (e instanceof type.UMLConnector && elem instanceof type.UMLPort) {
+                // Connectors will be included in the Port's parent Classifier as 'ownedConnector'
+            } else {
+                if (elem instanceof type.UMLPackage) {
+                    Writer.writeElement(json, 'packagedElement', e);
+                } else {
+                    Writer.writeElement(json, 'ownedMember', e);
+                }
+            }
         });
-        if (elem instanceof type.UMLPackage) {
-            Writer.writeElementArray(json, 'packagedElement', _ownedElements);
-        } else {
-            Writer.writeElementArray(json, 'ownedMember', _ownedElements);
-        }
-        // Write ownedRule (UMLConstraint)
-        var _ownedRules = _.filter(elem.ownedElements, function (e) {
-            return (e instanceof type.UMLConstraint);
-        });
-        Writer.writeElementArray(json, 'ownedRule', _ownedRules);
         return json;
     };
 
@@ -314,9 +316,21 @@ define(function (require, exports, module) {
 
     Writer.elements["UMLClassifier"] = function (elem) {
         var json = Writer.elements["UMLModelElement"](elem);
-        Writer.writeElementArray(json, 'ownedAttribute', elem.attributes);
+        var _attrs = _.reject(elem.attributes, function (e) { return e instanceof type.UMLPort; });
+        var _ports = _.filter(elem.attributes, function (e) { return e instanceof type.UMLPort; });
+        Writer.writeElementArray(json, 'ownedAttribute', _attrs);
+        Writer.writeElementArray(json, 'ownedPort', _ports);
         Writer.writeElementArray(json, 'ownedOperation', elem.operations);
-        // TODO: behaviors
+        // Include Connectors
+        var _connectors = [];
+        _.each(_ports, function (e1) {
+            _.each(e1.ownedElements, function (e2) {
+                if (e2 instanceof type.UMLConnector) {
+                    _connectors.push(e2);
+                }
+            });
+        });
+        Writer.writeElementArray(json, 'ownedConnector', _connectors);
         Writer.writeBoolean(json, 'isAbstract', elem.isAbstract);
         Writer.writeBoolean(json, 'isFinalSpecialization', elem.isFinalSpecialization);
         Writer.writeBoolean(json, 'isLeaf', elem.isLeaf);
@@ -324,7 +338,7 @@ define(function (require, exports, module) {
             return (r instanceof type.UMLGeneralization) && (r.source === elem);
         });
         Writer.writeElementArray(json, 'generalization', _generalizations);
-
+        // TODO: behaviors
         return json;
     };
 
@@ -529,7 +543,55 @@ define(function (require, exports, module) {
 
     // Composite Structure .....................................................
 
-    // -
+    Writer.elements["UMLPort"] = function (elem) {
+        var json = Writer.elements["UMLAttribute"](elem);
+        Writer.setType(json, 'uml:Port');
+        Writer.writeBoolean(json, 'isBehavior', elem.isBehavior);
+        Writer.writeBoolean(json, 'isService', elem.isService);
+        Writer.writeBoolean(json, 'isConjugated', elem.isConjugated);
+        return json;
+    };
+
+    Writer.elements["UMLConnectorEnd"] = function (elem) {
+        var json = Writer.elements["UMLRelationshipEnd"](elem);
+        Writer.setType(json, 'uml:ConnectorEnd');
+        Writer.writeRef(json, 'role', elem.reference);
+        return json;
+    };
+
+    Writer.elements["UMLConnector"] = function (elem) {
+        var json = Writer.elements["UMLUndirectedRelationship"](elem);
+        Writer.setType(json, 'uml:Connector');
+        Writer.writeRef(json, 'type', elem.type);
+        var _ends = [_.clone(elem.end1), _.clone(elem.end2)];
+        var _agg = _ends[0].aggregation;
+        _ends[0].aggregation = _ends[1].aggregation;
+        _ends[1].aggregation = _agg;
+        Writer.writeElementArray(json, 'end', _ends);
+        return json;
+    };
+
+    Writer.elements["UMLCollaboration"] = function (elem) {
+        var json = Writer.elements["UMLClassifier"](elem);
+        Writer.setType(json, 'uml:Collaboration');
+        return json;
+    };
+
+    Writer.elements["UMLCollaborationUse"] = function (elem) {
+        var json = Writer.elements["UMLModelElement"](elem);
+        Writer.setType(json, 'uml:CollaborationUse');
+        Writer.writeRef(json, 'type', elem.type);
+        return json;
+    };
+
+    Writer.elements["UMLRoleBinding"] = function (elem) {
+        var json = Writer.elements["UMLDependency"](elem);
+        Writer.setType(json, 'uml:Dependency');
+        if (elem.roleName && elem.roleName.length > 0) {
+            Writer.writeExtension(json, { roleName: { value: elem.roleName }});
+        }
+        return json;
+    };
 
     // Components ..............................................................
 
