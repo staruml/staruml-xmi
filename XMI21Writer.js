@@ -237,8 +237,10 @@ define(function (require, exports, module) {
      */
     function writeRefArray(json, name, elems) {
         _.each(elems, function (elem) {
-            var node = { "xmi:idref" : elem._id };
-            addTo(json, name, node);
+            if (elem) {
+                var node = { "xmi:idref" : elem._id };
+                addTo(json, name, node);
+            }
         });
     }
 

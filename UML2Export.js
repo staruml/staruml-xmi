@@ -49,6 +49,14 @@ define(function (require, exports, module) {
         _.each(elem.ownedElements, function (e) {
             if (e instanceof type.UMLGeneralization) {
                 // Generalizations will be included in Classifier as 'generalization'
+            } else if (e instanceof type.UMLComponentRealization) {
+                // ComponentRealizations will be included in Classifier as 'realization'
+            } else if (e instanceof type.UMLInterfaceRealization) {
+                // InterfaceRealizations will be included in Classifier as 'interfaceRealization'
+            } else if (e instanceof type.UMLDeployment) {
+                // Deployments will be included in Node as 'deployment'
+            } else if (e instanceof type.UMLExtend || e instanceof type.UMLInclude) {
+                // Extends and Includes will be included in UseCase as 'extend' and 'include'
             } else if (e instanceof type.UMLConstraint) {
                 // Constraints will be included as 'ownedRule'
                 Writer.writeElement(json, 'ownedRule', e);
@@ -338,6 +346,10 @@ define(function (require, exports, module) {
             return (r instanceof type.UMLGeneralization) && (r.source === elem);
         });
         Writer.writeElementArray(json, 'generalization', _generalizations);
+        var _interfaceRealizations = Repository.getRelationshipsOf(elem, function (r) {
+            return (r instanceof type.UMLInterfaceRealization) && (r.source === elem);
+        });
+        Writer.writeElementArray(json, 'interfaceRealization', _interfaceRealizations);
         // TODO: behaviors
         return json;
     };
@@ -446,19 +458,28 @@ define(function (require, exports, module) {
 
     Writer.elements["UMLInterfaceRealization"] = function (elem) {
         var json = Writer.elements["UMLRealization"](elem);
+        delete json["client"];
+        delete json["supplier"];
         Writer.setType(json, 'uml:InterfaceRealization');
+        Writer.writeRef(json, 'implementingClassifier', elem.source);
+        Writer.writeRef(json, 'contract', elem.target);
         return json;
     };
 
     Writer.elements["UMLComponentRealization"] = function (elem) {
         var json = Writer.elements["UMLRealization"](elem);
+        delete json["client"];
+        delete json["supplier"];
         Writer.setType(json, 'uml:ComponentRealization');
+        Writer.writeRef(json, 'realizingClassifier', elem.source);
+        Writer.writeRef(json, 'abstraction', elem.target);
         return json;
     };
 
     Writer.elements["UMLGeneralization"] = function (elem) {
         var json = Writer.elements["UMLDirectedRelationship"](elem);
         Writer.setType(json, 'uml:Generalization');
+        Writer.writeRef(json, 'specific', elem.source);
         Writer.writeRef(json, 'general', elem.target);
         return json;
     };
@@ -595,12 +616,117 @@ define(function (require, exports, module) {
 
     // Components ..............................................................
 
-    // - Artifact
-    // - Component
-    // - Subsystem
+    Writer.elements["UMLArtifact"] = function (elem) {
+        var json = Writer.elements["UMLClassifier"](elem);
+        Writer.setType(json, 'uml:Artifact');
+        Writer.writeString(json, 'fileName', elem.fileName);
+        return json;
+    };
+
+    Writer.elements["UMLComponent"] = function (elem) {
+        var json = Writer.elements["UMLClassifier"](elem);
+        Writer.setType(json, 'uml:Component');
+        Writer.writeBoolean(json, 'isIndirectlyInstantiated', elem.isIndirectlyInstantiated);
+        var _realizations = Repository.getRelationshipsOf(elem, function (r) {
+            return (r instanceof type.UMLComponentRealization) && (r.target === elem);
+        });
+        Writer.writeElementArray(json, 'realization', _realizations);
+        return json;
+    };
+
+    Writer.elements["UMLSubsystem"] = function (elem) {
+        var json = Writer.elements["UMLComponent"](elem);
+        Writer.setType(json, 'uml:Component');
+        Writer.writeExtension(json, { "stereotype": { "value": "subsystem" }});
+        return json;
+    };
 
     // Deployments .............................................................
 
+    Writer.elements["UMLNode"] = function (elem) {
+        var json = Writer.elements["UMLClassifier"](elem);
+        Writer.setType(json, 'uml:Node');
+        var _deployments = Repository.getRelationshipsOf(elem, function (r) {
+            return (r instanceof type.UMLDeployment) && (r.target === elem);
+        });
+        Writer.writeElementArray(json, 'deployment', _deployments);
+        return json;
+    };
+
+    Writer.elements["UMLCommunicationPath"] = function (elem) {
+        var json = Writer.elements["UMLAssociation"](elem);
+        Writer.setType(json, 'uml:CommunicationPath');
+        return json;
+    };
+
+    Writer.elements["UMLDeployment"] = function (elem) {
+        var json = Writer.elements["UMLDependency"](elem);
+        delete json["client"];
+        delete json["supplier"];
+        Writer.setType(json, 'uml:Deployment');
+        Writer.writeRef(json, 'deployedArtifact', elem.source);
+        Writer.writeRef(json, 'location', elem.target);
+        return json;
+    };
+
+    // Use Cases ...............................................................
+
+    Writer.elements["UMLActor"] = function (elem) {
+        var json = Writer.elements["UMLClassifier"](elem);
+        Writer.setType(json, 'uml:Actor');
+        return json;
+    };
+
+    Writer.elements["UMLExtensionPoint"] = function (elem) {
+        var json = Writer.elements["UMLModelElement"](elem);
+        Writer.setType(json, 'uml:ExtensionPoint');
+        return json;
+    };
+
+    Writer.elements["UMLUseCase"] = function (elem) {
+        var json = Writer.elements["UMLClassifier"](elem);
+        Writer.setType(json, 'uml:UseCase');
+        Writer.writeElementArray(json, 'extensionPoint', elem.extensionPoints);
+        // Extends
+        var _extends = Repository.getRelationshipsOf(elem, function (r) {
+            return (r instanceof type.UMLExtend) && (r.source === elem);
+        });
+        Writer.writeElementArray(json, 'extend', _extends);
+        // Includes
+        var _includes = Repository.getRelationshipsOf(elem, function (r) {
+            return (r instanceof type.UMLInclude) && (r.source === elem);
+        });
+        Writer.writeElementArray(json, 'include', _includes);
+        return json;
+    };
+
+    Writer.elements["UMLExtend"] = function (elem) {
+        var json = Writer.elements["UMLDependency"](elem);
+        delete json["client"];
+        delete json["supplier"];
+        Writer.setType(json, 'uml:Extend');
+        Writer.writeRef(json, 'extendedCase', elem.target);
+        Writer.writeRef(json, 'extension', elem.source);
+        Writer.writeRefArray(json, 'extensionLocation', elem.extensionLocations);
+        if (elem.condition && elem.condition.length > 0) {
+            json["condition"] = {
+                "xmi:id"        : IdGenerator.generateGuid(),
+                "xmi:type"      : "uml:Constraint",
+                "specification" : elem.condition
+            };
+        }
+        return json;
+    };
+
+    Writer.elements["UMLInclude"] = function (elem) {
+        var json = Writer.elements["UMLDependency"](elem);
+        delete json["client"];
+        delete json["supplier"];
+        Writer.setType(json, 'uml:Include');
+        Writer.writeRef(json, 'addition', elem.target);
+        Writer.writeRef(json, 'includingCase', elem.source);
+        return json;
+    };
 
     // Profiles ................................................................
 
