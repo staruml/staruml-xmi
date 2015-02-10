@@ -350,7 +350,7 @@ define(function (require, exports, module) {
             return (r instanceof type.UMLInterfaceRealization) && (r.source === elem);
         });
         Writer.writeElementArray(json, 'interfaceRealization', _interfaceRealizations);
-        // TODO: behaviors
+        Writer.writeElementArray(json, 'ownedBehavior', elem.behaviors);
         return json;
     };
 
@@ -372,10 +372,6 @@ define(function (require, exports, module) {
         _.extend(json, Writer.elements["UMLModelElement"](elem));
         return json;
     };
-
-    // Common Behaviors ........................................................
-
-
 
     // Classes .................................................................
 
@@ -727,6 +723,118 @@ define(function (require, exports, module) {
         Writer.writeRef(json, 'includingCase', elem.source);
         return json;
     };
+
+    // Common Behaviors ........................................................
+
+    Writer.elements["UMLBehavior"] = function (elem) {
+        var json = Writer.elements["UMLModelElement"](elem);
+        Writer.writeBoolean(json, 'isReentrant', elem.isReentrant);
+        Writer.writeElementArray(json, 'ownedParameter', elem.parameters);
+        return json;
+    };
+
+    Writer.elements["UMLOpaqueBehavior"] = function (elem) {
+        var json = Writer.elements["UMLBehavior"](elem);
+        Writer.setType(json, 'uml:OpaqueBehavior');
+        return json;
+    };
+
+    // Interactions ............................................................
+
+    Writer.elements["UMLInteractionFragment"] = function (elem) {
+        var json = Writer.elements["UMLBehavior"](elem);
+        return json;
+    };
+
+    Writer.elements["UMLInteraction"] = function (elem) {
+        var json = Writer.elements["UMLInteractionFragment"](elem);
+        Writer.setType(json, 'uml:Interaction');
+        _.each(elem.participants, function (e) {
+            if (e instanceof type.UMLLifeline) {
+                Writer.writeElement(json, 'lifeline', e);
+            } else if (e instanceof type.UMLGate) {
+                Writer.writeElement(json, 'formalGate', e);
+            }
+        });
+        // TODO: Message Ordering
+        Writer.writeElementArray(json, 'message', elem.messages);
+        Writer.writeElementArray(json, 'fragment', elem.fragments);
+        return json;
+    };
+
+    Writer.elements["UMLStateInvariant"] = function (elem) {
+        var json = Writer.elements["UMLInteractionFragment"](elem);
+        Writer.setType(json, 'uml:StateInvariant');
+        // TODO: covered
+        // TODO: invariant
+        return json;
+    };
+
+    Writer.elements["UMLContinuation"] = function (elem) {
+        var json = Writer.elements["UMLInteractionFragment"](elem);
+        Writer.setType(json, 'uml:Continuation');
+        // TODO: setting
+        return json;
+    };
+
+    Writer.elements["UMLInteractionOperand"] = function (elem) {
+        var json = Writer.elements["UMLInteractionFragment"](elem);
+        Writer.setType(json, 'uml:InteractionOperand');
+        // TODO: guard
+        return json;
+    };
+
+    Writer.elements["UMLCombinedFragment"] = function (elem) {
+        var json = Writer.elements["UMLInteractionFragment"](elem);
+        Writer.setType(json, 'uml:CombinedFragment');
+        // TODO: interactionOperator
+        // TODO: operands
+        return json;
+    };
+
+    Writer.elements["UMLInteractionUse"] = function (elem) {
+        var json = Writer.elements["UMLInteractionFragment"](elem);
+        Writer.setType(json, 'uml:InteractionUse');
+        // TODO: refersTo
+        // TODO: arguments
+        // TODO: returnValue
+        // TODO: returnValueRecipient
+        return json;
+    };
+
+    Writer.elements["UMLMessageEndpoint"] = function (elem) {
+        var json = Writer.elements["UMLModelElement"](elem);
+        return json;
+    };
+
+    Writer.elements["UMLLifeline"] = function (elem) {
+        var json = Writer.elements["UMLMessageEndpoint"](elem);
+        Writer.setType(json, 'uml:Lifeline');
+        Writer.writeValueSpec(json, 'selector', 'uml:LiteralString', elem.selector);
+        Writer.writeRef(json, 'represents', elem.represent);
+        // isMultiInstance
+        return json;
+    };
+
+    Writer.elements["UMLGate"] = function (elem) {
+        var json = Writer.elements["UMLMessageEndpoint"](elem);
+        Writer.setType(json, 'uml:Gate');
+        return json;
+    };
+
+    // TODO: UMLEndpoint
+    Writer.elements["UMLMessage"] = function (elem) {
+        var json = Writer.elements["UMLDirectedRelationship"](elem);
+        Writer.setType(json, 'uml:Message');
+        // TODO: messageSort
+        Writer.writeRef(json, 'signature', elem.signature);
+        Writer.writeRef(json, 'connector', elem.connector);
+        // TODO: arguments
+        // TODO: assignmentTarget
+        return json;
+    };
+
+
 
     // Profiles ................................................................
 
