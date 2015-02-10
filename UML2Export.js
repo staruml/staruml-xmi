@@ -181,6 +181,36 @@ define(function (require, exports, module) {
         }
     };
 
+    Writer.enumerations["UMLMessageSort"] = function (value) {
+        switch (value) {
+        case UML.MS_SYNCHCALL     : return "synchCall";
+        case UML.MS_ASYNCHCALL    : return "asynchCall";
+        case UML.MS_ASYNCHSIGNAL  : return "asynchSignal";
+        case UML.MS_CREATEMESSAGE : return "createMessage";
+        case UML.MS_DELETEMESSAGE : return "deleteMessage";
+        case UML.MS_REPLY         : return "reply";
+        default                   : return "synchCall";
+        }
+    };
+
+    Writer.enumerations["UMLInteractionOperatorKind"] = function (value) {
+        switch (value) {
+        case UML.IOK_ALT      : return "alt";
+        case UML.IOK_OPT      : return "opt";
+        case UML.IOK_PAR      : return "par";
+        case UML.IOK_LOOP     : return "loop";
+        case UML.IOK_CRITICAL : return "critical";
+        case UML.IOK_NEG      : return "neg";
+        case UML.IOK_ASSERT   : return "assert";
+        case UML.IOK_STRICT   : return "strict";
+        case UML.IOK_SEQ      : return "seq";
+        case UML.IOK_IGNORE   : return "ignore";
+        case UML.IOK_CONSIDER : return "consider";
+        case UML.IOK_BREAK    : return "break";
+        default               : return "seq";
+        }
+    };
+
     // Backbone ................................................................
 
     Writer.elements["UMLModelElement"] = function (elem) {
@@ -756,8 +786,31 @@ define(function (require, exports, module) {
                 Writer.writeElement(json, 'formalGate', e);
             }
         });
-        // TODO: Message Ordering
-        Writer.writeElementArray(json, 'message', elem.messages);
+        _.each(elem.messages, function (e) {
+            var _fromOccurrence = {
+                    "xmi:id"   : IdGenerator.generateGuid(),
+                    "xmi:type" : "uml:OccurrenceSpecification",
+                    "covered"  : e.source._id
+                },
+                _toOccurrence = {
+                    "xmi:id"   : IdGenerator.generateGuid(),
+                    "xmi:type" : "uml:OccurrenceSpecification",
+                    "covered"  : e.target._id
+                };
+            var _message = Writer.writeElement(json, 'message', e);
+            if (e.source instanceof type.UMLEndpoint) {
+                _message["receiveEvent"] = _toOccurrence["xmi:id"];
+                Writer.addTo(json, 'fragment', _toOccurrence);
+            } else if (e.target instanceof type.UMLEndpoint) {
+                _message["sendEvent"] = _fromOccurrence["xmi:id"];
+                Writer.addTo(json, 'fragment', _fromOccurrence);
+            } else {
+                _message["receiveEvent"] = _toOccurrence["xmi:id"];
+                _message["sendEvent"] = _fromOccurrence["xmi:id"];
+                Writer.addTo(json, 'fragment', _fromOccurrence);
+                Writer.addTo(json, 'fragment', _toOccurrence);
+            }
+        });
         Writer.writeElementArray(json, 'fragment', elem.fragments);
         return json;
     };
@@ -765,40 +818,50 @@ define(function (require, exports, module) {
     Writer.elements["UMLStateInvariant"] = function (elem) {
         var json = Writer.elements["UMLInteractionFragment"](elem);
         Writer.setType(json, 'uml:StateInvariant');
-        // TODO: covered
-        // TODO: invariant
+        Writer.writeRef(json, 'covered', elem.covered);
+        if (elem.invariant && elem.invariant.length > 0) {
+            json["invariant"] = {
+                "xmi:id"        : IdGenerator.generateGuid(),
+                "xmi:type"      : "uml:Constraint",
+                "specification" : elem.invariant
+            };
+        }
         return json;
     };
 
     Writer.elements["UMLContinuation"] = function (elem) {
         var json = Writer.elements["UMLInteractionFragment"](elem);
         Writer.setType(json, 'uml:Continuation');
-        // TODO: setting
+        Writer.writeBoolean(json, 'setting', elem.setting);
         return json;
     };
 
     Writer.elements["UMLInteractionOperand"] = function (elem) {
         var json = Writer.elements["UMLInteractionFragment"](elem);
         Writer.setType(json, 'uml:InteractionOperand');
-        // TODO: guard
+        if (elem.guard && elem.guard.length > 0) {
+            json["guard"] = {
+                "xmi:id"        : IdGenerator.generateGuid(),
+                "xmi:type"      : "uml:Constraint",
+                "specification" : elem.guard
+            };
+        }
+        // TODO: fragment (see UML Spec, it's about OccurrentSpecifications of Messages included in this operand)
         return json;
     };
 
     Writer.elements["UMLCombinedFragment"] = function (elem) {
         var json = Writer.elements["UMLInteractionFragment"](elem);
         Writer.setType(json, 'uml:CombinedFragment');
-        // TODO: interactionOperator
-        // TODO: operands
+        Writer.writeEnum(json, 'interactionOperator', 'UMLInteractionOperatorKind', elem.interactionOperator);
+        Writer.writeElementArray(json, 'operand', elem.operands);
         return json;
     };
 
     Writer.elements["UMLInteractionUse"] = function (elem) {
         var json = Writer.elements["UMLInteractionFragment"](elem);
         Writer.setType(json, 'uml:InteractionUse');
-        // TODO: refersTo
-        // TODO: arguments
-        // TODO: returnValue
-        // TODO: returnValueRecipient
+        Writer.writeRef(json, 'refersTo', elem.refersTo);
         return json;
     };
 
@@ -812,7 +875,6 @@ define(function (require, exports, module) {
         Writer.setType(json, 'uml:Lifeline');
         Writer.writeValueSpec(json, 'selector', 'uml:LiteralString', elem.selector);
         Writer.writeRef(json, 'represents', elem.represent);
-        // isMultiInstance
         return json;
     };
 
@@ -822,19 +884,27 @@ define(function (require, exports, module) {
         return json;
     };
 
-    // TODO: UMLEndpoint
     Writer.elements["UMLMessage"] = function (elem) {
         var json = Writer.elements["UMLDirectedRelationship"](elem);
         Writer.setType(json, 'uml:Message');
-        // TODO: messageSort
+        Writer.writeEnum(json, 'messageSort', 'UMLMessageSort', elem.messageSort);
+        if (elem.source instanceof type.UMLEndpoint) {
+            Writer.writeString(json, 'messageKind', "found");
+        } else if (elem.target instanceof type.UMLEndpoint) {
+            Writer.writeString(json, 'messageKind', "lost");
+        } else {
+            Writer.writeString(json, 'messageKind', "complete");
+        }
         Writer.writeRef(json, 'signature', elem.signature);
         Writer.writeRef(json, 'connector', elem.connector);
-        // TODO: arguments
-        // TODO: assignmentTarget
+        if (elem.arguments && elem.arguments.length > 0) {
+            Writer.writeValueSpec(json, 'argument', 'uml:LiteralString', elem.arguments);
+        }
+        if (elem.assignmentTarget && elem.assignmentTarget.length > 0) {
+            Writer.writeExtension(json, { assignmentTarget: { value: elem.assignmentTarget }});
+        }
         return json;
     };
-
-
 
     // Profiles ................................................................
 

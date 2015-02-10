@@ -194,11 +194,13 @@ define(function (require, exports, module) {
      * @param {Element} elem
      */
     function writeElement(json, name, elem) {
-        var fun = elements[elem.getClassName()];
+        var fun  = elements[elem.getClassName()],
+            node = null;
         if (fun) {
-            var node = fun(elem);
+            node = fun(elem);
             addTo(json, name, node);
         }
+        return node;
     }
 
     /**
