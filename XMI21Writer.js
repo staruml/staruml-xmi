@@ -157,7 +157,9 @@ define(function (require, exports, module) {
      * @param {string} value
      */
     function writeString(json, name, value) {
-        json[name] = value;
+        if (value && value.length > 0) {
+            json[name] = value;
+        }
     }
 
     /**
@@ -254,6 +256,7 @@ define(function (require, exports, module) {
      * @param {string} value
      */
     function writeValueSpec(json, name, valueType, value) {
+        value = String(value);
         if (valueType === "uml:OpaqueExpression") {
             if (value && value.length > 0) {
                 json[name] = {
@@ -263,11 +266,13 @@ define(function (require, exports, module) {
                 };
             }
         } else {
-            json[name] = {
-                "xmi:id"   : IdGenerator.generateGuid(),
-                "xmi:type" : valueType,
-                "value"    : value
-            };
+            if (value && value.length > 0) {
+                json[name] = {
+                    "xmi:id"   : IdGenerator.generateGuid(),
+                    "xmi:type" : valueType,
+                    "value"    : value
+                };
+            }
         }
     }
 

@@ -236,6 +236,16 @@ define(function (require, exports, module) {
         }
     };
 
+    Writer.enumerations["UMLObjectNodeOrderingKind"] = function (value) {
+        switch (value) {
+        case UML.ONOK_UNORDERED : return "unordered";
+        case UML.ONOK_ORDERED   : return "ordered";
+        case UML.ONOK_LIFO      : return "LIFO";
+        case UML.ONOK_FIFO      : return "FIFO";
+        default                 : return "FIFO";
+        }
+    };
+
     // Backbone ................................................................
 
     Writer.elements["UMLModelElement"] = function (elem) {
@@ -1036,6 +1046,203 @@ define(function (require, exports, module) {
         });
         Writer.writeElementArray(json, 'trigger', elem.triggers);
         Writer.writeElementArray(json, 'effect', elem.effects);
+        return json;
+    };
+
+    // Activities ..............................................................
+
+    Writer.elements["UMLActivity"] = function (elem) {
+        var json = Writer.elements["UMLBehavior"](elem);
+        Writer.setType(json, 'uml:Activity');
+        Writer.writeBoolean(json, 'isReadOnly', elem.isReadOnly);
+        Writer.writeBoolean(json, 'isSingleExecution', elem.isSingleExecution);
+        Writer.writeElementArray(json, 'groups', elem.groups);
+        Writer.writeElementArray(json, 'node', elem.nodes);
+        Writer.writeElementArray(json, 'edge', elem.edges);
+        return json;
+    };
+
+    Writer.elements["UMLPin"] = function (elem) {
+        var json = Writer.elements["UMLStructuralFeature"](elem);
+        Writer.setType(json, 'uml:Pin');
+        return json;
+    };
+
+    Writer.elements["UMLInputPin"] = function (elem) {
+        var json = Writer.elements["UMLPin"](elem);
+        Writer.setType(json, 'uml:InputPin');
+        return json;
+    };
+
+    Writer.elements["UMLOutputPin"] = function (elem) {
+        var json = Writer.elements["UMLPin"](elem);
+        Writer.setType(json, 'uml:OutputPin');
+        return json;
+    };
+
+    Writer.elements["UMLActivityNode"] = function (elem) {
+        var json = Writer.elements["UMLModelElement"](elem);
+        Writer.setType(json, 'uml:ActivityNode');
+        return json;
+    };
+
+    Writer.elements["UMLAction"] = function (elem) {
+        var json = Writer.elements["UMLActivityNode"](elem);
+        switch (elem.kind) {
+        case UML.ACK_OPAQUE:
+            Writer.setType(json, 'uml:OpaqueAction');
+            break;
+        case UML.ACK_CREATE:
+            Writer.setType(json, 'uml:CreateObjectAction');
+            Writer.writeRef(json, 'classifier', elem.target);
+            break;
+        case UML.ACK_DESTROY:
+            Writer.setType(json, 'uml:DestroyObjectAction');
+            Writer.writeRef(json, 'target', elem.target);
+            break;
+        case UML.ACK_READ:
+            Writer.setType(json, 'uml:ReadVariableAction');
+            break;
+        case UML.ACK_WRITE:
+            Writer.setType(json, 'uml:WriteVariableAction');
+            break;
+        case UML.ACK_INSERT:
+            Writer.setType(json, 'uml:OpaqueAction');
+            break;
+        case UML.ACK_DELETE:
+            Writer.setType(json, 'uml:OpaqueAction');
+            break;
+        case UML.ACK_SENDSIGNAL:
+            Writer.setType(json, 'uml:SendSignalAction');
+            Writer.writeRef(json, 'signal', elem.target);
+            break;
+        case UML.ACK_ACCEPTSIGNAL:
+            Writer.setType(json, 'uml:AcceptEventAction');
+            break;
+        case UML.ACK_TRIGGEREVENT:
+            Writer.setType(json, 'uml:OpaqueAction');
+            break;
+        case UML.ACK_ACCEPTEVENT:
+            Writer.setType(json, 'uml:AcceptEventAction');
+            break;
+        case UML.ACK_STRUCTURED:
+            Writer.setType(json, 'uml:StructuredActivityNode');
+            break;
+        }
+        Writer.writeElementArray(json, 'input', elem.inputs);
+        Writer.writeElementArray(json, 'output', elem.outputs);
+        Writer.writeBoolean(json, 'isLocallyReentrant', elem.isLocallyReentrant);
+        Writer.writeBoolean(json, 'isSynchronous', elem.isSynchronous);
+        Writer.writeString(json, 'language', elem.language);
+        Writer.writeString(json, 'body', elem.body);
+        Writer.writeElementArray(json, 'localPrecondition', elem.localPreconditions);
+        Writer.writeElementArray(json, 'localPostcondition', elem.localPostconditions);
+        return json;
+    };
+
+    Writer.elements["UMLObjectNode"] = function (elem) {
+        var json = Writer.elements["UMLActivityNode"](elem);
+        Writer.setType(json, 'uml:ObjectNode');
+        Writer.writeBoolean(json, 'isControlType', elem.isControlType);
+        Writer.writeEnum(json, 'ordering', 'UMLObjectNodeOrderingKind', elem.ordering);
+        if (_.isObject(elem.type) && elem.type._id) {
+            Writer.writeRef(json, 'type', elem.type);
+        } else if (_.isString(elem.type) && elem.type.trim().length > 0) {
+            var _typeNode = {
+                "xmi:id"   : elem.type + "_id",
+                "xmi:type" : "uml:DataType",
+                "name"     : elem.type
+            };
+            Writer.addToDeferedNode(_typeNode);
+            Writer.writeString(json, 'type', _typeNode["xmi:id"]);
+        }
+        return json;
+    };
+
+    Writer.elements["UMLControlNode"] = function (elem) {
+        var json = Writer.elements["UMLActivityNode"](elem);
+        return json;
+    };
+
+    Writer.elements["UMLInitialNode"] = function (elem) {
+        var json = Writer.elements["UMLControlNode"](elem);
+        Writer.setType(json, 'uml:InitialNode');
+        return json;
+    };
+
+    Writer.elements["UMLFinalNode"] = function (elem) {
+        var json = Writer.elements["UMLControlNode"](elem);
+        return json;
+    };
+
+    Writer.elements["UMLActivityFinalNode"] = function (elem) {
+        var json = Writer.elements["UMLFinalNode"](elem);
+        Writer.setType(json, 'uml:ActivityFinalNode');
+        return json;
+    };
+
+    Writer.elements["UMLFlowFinalNode"] = function (elem) {
+        var json = Writer.elements["UMLFinalNode"](elem);
+        Writer.setType(json, 'uml:FlowFinalNode');
+        return json;
+    };
+
+    Writer.elements["UMLForkNode"] = function (elem) {
+        var json = Writer.elements["UMLControlNode"](elem);
+        Writer.setType(json, 'uml:ForkNode');
+        return json;
+    };
+
+    Writer.elements["UMLJoinNode"] = function (elem) {
+        var json = Writer.elements["UMLControlNode"](elem);
+        Writer.setType(json, 'uml:JoinNode');
+        return json;
+    };
+
+    Writer.elements["UMLMergeNode"] = function (elem) {
+        var json = Writer.elements["UMLControlNode"](elem);
+        Writer.setType(json, 'uml:MergeNode');
+        return json;
+    };
+
+    Writer.elements["UMLDecisionNode"] = function (elem) {
+        var json = Writer.elements["UMLControlNode"](elem);
+        Writer.setType(json, 'uml:DecisionNode');
+        return json;
+    };
+
+    Writer.elements["UMLActivityGroup"] = function (elem) {
+        var json = Writer.elements["UMLModelElement"](elem);
+        Writer.writeElementArray(json, 'subgroup', elem.subgroups);
+        return json;
+    };
+
+    Writer.elements["UMLActivityPartition"] = function (elem) {
+        var json = Writer.elements["UMLActivityGroup"](elem);
+        Writer.setType(json, 'uml:ActivityPartition');
+        Writer.writeElementArray(json, 'node', elem.nodes);
+        Writer.writeElementArray(json, 'edge', elem.edges);
+        return json;
+    };
+
+    Writer.elements["UMLActivityEdge"] = function (elem) {
+        var json = Writer.elements["UMLDirectedRelationship"](elem);
+        Writer.writeRef(json, 'source', elem.source);
+        Writer.writeRef(json, 'target', elem.target);
+        Writer.writeValueSpec(json, 'guard', 'uml:LiteralString', elem.guard);
+        Writer.writeValueSpec(json, 'weight', 'uml:LiteralInteger', elem.weight);
+        return json;
+    };
+
+    Writer.elements["UMLControlFlow"] = function (elem) {
+        var json = Writer.elements["UMLActivityEdge"](elem);
+        Writer.setType(json, 'uml:ControlFlow');
+        return json;
+    };
+
+    Writer.elements["UMLObjectFlow"] = function (elem) {
+        var json = Writer.elements["UMLActivityEdge"](elem);
+        Writer.setType(json, 'uml:ObjectFlow');
         return json;
     };
 
