@@ -211,6 +211,31 @@ define(function (require, exports, module) {
         }
     };
 
+    Writer.enumerations["UMLPseudostateKind"] = function (value) {
+        switch (value) {
+        case UML.PSK_INITIAL        : return "initial";
+        case UML.PSK_DEEPHISTORY    : return "deepHistory";
+        case UML.PSK_SHALLOWHISTORY : return "shallowHistory";
+        case UML.PSK_JOIN           : return "join";
+        case UML.PSK_FORK           : return "fork";
+        case UML.PSK_JUNCTION       : return "junction";
+        case UML.PSK_CHOICE         : return "choice";
+        case UML.PSK_ENTRYPOINT     : return "entryPoint";
+        case UML.PSK_EXITPOINT      : return "exitPoint";
+        case UML.PSK_TERMINATE      : return "terminate";
+        default                     : return "initial";
+        }
+    };
+
+    Writer.enumerations["UMLTransitionKind"] = function (value) {
+        switch (value) {
+        case UML.TK_EXTERNAL : return "external";
+        case UML.TK_INTERNAL : return "internal";
+        case UML.TK_LOCAL    : return "local";
+        default              : return "external";
+        }
+    };
+
     // Backbone ................................................................
 
     Writer.elements["UMLModelElement"] = function (elem) {
@@ -769,6 +794,32 @@ define(function (require, exports, module) {
         return json;
     };
 
+    Writer.elements["UMLEvent"] = function (elem) {
+        var json = Writer.elements["UMLModelElement"](elem);
+        switch (elem.kind) {
+        case UML.EK_SIGNAL:
+            Writer.setType(json, 'uml:SignalEvent');
+            Writer.writeRef(json, 'signal', elem.targetSignal);
+            break;
+        case UML.EK_CALL:
+            Writer.setType(json, 'uml:CallEvent');
+            Writer.writeRef(json, 'operation', elem.targetOperation);
+            break;
+        case UML.EK_CHANGE:
+            Writer.setType(json, 'uml:ChangeEvent');
+            Writer.writeValueSpec(json, 'changeExpression', 'uml:OpaqueExpression', elem.expression);
+            break;
+        case UML.EK_TIME:
+            Writer.setType(json, 'uml:TimeEvent');
+            Writer.writeValueSpec(json, 'when', 'uml:OpaqueExpression', elem.expression);
+            break;
+        case UML.EK_ANYRECEIVE:
+            Writer.setType(json, 'uml:AnyReceiveEvent');
+            break;
+        }
+        return json;
+    };
+
     // Interactions ............................................................
 
     Writer.elements["UMLInteractionFragment"] = function (elem) {
@@ -903,6 +954,88 @@ define(function (require, exports, module) {
         if (elem.assignmentTarget && elem.assignmentTarget.length > 0) {
             Writer.writeExtension(json, { assignmentTarget: { value: elem.assignmentTarget }});
         }
+        return json;
+    };
+
+    // State Machines ..........................................................
+
+    Writer.elements["UMLStateMachine"] = function (elem) {
+        var json = Writer.elements["UMLBehavior"](elem);
+        Writer.setType(json, 'uml:StateMachine');
+        Writer.writeElementArray(json, 'region', elem.regions);
+        return json;
+    };
+
+    Writer.elements["UMLRegion"] = function (elem) {
+        var json = Writer.elements["UMLModelElement"](elem);
+        Writer.setType(json, 'uml:Region');
+        Writer.writeElementArray(json, 'subvertex', elem.vertices);
+        Writer.writeElementArray(json, 'transition', elem.transitions);
+        return json;
+    };
+
+    Writer.elements["UMLVertex"] = function (elem) {
+        var json = Writer.elements["UMLModelElement"](elem);
+        return json;
+    };
+
+    Writer.elements["UMLPseudostate"] = function (elem) {
+        var json = Writer.elements["UMLVertex"](elem);
+        Writer.setType(json, 'uml:Pseudostate');
+        Writer.writeEnum(json, 'kind', 'UMLPseudostateKind', elem.kind);
+        return json;
+    };
+
+    Writer.elements["UMLConnectionPointReference"] = function (elem) {
+        var json = Writer.elements["UMLVertex"](elem);
+        Writer.setType(json, 'uml:ConnectionPointReference');
+        Writer.writeRefArray(json, 'entry', elem.entry);
+        Writer.writeRefArray(json, 'exit', elem.exit);
+        return json;
+    };
+
+    Writer.elements["UMLState"] = function (elem) {
+        var json = Writer.elements["UMLVertex"](elem);
+        Writer.setType(json, 'uml:State');
+        Writer.writeElementArray(json, 'region', elem.regions);
+        Writer.writeElementArray(json, 'entry', elem.entryActivities);
+        Writer.writeElementArray(json, 'exit', elem.exitActivities);
+        Writer.writeElementArray(json, 'doActivity', elem.doActivities);
+        Writer.writeRef(json, 'submachine', elem.submachine);
+        Writer.writeElementArray(json, 'connection', elem.connections);
+        return json;
+    };
+
+    Writer.elements["UMLFinalState"] = function (elem) {
+        var json = Writer.elements["UMLVertex"](elem);
+        Writer.setType(json, 'uml:FinalState');
+        return json;
+    };
+
+    Writer.elements["UMLTransition"] = function (elem) {
+        var json = Writer.elements["UMLDirectedRelationship"](elem);
+        Writer.setType(json, 'uml:Transition');
+        Writer.writeRef(json, 'source', elem.source);
+        Writer.writeRef(json, 'target', elem.target);
+        Writer.writeEnum(json, 'kind', 'UMLTransitionKind', elem.kind);
+        if (elem.guard && elem.guard.length > 0) {
+            json["guard"] = {
+                "xmi:id"        : IdGenerator.generateGuid(),
+                "xmi:type"      : "uml:Constraint",
+                "specification" : elem.guard
+            };
+        }
+        _.each(elem.triggers, function (e) {
+            Writer.writeElement(json, 'ownedMember', e);
+            Writer.addTo(json, 'trigger', {
+                "xmi:id"   : IdGenerator.generateGuid(),
+                "xmi:type" : "uml:Trigger",
+                "name"     : e.name,
+                "event"    : e._id
+            });
+        });
+        Writer.writeElementArray(json, 'trigger', elem.triggers);
+        Writer.writeElementArray(json, 'effect', elem.effects);
         return json;
     };
 
