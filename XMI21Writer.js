@@ -282,13 +282,16 @@ define(function (require, exports, module) {
      * @param {object} valueMap
      */
     function writeExtension(json, valueMap) {
-        var node = {
-            "extender": "StarUML"
-        };
+        var node = json["xmi:Extension"];
+        if (!node) {
+            node = {
+                "extender": "StarUML"
+            };
+            json["xmi:Extension"] = node;
+        }
         _.each(valueMap, function (value, key) {
             node[key] = value;
         });
-        addTo(json, 'xmi:Extension', node);
     }
 
     /**
@@ -303,28 +306,35 @@ define(function (require, exports, module) {
         var line = '<' + tagName;
 
         // Convert attributes
+        var childCount = 0;
         _.each(json, function (val, key) {
             if (!_.isObject(val)) {
                 line += ' ' + key + '="' + val + '"';
-            }
-        });
-        line += '>';
-        xmlWriter.writeLine(line);
-        xmlWriter.indent();
-
-        // Convert children
-        _.each(json, function (val, key) {
-            if (_.isArray(val)) {
-                _.each(val, function (item) {
-                    convertJsonToXML(item, xmlWriter, key);
-                });
-            } else if (_.isObject(val)) {
-                convertJsonToXML(val, xmlWriter, key);
+            } else {
+                childCount++;
             }
         });
 
-        xmlWriter.outdent();
-        xmlWriter.writeLine('</' + tagName + '>');
+        if (childCount > 0) {
+            line += '>';
+            xmlWriter.writeLine(line);
+            xmlWriter.indent();
+            // Convert children
+            _.each(json, function (val, key) {
+                if (_.isArray(val)) {
+                    _.each(val, function (item) {
+                        convertJsonToXML(item, xmlWriter, key);
+                    });
+                } else if (_.isObject(val)) {
+                    convertJsonToXML(val, xmlWriter, key);
+                }
+            });
+            xmlWriter.outdent();
+            xmlWriter.writeLine('</' + tagName + '>');
+        } else {
+            line += '/>';
+            xmlWriter.writeLine(line);
+        }
     }
 
 
