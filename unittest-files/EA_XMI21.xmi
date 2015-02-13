@@ -3706,7 +3706,7 @@
 				<properties ea_type="Dependency" stereotype="role binding" direction="Source -&gt; Destination"/>
 				<documentation/>
 				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
-				<labels mb=" &#xA;«role binding»" mt="RoleFeature1"/>
+				<labels mb=" &#xA;Â«role bindingÂ»" mt="RoleFeature1"/>
 				<extendedProperties conditional=" &#xA;&#8810;role binding&#8811;" virtualInheritance="0"/>
 				<style/>
 				<xrefs value="$XREFPROP=$XID={84C85BA1-79BA-4adf-8DFB-91E54DE96015}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=role binding;GUID={491B7974-2908-42f0-92E5-7CC595B8C20F};@ENDSTEREO;$DES;$CLT={A03DCF87-0E86-4da4-A0F6-E49054C15BCC}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
@@ -3739,7 +3739,7 @@
 				<properties ea_type="Dependency" stereotype="role binding" direction="Source -&gt; Destination"/>
 				<documentation/>
 				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
-				<labels mb=" &#xA;«role binding»" mt="RoleFeature2"/>
+				<labels mb=" &#xA;Â«role bindingÂ»" mt="RoleFeature2"/>
 				<extendedProperties conditional=" &#xA;&#8810;role binding&#8811;" virtualInheritance="0"/>
 				<style/>
 				<xrefs value="$XREFPROP=$XID={02ABD904-AFB9-4000-87CE-091FBECFFA39}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=role binding;@ENDSTEREO;$DES;$CLT={3E746BBD-A705-4cd5-BBDD-35F6D785CBE3}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
@@ -3874,7 +3874,7 @@
 				<properties ea_type="Deployment" direction="Source -&gt; Destination"/>
 				<documentation/>
 				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
-				<labels mb="«deploy»"/>
+				<labels mb="Â«deployÂ»"/>
 				<extendedProperties conditional="&#8810;deploy&#8811;" virtualInheritance="0"/>
 				<style/>
 				<xrefs/>
@@ -3907,7 +3907,7 @@
 				<properties ea_type="Deployment" direction="Source -&gt; Destination"/>
 				<documentation/>
 				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
-				<labels mb="«deploy»"/>
+				<labels mb="Â«deployÂ»"/>
 				<extendedProperties conditional="&#8810;deploy&#8811;" virtualInheritance="0"/>
 				<style/>
 				<xrefs/>
@@ -5011,7 +5011,7 @@
 				<modifiers isRoot="false" isLeaf="false"/>
 				<documentation/>
 				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
-				<labels mb=" &#xA;«extend»"/>
+				<labels mb=" &#xA;Â«extendÂ»"/>
 				<extendedProperties conditional=" &#xA;&#8810;extend&#8811;" virtualInheritance="0"/>
 				<style/>
 				<xrefs value="$XREFPROP=$XID={B416DAE5-C8D3-4b5c-836B-4895C6EB13B1}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=extend;GUID={0FB3DB5A-0281-470a-972F-151491775078};@ENDSTEREO;$DES;$CLT={06904D2C-23DD-4d72-A62E-1A0B173EE77A}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;$XREFPROP=$XID={74A89C0C-269A-45b8-BE32-879A69BBDE07}$XID;$NAM=MOFProps$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$BEH=extensionLocation$BEH;$PAR=0$PAR;$DES=0;{6B482BE9-360C-4279-813B-2F22982CD7D0};1$DES;$CLT={06904D2C-23DD-4d72-A62E-1A0B173EE77A}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
@@ -5045,7 +5045,7 @@
 				<modifiers isRoot="false" isLeaf="false"/>
 				<documentation/>
 				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
-				<labels mb=" &#xA;«extend»"/>
+				<labels mb=" &#xA;Â«extendÂ»"/>
 				<extendedProperties conditional=" &#xA;&#8810;extend&#8811;" virtualInheritance="0"/>
 				<style/>
 				<xrefs value="$XREFPROP=$XID={D19D3471-9C09-452d-A78A-81B4773FF3F8}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=extend;@ENDSTEREO;$DES;$CLT={C865D49C-1A04-4da3-AABA-9E7800ABFAF0}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;$XREFPROP=$XID={B206D001-0CA3-4f8d-87CE-F0E2BBF99708}$XID;$NAM=MOFProps$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$BEH=extensionLocation$BEH;$PAR=0$PAR;$DES=1;{7CB4BC5E-4954-4306-A2ED-21A3E4A5C148};1$DES;$CLT={C865D49C-1A04-4da3-AABA-9E7800ABFAF0}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
@@ -5079,7 +5079,7 @@
 				<modifiers isRoot="false" isLeaf="false"/>
 				<documentation/>
 				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
-				<labels mb=" &#xA;«include»"/>
+				<labels mb=" &#xA;Â«includeÂ»"/>
 				<extendedProperties conditional=" &#xA;&#8810;include&#8811;" virtualInheritance="0"/>
 				<style/>
 				<xrefs value="$XREFPROP=$XID={FA017E35-BD15-419e-A197-B3D794E9114D}$XID;$NAM=Stereotypes$NAM;$TYP=connector property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=include;GUID={335000C9-CE46-42dd-9730-B5F2B5853EE9};@ENDSTEREO;$DES;$CLT={B6533581-E545-4455-832A-9F0CCA8EE50E}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>

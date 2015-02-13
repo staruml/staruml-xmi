@@ -336,7 +336,12 @@ define(function (require, exports, module) {
     Reader.elements["uml:TemplateableElement"] = function (node) {
         var json = Reader.elements["uml:Element"](node);
         var ts = Reader.readElement(node, "ownedTemplateSignature");
-        json["templateParameters"] = ts ? ts["__ownedParameter"] : [];
+        if (ts && ts["__ownedParameter"]) {
+            _.each(ts["__ownedParameter"], function (e) {
+                addTo(json, "templateParameters", e);
+                e._parent = { "$ref": json._id };
+            });
+        }
         return json;
     };
 
@@ -1373,8 +1378,14 @@ define(function (require, exports, module) {
         if (elem._type === "UMLInteraction") {
             var parent = Reader.get(elem._parent.$ref);
             if (MetaModelManager.isKindOf(parent._type, "UMLClassifier")) {
-                appendTo(parent, "attributes", elem.attributes || []);
-                appendTo(parent, "operations", elem.operations || []);
+                _.each(elem.attributes, function (e) {
+                    addTo(parent, "attributes", e);
+                    e._parent = { "$ref": parent._id };
+                });
+                _.each(elem.operations, function (e) {
+                    addTo(parent, "operations", e);
+                    e._parent = { "$ref": parent._id };
+                });
             } else {
                 parent.ownedElements = _.without(parent.ownedElements, elem);
                 var collaboration = {
@@ -1382,10 +1393,19 @@ define(function (require, exports, module) {
                     _parent: { "$ref": parent._id },
                     _type: "UMLCollaboration",
                     ownedElements: [ elem ],
-                    attributes: elem.attributes || [],
-                    operations: elem.operations || []
+                    attributes: [],
+                    operations: []
                 };
+                _.each(elem.attributes, function (e) {
+                    addTo(collaboration, "attributes", e);
+                    e._parent = { "$ref": collaboration._id };
+                });
+                _.each(elem.operations, function (e) {
+                    addTo(collaboration, "operations", e);
+                    e._parent = { "$ref": collaboration._id };
+                });
                 parent.ownedElements.push(collaboration);
+                elem._parent = { "$ref": collaboration._id };
             }
             _.each(elem.messages, function (msg) {
                 var _endpoint;
@@ -1435,7 +1455,10 @@ define(function (require, exports, module) {
                 var _cb  = Reader.get(elem._parent.$ref);
                 var _int = Reader.get(_cb._parent.$ref);
                 if (_int._type === "UMLInteraction") {
-                    appendTo(_int, "participants", elem._formalGates);
+                    _.each(elem._formalGates, function (e) {
+                        addTo(_int, "participants", e);
+                        e._parent = { "$ref": _int._id };
+                    });
                 }
             }
         }
@@ -1447,15 +1470,18 @@ define(function (require, exports, module) {
             var parent = Reader.get(elem._parent.$ref);
             if (parent._type !== "UMLRegion") {
                 if (!parent._stateMachine) {
+                    var stateMachineId = IdGenerator.generateGuid();
                     parent._stateMachine = {
-                        _id: IdGenerator.generateGuid(),
-                        _type: "UMLStateMachine",
-                        regions: [
+                        _id     : stateMachineId,
+                        _type   : "UMLStateMachine",
+                        _parent : { "$ref": parent._id },
+                        regions : [
                             {
-                                _id: IdGenerator.generateGuid(),
-                                _type: "UMLRegion",
-                                vertices: [],
-                                transitions: []
+                                _id         : IdGenerator.generateGuid(),
+                                _type       : "UMLRegion",
+                                _parent     : { "$ref": stateMachineId },
+                                vertices    : [],
+                                transitions : []
                             }
                         ]
                     };
