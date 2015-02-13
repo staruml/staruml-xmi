@@ -376,15 +376,8 @@ define(function (require, exports, module) {
 
                 ProjectManager.importFromJson(ProjectManager.getProject(), XMIData);
                 ModelExplorerView.expand(Repository.get(XMIData._id));
-
-            // } catch (err) {
-            //     console.error("[Error] Failed to load the file: " + filename);
-            //     console.error(err);
-            //     result.reject(err);
-            // }
             })
             .fail(function (err) {
-                console.error(err);
                 result.reject(err);
             })
             .always(function () {

@@ -915,6 +915,7 @@ define(function (require, exports, module) {
         json["receiveEvent"] = Reader.readRef(node, "receiveEvent");
         json["sendEvent"] = Reader.readRef(node, "sendEvent");
         json["connector"] = Reader.readRef(node, "connector");
+        json["messageSort"] = Reader.readEnum(node, "messageSort", "uml:MessageSort", UML.MS_SYNCHCALL);
         var _signature = Reader.readElement(node, "signature");
         if (_signature && _signature._type === "UMLCallOperationAction") {
             json["signature"] = _signature.operation;
@@ -1499,5 +1500,24 @@ define(function (require, exports, module) {
             }
         }
     });
+
+    // process Relationships
+    Reader.postprocessors.push(function (elem) {
+        if (MetaModelManager.isKindOf(elem._type, "DirectedRelationship")) {
+            var parent = Reader.get(elem._parent.$ref),
+                source = Reader.get(elem.source.$ref),
+                target = Reader.get(elem.target.$ref);
+            if (!source || !target) {
+                if (parent.ownedElements && _.contains(parent.ownedElements, elem)) {
+                    parent.ownedElements = _.without(parent.ownedElements, elem);
+                } else if (parent.edges && _.contains(parent.edges, elem)) {
+                    parent.edges = _.without(parent.edges, elem);
+                } else if (parent.messages && _.contains(parent.messages, elem)) {
+                    parent.messages = _.without(parent.messages, elem);
+                }
+            }
+        }
+    });
+
 
 });

@@ -31,7 +31,8 @@ define(function (require, exports, module) {
         ProjectManager = app.getModule("engine/ProjectManager"),
         MenuManager    = app.getModule("menu/MenuManager"),
         FileUtils      = app.getModule("file/FileUtils"),
-        FileSystem     = app.getModule("filesystem/FileSystem");
+        FileSystem     = app.getModule("filesystem/FileSystem"),
+        Dialogs        = app.getModule("dialogs/Dialogs");
 
     var XMI21Reader    = require("XMI21Reader"),
         XMI21Writer    = require("XMI21Writer"),
@@ -51,7 +52,16 @@ define(function (require, exports, module) {
             FileSystem.showOpenDialog(false, false, "Select a XMI File (.xmi)", null, ["xmi"], function (err, files) {
                 if (!err) {
                     if (files && files.length > 0) {
-                        XMI21Reader.loadFromFile(files[0]).then(result.resolve, result.reject);
+                        XMI21Reader.loadFromFile(files[0])
+                            .done(function () {
+                                result.resolve();
+                            })
+                            .fail(function (err) {
+                                if (err === "NotReadable") {
+                                    Dialogs.showErrorDialog("Cannot open the file. (Only UTF-8 encoded files are supported)");
+                                }
+                                result.reject(err);
+                            });
                     } else {
                         result.reject(USER_CANCELED);
                     }
