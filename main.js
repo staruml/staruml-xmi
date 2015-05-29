@@ -59,6 +59,10 @@ define(function (require, exports, module) {
                             .fail(function (err) {
                                 if (err === "NotReadable") {
                                     Dialogs.showErrorDialog("Cannot open the file. (Only UTF-8 encoded files are supported)");
+                                } else if (err === "NotFound") {
+                                    Dialogs.showErrorDialog("File not found. (Files in network drive are not supported)");
+                                } else {
+                                    console.error(err);
                                 }
                                 result.reject(err);
                             });
