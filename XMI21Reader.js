@@ -194,8 +194,8 @@ define(function (require, exports, module) {
                 var fun = elements[_type];
                 if (fun) {
                     var elem = fun(child);
-                    if (typeof elem !== "undefined" && elem !== null) {
-                        if (parentId) {
+                    if (typeof elem !== "undefined" && elem !== null && typeof elem === "object") {
+                        if (parentId ) {
                             elem._parent = { "$ref": parentId };
                         }
                         idMap[elem._id] = elem;
@@ -226,7 +226,7 @@ define(function (require, exports, module) {
                 var fun = elements[_type];
                 if (fun) {
                     var elem = fun(child);
-                    if (typeof elem !== "undefined" && elem !== null) {
+                    if (typeof elem !== "undefined" && elem !== null && typeof elem === "object") {
                         if (parentId) {
                             elem._parent = { "$ref": parentId };
                         }
