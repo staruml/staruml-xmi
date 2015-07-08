@@ -2,9 +2,9 @@
     "name": "staruml.xmi",
     "title": "XMI",
     "description": "XMI (XML Metadata Interchange) import and export",
-    "homepage": "https://github.com/staruml/Markdown",
-    "issues": "https://github.com/staruml/Markdown/issues",
-    "version": "0.9.0",
+    "homepage": "https://github.com/staruml/XMI",
+    "issues": "https://github.com/staruml/XMI/issues",
+    "version": "0.9.1",
     "author": {
         "name": "Minkyu Lee",
         "email": "niklaus.lee@gmail.com",
