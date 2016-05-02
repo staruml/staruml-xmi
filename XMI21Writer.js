@@ -308,7 +308,9 @@ define(function (require, exports, module) {
         // Convert attributes
         var childCount = 0;
         _.each(json, function (val, key) {
-            if (!_.isObject(val)) {
+            if (_.isString(val)) {
+                line += ' ' + key + '="' + _.escape(val) + '"';
+            } else if (!_.isObject(val)) {
                 line += ' ' + key + '="' + val + '"';
             } else {
                 childCount++;
