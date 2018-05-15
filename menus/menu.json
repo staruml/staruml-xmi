@@ -1,0 +1,18 @@
+{
+  "menu": [
+    {
+      "id": "file.import",
+      "submenu": [
+        { "type": "separator" },
+        { "label": "XMI Import (v2.1)...", "id": "file.import.xmi.import", "command": "xmi:import" }
+      ]
+    },
+    {
+      "id": "file.export",
+      "submenu": [
+        { "type": "separator" },
+        { "label": "XMI Export (v2.1)...", "id": "file.import.xmi.export", "command": "xmi:export" }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 MKLab. All rights reserved.
+ * Copyright (c) 2014-2018 MKLab. All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -21,89 +21,48 @@
  *
  */
 
-/*jslint vars: true, plusplus: true, devel: true, nomen: true, indent: 4, maxerr: 50, browser: true */
-/*global $, _, define, app, type, DOMParser */
-define(function (require, exports, module) {
-    "use strict";
+const filenamify = require('filenamify')
+const xmi21reader = require('./xmi21-reader')
+const xmi21writer = require('./xmi21-writer')
+require('./uml2-import')
+require('./uml2-export')
 
-    var Commands       = app.getModule("command/Commands"),
-        CommandManager = app.getModule("command/CommandManager"),
-        ProjectManager = app.getModule("engine/ProjectManager"),
-        MenuManager    = app.getModule("menu/MenuManager"),
-        FileUtils      = app.getModule("file/FileUtils"),
-        FileSystem     = app.getModule("filesystem/FileSystem"),
-        Dialogs        = app.getModule("dialogs/Dialogs");
+const XMI_FILE_FILTERS = [
+  {name: 'XMI Files', extensions: ['xmi']},
+  {name: 'All Files', extensions: ['*']}
+]
 
-    var XMI21Reader    = require("XMI21Reader"),
-        XMI21Writer    = require("XMI21Writer"),
-        UML2Import     = require("UML2Import"),
-        UML2Export     = require("UML2Export");
-
-    var CMD_XMI_IMPORT_V21 = 'xmi.import.v2.1',
-        CMD_XMI_EXPORT_V21 = 'xmi.export.v2.1';
-
-    var USER_CANCELED = { userCanceled: true };
-
-    function _handleXMI21Import(fullPath) {
-        var result = new $.Deferred();
-        if (fullPath) {
-            XMI21Reader.loadFromFile(fullPath).then(result.resolve, result.reject);
-        } else {
-            FileSystem.showOpenDialog(false, false, "Select a XMI File (.xmi)", null, ["xmi"], function (err, files) {
-                if (!err) {
-                    if (files && files.length > 0) {
-                        XMI21Reader.loadFromFile(files[0])
-                            .done(function () {
-                                result.resolve();
-                            })
-                            .fail(function (err) {
-                                if (err === "NotReadable") {
-                                    Dialogs.showErrorDialog("Cannot open the file. (Only UTF-8 encoded files are supported)");
-                                } else if (err === "NotFound") {
-                                    Dialogs.showErrorDialog("File not found. (Files in network drive are not supported)");
-                                } else {
-                                    console.error(err);
-                                }
-                                result.reject(err);
-                            });
-                    } else {
-                        result.reject(USER_CANCELED);
-                    }
-                } else {
-                    result.reject(err);
-                }
-            });
-        }
-        return result.promise();
+function _handleXMI21Import (fullPath) {
+  if (fullPath) {
+    xmi21reader.loadFromFile(fullPath)
+  } else {
+    var files = app.dialogs.showOpenDialog('Select a XMI File (.xmi)', null, XMI_FILE_FILTERS)
+    if (files && files.length > 0) {
+      try {
+        xmi21reader.loadFromFile(files[0])
+      } catch (err) {
+        app.dialogs.showErrorDialog('Failed to load the file.', err)
+        console.log(err)
+      }
     }
+  }
+}
 
-    function _handleXMI21Export(fullPath) {
-        var result = new $.Deferred();
-        if (fullPath) {
-            XMI21Writer.saveToFile(fullPath).then(result.resolve, result.reject);
-        } else {
-            var _filename = FileUtils.convertToWindowsFilename(ProjectManager.getProject().name);
-            FileSystem.showSaveDialog("Export Project As XMI", null, _filename + ".xmi", function (err, selectedPath) {
-                if (!err) {
-                    XMI21Writer.saveToFile(selectedPath).then(result.resolve, result.reject);
-                } else {
-                    result.reject(err);
-                }
-            });
-        }
-        return result.promise();
+function _handleXMI21Export (fullPath) {
+  if (fullPath) {
+    xmi21writer.saveToFile(fullPath)
+  } else {
+    var _filename = filenamify(app.project.getProject().name)
+    var filename = app.dialogs.showSaveDialog('Export Project As XMI', _filename + '.xmi', XMI_FILE_FILTERS)
+    if (filename) {
+      xmi21writer.saveToFile(filename)
     }
+  }
+}
 
-    // Register Commands
-    CommandManager.register("XMI Import (v2.1)...",  CMD_XMI_IMPORT_V21, _handleXMI21Import);
-    CommandManager.register("XMI Export (v2.1)...",  CMD_XMI_EXPORT_V21, _handleXMI21Export);
+function init () {
+  app.commands.register('xmi:import', _handleXMI21Import)
+  app.commands.register('xmi:export', _handleXMI21Export)
+}
 
-    // Setup Menus
-    var menuItem = MenuManager.getMenuItem(Commands.FILE_IMPORT);
-    menuItem.addMenuDivider();
-    menuItem.addMenuItem(CMD_XMI_IMPORT_V21);
-    menuItem = MenuManager.getMenuItem(Commands.FILE_EXPORT);
-    menuItem.addMenuDivider();
-    menuItem.addMenuItem(CMD_XMI_EXPORT_V21);
-
-});
+exports.init = init
