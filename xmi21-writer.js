@@ -22,7 +22,6 @@
 */
 
 const fs = require('fs')
-const _ = require('lodash')
 
 /**
  * XMLWriter
@@ -116,8 +115,8 @@ function appendTo (json, name, elements) {
     json[name] = []
   }
   var arr = json[name]
-  _.each(elements, function (elem) {
-    if (!_.includes(arr, elem) && !_.some(arr, function (item) { return item._id === elem._id })) {
+  elements.forEach(function (elem) {
+    if (!arr.includes(elem) && !arr.some(function (item) { return item._id === elem._id })) {
       arr.push(elem)
     }
   })
@@ -128,7 +127,7 @@ function appendTo (json, name, elements) {
  * @param{object} node
  */
 function addToDeferedNode (node) {
-  if (node['xmi:id'] && !_.some(deferedNodes, function (n) { return (n['xmi:id'] === node['xmi:id']) })) {
+  if (node['xmi:id'] && !deferedNodes.some(function (n) { return (n['xmi:id'] === node['xmi:id']) })) {
     deferedNodes.push(node)
   }
 }
@@ -204,7 +203,7 @@ function writeElement (json, name, elem) {
  * @param {Array.<Element>} elems
  */
 function writeElementArray (json, name, elems) {
-  _.each(elems, function (elem) {
+  elems.forEach(function (elem) {
     var fun = elements[elem.getClassName()]
     if (fun) {
       var node = fun(elem)
@@ -232,7 +231,7 @@ function writeRef (json, name, elem) {
  * @param {Array.<Element>} elems
  */
 function writeRefArray (json, name, elems) {
-  _.each(elems, function (elem) {
+  elems.forEach(function (elem) {
     if (elem) {
       var node = { 'xmi:idref': elem._id }
       addTo(json, name, node)
@@ -281,9 +280,9 @@ function writeExtension (json, valueMap) {
     }
     json['xmi:Extension'] = node
   }
-  _.each(valueMap, function (value, key) {
-    node[key] = value
-  })
+  for (var key in valueMap) {
+    node[key] = valueMap[key]
+  }
 }
 
 /**
@@ -299,30 +298,33 @@ function convertJsonToXML (json, xmlWriter, tagName) {
 
   // Convert attributes
   var childCount = 0
-  _.each(json, function (val, key) {
-    if (_.isString(val)) {
-      line += ' ' + key + '="' + _.escape(val) + '"'
-    } else if (!_.isObject(val)) {
+  var key, val
+  for (key in json) {
+    val = json[key]
+    if (typeof val === 'string') {
+      line += ' ' + key + '="' + encodeURI(val) + '"'
+    } else if (!(typeof val === 'object')) {
       line += ' ' + key + '="' + val + '"'
     } else {
       childCount++
     }
-  })
+  }
 
   if (childCount > 0) {
     line += '>'
     xmlWriter.writeLine(line)
     xmlWriter.indent()
     // Convert children
-    _.each(json, function (val, key) {
-      if (_.isArray(val)) {
-        _.each(val, function (item) {
+    for (key in json) {
+      val = json[key]
+      if (Array.isArray(val)) {
+        val.forEach(function (item) {
           convertJsonToXML(item, xmlWriter, key)
         })
-      } else if (_.isObject(val)) {
+      } else if (typeof val === 'object') {
         convertJsonToXML(val, xmlWriter, key)
       }
-    })
+    }
     xmlWriter.outdent()
     xmlWriter.writeLine('</' + tagName + '>')
   } else {
@@ -348,7 +350,7 @@ function saveToFile (filename) {
       'packagedElement': []
     }
     writeElementArray(root, 'packagedElement', project.ownedElements)
-    _.each(deferedNodes, function (node) {
+    deferedNodes.forEach(function (node) {
       addTo(root, 'packagedElement', node)
     })
 

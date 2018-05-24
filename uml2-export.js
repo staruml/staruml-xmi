@@ -21,7 +21,6 @@
  *
  */
 
-const _ = require('lodash')
 const writer = require('./xmi21-writer')
 
 // Core ....................................................................
@@ -35,7 +34,7 @@ writer.elements['Element'] = function (elem) {
 writer.elements['Model'] = function (elem) {
   var json = writer.elements['Element'](elem)
   writer.writeString(json, 'name', elem.name)
-  _.each(elem.ownedElements, function (e) {
+  elem.ownedElements.forEach(function (e) {
     if (e instanceof type.UMLGeneralization) {
       // Generalizations will be included in Classifier as 'generalization'
     } else if (e instanceof type.UMLComponentRealization) {
@@ -75,7 +74,7 @@ writer.elements['ExtensibleModel'] = function (elem) {
   if (elem.tags && elem.tags.length > 0) {
     _writeExtension = true
     _extensionNode.tag = []
-    _.each(elem.tags, function (tag) {
+    elem.tags.forEach(function (tag) {
       var _tag = {}
       switch (tag.kind) {
       case type.Tag.TK_STRING:
@@ -298,9 +297,9 @@ writer.enumerations['UMLObjectNodeOrderingKind'] = function (value) {
 writer.elements['UMLModelElement'] = function (elem) {
   var json = writer.elements['ExtensibleModel'](elem)
   // Write stereotype (it's not Standard, but it's the most convenient way to read
-  if (_.isObject(elem.stereotype) && elem.stereotype._id) {
+  if (typeof elem.stereotype === 'object' && elem.stereotype && elem.stereotype._id) {
     writer.writeExtension(json, {'stereotype': { 'value': elem.stereotype._id }})
-  } else if (_.isString(elem.stereotype)) {
+  } else if (typeof elem.stereotype === 'string') {
     writer.writeExtension(json, {'stereotype': { 'value': elem.stereotype }})
   }
   writer.writeEnum(json, 'visibility', 'UMLVisibilityKind', elem.visibility)
@@ -349,9 +348,9 @@ writer.elements['UMLFeature'] = function (elem) {
 
 writer.elements['UMLStructuralFeature'] = function (elem) {
   var json = writer.elements['UMLFeature'](elem)
-  if (_.isObject(elem.type) && elem.type._id) {
+  if ((typeof elem.type === 'object') && elem.type._id) {
     writer.writeRef(json, 'type', elem.type)
-  } else if (_.isString(elem.type) && elem.type.trim().length > 0) {
+  } else if (typeof elem.type === 'string' && elem.type.trim().length > 0) {
     var _typeNode = {
       'xmi:id': elem.type + '_id',
       'xmi:type': 'uml:DataType',
@@ -436,15 +435,15 @@ writer.elements['UMLOperation'] = function (elem) {
 
 writer.elements['UMLClassifier'] = function (elem) {
   var json = writer.elements['UMLModelElement'](elem)
-  var _attrs = _.reject(elem.attributes, function (e) { return e instanceof type.UMLPort })
-  var _ports = _.filter(elem.attributes, function (e) { return e instanceof type.UMLPort })
+  var _attrs = elem.attributes.filter(function (e) { return !(e instanceof type.UMLPort) })
+  var _ports = elem.attributes.filter(function (e) { return e instanceof type.UMLPort })
   writer.writeElementArray(json, 'ownedAttribute', _attrs)
   writer.writeElementArray(json, 'ownedPort', _ports)
   writer.writeElementArray(json, 'ownedOperation', elem.operations)
   // Include Connectors
   var _connectors = []
-  _.each(_ports, function (e1) {
-    _.each(e1.ownedElements, function (e2) {
+  _ports.forEach(function (e1) {
+    e1.ownedElements.forEach(function (e2) {
       if (e2 instanceof type.UMLConnector) {
         _connectors.push(e2)
       }
@@ -468,20 +467,20 @@ writer.elements['UMLClassifier'] = function (elem) {
 
 writer.elements['UMLDirectedRelationship'] = function (elem) {
   var json = writer.elements['DirectedRelationship'](elem)
-  _.extend(json, writer.elements['UMLModelElement'](elem))
+  Object.assign(json, writer.elements['UMLModelElement'](elem))
   return json
 }
 
 writer.elements['UMLRelationshipEnd'] = function (elem) {
   var json = writer.elements['RelationshipEnd'](elem)
-  _.extend(json, writer.elements['UMLAttribute'](elem))
+  Object.assign(json, writer.elements['UMLAttribute'](elem))
   // TODO: navigable
   return json
 }
 
 writer.elements['UMLUndirectedRelationship'] = function (elem) {
   var json = writer.elements['UndirectedRelationship'](elem)
-  _.extend(json, writer.elements['UMLModelElement'](elem))
+  Object.assign(json, writer.elements['UMLModelElement'](elem))
   return json
 }
 
@@ -604,7 +603,9 @@ writer.elements['UMLAssociation'] = function (elem) {
   var json = writer.elements['UMLUndirectedRelationship'](elem)
   writer.setType(json, 'uml:Association')
   writer.writeBoolean(json, 'isDerived', elem.isDerived)
-  var _ends = [_.clone(elem.end1), _.clone(elem.end2)]
+  var _e1 = new elem.end1.constructor()
+  var _e2 = new elem.end2.constructor()
+  var _ends = [Object.assign(_e1, elem.end1), Object.assign(_e2, elem.end2)]
   var _agg = _ends[0].aggregation
   _ends[0].aggregation = _ends[1].aggregation
   _ends[1].aggregation = _agg
@@ -691,7 +692,9 @@ writer.elements['UMLConnector'] = function (elem) {
   var json = writer.elements['UMLUndirectedRelationship'](elem)
   writer.setType(json, 'uml:Connector')
   writer.writeRef(json, 'type', elem.type)
-  var _ends = [_.clone(elem.end1), _.clone(elem.end2)]
+  var _e1 = new elem.end1.constructor()
+  var _e2 = new elem.end2.constructor()
+  var _ends = [Object.assign(_e1, elem.end1), Object.assign(_e2, elem.end2)]
   var _agg = _ends[0].aggregation
   _ends[0].aggregation = _ends[1].aggregation
   _ends[1].aggregation = _agg
@@ -886,14 +889,14 @@ writer.elements['UMLInteractionFragment'] = function (elem) {
 writer.elements['UMLInteraction'] = function (elem) {
   var json = writer.elements['UMLInteractionFragment'](elem)
   writer.setType(json, 'uml:Interaction')
-  _.each(elem.participants, function (e) {
+  elem.participants.forEach(function (e) {
     if (e instanceof type.UMLLifeline) {
       writer.writeElement(json, 'lifeline', e)
     } else if (e instanceof type.UMLGate) {
       writer.writeElement(json, 'formalGate', e)
     }
   })
-  _.each(elem.messages, function (e) {
+  elem.messages.forEach(function (e) {
     var _fromOccurrence = {
       'xmi:id': app.repository.generateGuid(),
       'xmi:type': 'uml:OccurrenceSpecification',
@@ -1081,7 +1084,7 @@ writer.elements['UMLTransition'] = function (elem) {
       'specification': elem.guard
     }
   }
-  _.each(elem.triggers, function (e) {
+  elem.triggers.forEach(function (e) {
     writer.writeElement(json, 'ownedMember', e)
     writer.addTo(json, 'trigger', {
       'xmi:id': app.repository.generateGuid(),
@@ -1191,9 +1194,9 @@ writer.elements['UMLObjectNode'] = function (elem) {
   writer.setType(json, 'uml:ObjectNode')
   writer.writeBoolean(json, 'isControlType', elem.isControlType)
   writer.writeEnum(json, 'ordering', 'UMLObjectNodeOrderingKind', elem.ordering)
-  if (_.isObject(elem.type) && elem.type._id) {
+  if ((typeof elem.type === 'object') && elem.type._id) {
     writer.writeRef(json, 'type', elem.type)
-  } else if (_.isString(elem.type) && elem.type.trim().length > 0) {
+  } else if ((typeof elem.type === 'string') && elem.type.trim().length > 0) {
     var _typeNode = {
       'xmi:id': elem.type + '_id',
       'xmi:type': 'uml:DataType',
@@ -1321,7 +1324,7 @@ writer.elements['UMLStereotype'] = function (elem) {
       ]
     }
     writer.addTo(json, 'ownedMember', _extension)
-    _.each(_extensions, function (ex) {
+    _extensions.forEach(function (ex) {
       var _type = 'Class'
       if (ex.target && ex.target.name && ex.target.name.substring(0, 3) === 'UML') {
         _type = ex.target.name.substring(3, ex.target.name.length)

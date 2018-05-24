@@ -21,7 +21,6 @@
  *
  */
 
-const _ = require('lodash')
 const reader = require('./xmi21-reader')
 
 function addTo (json, field, element) {
@@ -39,8 +38,8 @@ function appendTo (json, field, elements) {
     json[field] = []
   }
   var arr = json[field]
-  _.each(elements, function (elem) {
-    if (!_.includes(arr, elem) && !_.some(arr, function (item) { return item._id === elem._id })) {
+  elements.forEach(function (elem) {
+    if (!arr.includes(elem) && !arr.some(function (item) { return item._id === elem._id })) {
       arr.push(elem)
     }
   })
@@ -228,7 +227,7 @@ reader.elements['uml:Namespace'] = function (node) {
 
 reader.elements['uml:Package'] = function (node) {
   var json = reader.elements['uml:Namespace'](node)
-  _.extend(json, reader.elements['uml:PackageableElement'](node))
+  Object.assign(json, reader.elements['uml:PackageableElement'](node))
   json['_type'] = 'UMLPackage'
   appendTo(json, 'ownedElements', reader.readElementArray(node, 'packagedElement'))
   // TODO: ownedType
@@ -273,15 +272,15 @@ reader.elements['uml:Feature'] = function (node) {
 
 reader.elements['uml:StructuralFeature'] = function (node) {
   var json = reader.elements['uml:Feature'](node)
-  _.extend(json, reader.elements['uml:TypedElement'](node))
-  _.extend(json, reader.elements['uml:MultiplicityElement'](node))
+  Object.assign(json, reader.elements['uml:TypedElement'](node))
+  Object.assign(json, reader.elements['uml:MultiplicityElement'](node))
   json['isReadOnly'] = reader.readBoolean(node, 'isReadOnly', false)
   return json
 }
 
 reader.elements['uml:Property'] = function (node) {
   var json = reader.elements['uml:StructuralFeature'](node)
-  _.extend(json, reader.elements['uml:ConnectableElement'](node))
+  Object.assign(json, reader.elements['uml:ConnectableElement'](node))
   json['_type'] = 'UMLAttribute'
   json['isDerived'] = reader.readBoolean(node, 'isDerived', false)
   // isDerivedUnion
@@ -295,7 +294,7 @@ reader.elements['uml:Property'] = function (node) {
 
 reader.elements['uml:Parameter'] = function (node) {
   var json = reader.elements['uml:TypedElement'](node)
-  _.extend(json, reader.elements['uml:MultiplicityElement'](node))
+  Object.assign(json, reader.elements['uml:MultiplicityElement'](node))
   json['_type'] = 'UMLParameter'
   json['defaultValue'] = reader.readElement(node, 'defaultValue') || ''
   json['direction'] =
@@ -307,7 +306,7 @@ reader.elements['uml:Parameter'] = function (node) {
 
 reader.elements['uml:BehavioralFeature'] = function (node) {
   var json = reader.elements['uml:Feature'](node)
-  _.extend(json, reader.elements['uml:Namespace'](node))
+  Object.assign(json, reader.elements['uml:Namespace'](node))
   json['parameters'] = reader.readElementArray(node, 'ownedParameter', 'uml:Parameter')
   return json
 }
@@ -326,7 +325,7 @@ reader.elements['uml:TemplateableElement'] = function (node) {
   var json = reader.elements['uml:Element'](node)
   var ts = reader.readElement(node, 'ownedTemplateSignature')
   if (ts && ts['__ownedParameter']) {
-    _.each(ts['__ownedParameter'], function (e) {
+    ts['__ownedParameter'].forEach(function (e) {
       addTo(json, 'templateParameters', e)
       e._parent = { '$ref': json._id }
     })
@@ -347,7 +346,7 @@ reader.elements['uml:TemplateSignature'] = function (node) {
 
 reader.elements['uml:RedefinableTemplateSignature'] = function (node) {
   var json = reader.elements['uml:TemplateSignature'](node)
-  _.extend(json, reader.elements['uml:RedefinableElement'](node))
+  Object.assign(json, reader.elements['uml:RedefinableElement'](node))
   return json
 }
 
@@ -396,15 +395,15 @@ reader.elements['uml:Type'] = function (node) {
 
 reader.elements['uml:Classifier'] = function (node) {
   var json = reader.elements['uml:Namespace'](node)
-  _.extend(json, reader.elements['uml:RedefinableElement'](node))
-  _.extend(json, reader.elements['uml:Type'](node))
-  _.extend(json, reader.elements['uml:TemplateableElement'](node))
-  _.extend(json, reader.elements['uml:ParameterableElement'](node))
+  Object.assign(json, reader.elements['uml:RedefinableElement'](node))
+  Object.assign(json, reader.elements['uml:Type'](node))
+  Object.assign(json, reader.elements['uml:TemplateableElement'](node))
+  Object.assign(json, reader.elements['uml:ParameterableElement'](node))
   json['isAbstract'] = reader.readBoolean(node, 'isAbstract', false)
   json['attributes'] = reader.readElementArray(node, 'ownedAttribute', 'uml:Property')
   json['operations'] = reader.readElementArray(node, 'ownedOperation', 'uml:Operation')
   var _generalizations = reader.readElementArray(node, 'generalization')
-  _.each(_generalizations, function (g) {
+  _generalizations.forEach(function (g) {
     g['source'] = { '$ref': json._id }
     addTo(json, 'ownedElements', g)
   })
@@ -435,8 +434,8 @@ reader.elements['uml:Class'] = function (node) {
   var json = reader.elements['uml:Classifier'](node)
   var _encapsulated = reader.elements['uml:EncapsulatedClassifier'](node)
   var _behaviored = reader.elements['uml:BehavioredClassifier'](node)
-  _.extend(json, _encapsulated)
-  _.extend(json, _behaviored)
+  Object.assign(json, _encapsulated)
+  Object.assign(json, _behaviored)
   appendTo(json, 'ownedElements', _encapsulated.ownedElements)
   appendTo(json, 'ownedElements', _behaviored.ownedElements)
   appendTo(json, 'attributes', _encapsulated.attributes)
@@ -484,7 +483,7 @@ reader.elements['uml:Generalization'] = function (node) {
 
 reader.elements['uml:Dependency'] = function (node) {
   var json = reader.elements['uml:DirectedRelationship'](node)
-  _.extend(json, reader.elements['uml:PackageableElement'](node))
+  Object.assign(json, reader.elements['uml:PackageableElement'](node))
   json['_type'] = 'UMLDependency'
   json['source'] = reader.readRef(node, 'client')
   json['target'] = reader.readRef(node, 'supplier')
@@ -518,7 +517,7 @@ reader.elements['uml:InterfaceRealization'] = function (node) {
 
 reader.elements['uml:Association'] = function (node) {
   var json = reader.elements['uml:Relationship'](node)
-  _.extend(json, reader.elements['uml:Classifier'](node))
+  Object.assign(json, reader.elements['uml:Classifier'](node))
   json['_type'] = 'UMLAssociation'
   var _ends = reader.readElementArray(node, 'ownedEnd')
   var _endRefs = reader.readRefArray(node, 'memberEnd')
@@ -653,7 +652,7 @@ reader.elements['uml:DeployedArtifact'] = function (node) {
 
 reader.elements['uml:Artifact'] = function (node) {
   var json = reader.elements['uml:Classifier'](node)
-  _.extend(json, reader.elements['uml:DeployedArtifact'](node))
+  Object.assign(json, reader.elements['uml:DeployedArtifact'](node))
   json['_type'] = 'UMLArtifact'
   json['fileName'] = reader.readString(node, 'fileName', '')
   return json
@@ -661,7 +660,7 @@ reader.elements['uml:Artifact'] = function (node) {
 
 reader.elements['uml:Node'] = function (node) {
   var json = reader.elements['uml:Class'](node)
-  _.extend(json, reader.elements['uml:DeploymentTarget'](node))
+  Object.assign(json, reader.elements['uml:DeploymentTarget'](node))
   json['_type'] = 'UMLNode'
   return json
 }
@@ -711,12 +710,12 @@ reader.elements['uml:UseCase'] = function (node) {
   json['_type'] = 'UMLUseCase'
   json['extensionPoints'] = reader.readElementArray(node, 'extensionPoint')
   var _includes = reader.readElementArray(node, 'include')
-  _.each(_includes, function (g) {
+  _includes.forEach(function (g) {
     g['source'] = { '$ref': json._id }
     addTo(json, 'ownedElements', g)
   })
   var _extends = reader.readElementArray(node, 'extend')
-  _.each(_extends, function (g) {
+  _extends.forEach(function (g) {
     g['source'] = { '$ref': json._id }
     addTo(json, 'ownedElements', g)
   })
@@ -725,7 +724,7 @@ reader.elements['uml:UseCase'] = function (node) {
 
 reader.elements['uml:Extend'] = function (node) {
   var json = reader.elements['uml:DirectedRelationship'](node)
-  _.extend(json, reader.elements['uml:NamedElement'](node))
+  Object.assign(json, reader.elements['uml:NamedElement'](node))
   json['_type'] = 'UMLExtend'
   json['target'] = reader.readRef(node, 'extendedCase')
   addTo(json, 'extensionLocations', reader.readRef(node, 'extensionLocation'))
@@ -734,7 +733,7 @@ reader.elements['uml:Extend'] = function (node) {
 
 reader.elements['uml:Include'] = function (node) {
   var json = reader.elements['uml:DirectedRelationship'](node)
-  _.extend(json, reader.elements['uml:NamedElement'](node))
+  Object.assign(json, reader.elements['uml:NamedElement'](node))
   json['_type'] = 'UMLInclude'
   json['target'] = reader.readRef(node, 'addition')
   return json
@@ -758,6 +757,7 @@ reader.elements['uml:Stereotype'] = function (node) {
 
 reader.elements['uml:Event'] = function (node) {
   var json = reader.elements['uml:PackageableElement'](node)
+  json['_type'] = 'UMLEvent'
   return json
 }
 
@@ -834,7 +834,7 @@ reader.elements['uml:InteractionFragment'] = function (node) {
 
 reader.elements['uml:Interaction'] = function (node) {
   var json = reader.elements['uml:InteractionFragment'](node)
-  _.extend(json, reader.elements['uml:Behavior'](node))
+  Object.assign(json, reader.elements['uml:Behavior'](node))
   json['_type'] = 'UMLInteraction'
   appendTo(json, 'participants', reader.readElementArray(node, 'lifeline'))
   appendTo(json, 'participants', reader.readElementArray(node, 'formalGate'))
@@ -980,7 +980,7 @@ reader.elements['uml:ConnectionPointReference'] = function (node) {
 
 reader.elements['uml:State'] = function (node) {
   var json = reader.elements['uml:Namespace'](node)
-  _.extend(json, reader.elements['uml:Vertex'](node))
+  Object.assign(json, reader.elements['uml:Vertex'](node))
   json['_type'] = 'UMLState'
   json['regions'] = reader.readElementArray(node, 'region')
   json['entryActivities'] = reader.readElementArray(node, 'entry')
@@ -1017,7 +1017,7 @@ reader.elements['uml:Activity'] = function (node) {
 
 reader.elements['uml:Pin'] = function (node) {
   var json = reader.elements['uml:TypedElement'](node)
-  _.extend(json, reader.elements['uml:MultiplicityElement'](node))
+  Object.assign(json, reader.elements['uml:MultiplicityElement'](node))
   return json
 }
 
@@ -1276,7 +1276,7 @@ reader.postprocessors.push(function (elem) {
     if (elem.end1 && elem.end1.$ref) {
       elem.end1 = reader.get(elem.end1.$ref)
       var parent1 = reader.get(elem.end1._parent.$ref)
-      parent1.attributes = _.without(parent1.attributes, elem.end1)
+      parent1.attributes = parent1.attributes.filter(e => e !== elem.end1)
       elem.end1._type = 'UMLAssociationEnd'
       elem.end1._parent = { '$ref': elem._id }
       elem.end1.navigable = false
@@ -1285,7 +1285,7 @@ reader.postprocessors.push(function (elem) {
     if (elem.end2 && elem.end2.$ref) {
       elem.end2 = reader.get(elem.end2.$ref)
       var parent2 = reader.get(elem.end2._parent.$ref)
-      parent2.attributes = _.without(parent2.attributes, elem.end2)
+      parent2.attributes = parent2.attributes.filter(e => e !== elem.end2)
       elem.end2._type = 'UMLAssociationEnd'
       elem.end2._parent = { '$ref': elem._id }
       elem.end2.navigable = false
@@ -1362,16 +1362,16 @@ reader.postprocessors.push(function (elem) {
   if (elem._type === 'UMLInteraction') {
     var parent = reader.get(elem._parent.$ref)
     if (parent && app.metamodels.isKindOf(parent._type, 'UMLClassifier')) {
-      _.each(elem.attributes, function (e) {
+      elem.attributes.forEach(function (e) {
         addTo(parent, 'attributes', e)
         e._parent = { '$ref': parent._id }
       })
-      _.each(elem.operations, function (e) {
+      elem.operations.forEach(function (e) {
         addTo(parent, 'operations', e)
         e._parent = { '$ref': parent._id }
       })
-    } else {
-      parent.ownedElements = _.without(parent.ownedElements, elem)
+    } else if (parent && parent.ownedElements) {
+      parent.ownedElements = parent.ownedElements.filter(e => e !== elem)
       var collaboration = {
         _id: app.repository.generateGuid(),
         _parent: { '$ref': parent._id },
@@ -1380,18 +1380,18 @@ reader.postprocessors.push(function (elem) {
         attributes: [],
         operations: []
       }
-      _.each(elem.attributes, function (e) {
+      elem.attributes.forEach(function (e) {
         addTo(collaboration, 'attributes', e)
         e._parent = { '$ref': collaboration._id }
       })
-      _.each(elem.operations, function (e) {
+      elem.operations.forEach(function (e) {
         addTo(collaboration, 'operations', e)
         e._parent = { '$ref': collaboration._id }
       })
       parent.ownedElements.push(collaboration)
       elem._parent = { '$ref': collaboration._id }
     }
-    _.each(elem.messages, function (msg) {
+    elem.messages.forEach(function (msg) {
       var _endpoint
       if (msg.sendEvent && msg.sendEvent.$ref && reader.get(msg.sendEvent.$ref)) {
         var _from = reader.get(msg.sendEvent.$ref)
@@ -1426,8 +1426,8 @@ reader.postprocessors.push(function (elem) {
         msg.target = { '$ref': _endpoint._id }
       }
     })
-    elem.fragments = _.reject(elem.fragments, function (f) {
-      return (f._type === 'OccurrenceSpecification')
+    elem.fragments = elem.fragments.filter(function (f) {
+      return (f._type !== 'OccurrenceSpecification')
     })
   }
 })
@@ -1439,7 +1439,7 @@ reader.postprocessors.push(function (elem) {
       var _cb = reader.get(elem._parent.$ref)
       var _int = reader.get(_cb._parent.$ref)
       if (_int._type === 'UMLInteraction') {
-        _.each(elem._formalGates, function (e) {
+        elem._formalGates.forEach(function (e) {
           addTo(_int, 'participants', e)
           e._parent = { '$ref': _int._id }
         })
@@ -1473,11 +1473,11 @@ reader.postprocessors.push(function (elem) {
       }
       if (app.metamodels.isKindOf(elem._type, 'UMLVertex')) {
         parent._stateMachine.regions[0].vertices.push(elem)
-        parent.ownedElements = _.without(parent.ownedElements, elem)
+        parent.ownedElements = parent.ownedElements.filter(e => e !== elem)
         elem._parent = { '$ref': parent._stateMachine.regions[0]._id }
       } else if (app.metamodels.isKindOf(elem._type, 'UMLTransition')) {
         parent._stateMachine.regions[0].transitions.push(elem)
-        parent.ownedElements = _.without(parent.ownedElements, elem)
+        parent.ownedElements = parent.ownedElements.filter(e => e !== elem)
         elem._parent = { '$ref': parent._stateMachine.regions[0]._id }
       }
     }
@@ -1487,16 +1487,16 @@ reader.postprocessors.push(function (elem) {
 // process Relationships
 reader.postprocessors.push(function (elem) {
   if (app.metamodels.isKindOf(elem._type, 'DirectedRelationship')) {
-    var parent = reader.get(elem._parent.$ref)
-    var source = reader.get(elem.source.$ref)
-    var target = reader.get(elem.target.$ref)
+    var parent = elem._parent ? reader.get(elem._parent.$ref) : null
+    var source = elem.source ? reader.get(elem.source.$ref) : null
+    var target = elem.target ? reader.get(elem.target.$ref) : null
     if (!source || !target) {
-      if (parent.ownedElements && _.includes(parent.ownedElements, elem)) {
-        parent.ownedElements = _.without(parent.ownedElements, elem)
-      } else if (parent.edges && _.includes(parent.edges, elem)) {
-        parent.edges = _.without(parent.edges, elem)
-      } else if (parent.messages && _.includes(parent.messages, elem)) {
-        parent.messages = _.without(parent.messages, elem)
+      if (parent.ownedElements && parent.ownedElements.includes(elem)) {
+        parent.ownedElements = parent.ownedElements.filter(e => e !== elem)
+      } else if (parent.edges && parent.edges.includes(elem)) {
+        parent.edges = parent.edges.filter(e => e !== elem)
+      } else if (parent.messages && parent.messages.includes(elem)) {
+        parent.messages = parent.messages.filter(e => e !== elem)
       }
     }
   }
