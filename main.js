@@ -21,7 +21,6 @@
  *
  */
 
-const filenamify = require('filenamify')
 const xmi21reader = require('./xmi21-reader')
 const xmi21writer = require('./xmi21-writer')
 require('./uml2-import')
@@ -52,7 +51,7 @@ function _handleXMI21Export (fullPath) {
   if (fullPath) {
     xmi21writer.saveToFile(fullPath)
   } else {
-    var _filename = filenamify(app.project.getProject().name)
+    var _filename = app.project.getProject().name
     var filename = app.dialogs.showSaveDialog('Export Project As XMI', _filename + '.xmi', XMI_FILE_FILTERS)
     if (filename) {
       xmi21writer.saveToFile(filename)
