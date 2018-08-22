@@ -348,7 +348,7 @@ writer.elements['UMLFeature'] = function (elem) {
 
 writer.elements['UMLStructuralFeature'] = function (elem) {
   var json = writer.elements['UMLFeature'](elem)
-  if ((typeof elem.type === 'object') && elem.type._id) {
+  if (elem.type && elem.type._id) {
     writer.writeRef(json, 'type', elem.type)
   } else if (typeof elem.type === 'string' && elem.type.trim().length > 0) {
     var _typeNode = {
@@ -1194,7 +1194,7 @@ writer.elements['UMLObjectNode'] = function (elem) {
   writer.setType(json, 'uml:ObjectNode')
   writer.writeBoolean(json, 'isControlType', elem.isControlType)
   writer.writeEnum(json, 'ordering', 'UMLObjectNodeOrderingKind', elem.ordering)
-  if ((typeof elem.type === 'object') && elem.type._id) {
+  if (elem.type && elem.type._id) {
     writer.writeRef(json, 'type', elem.type)
   } else if ((typeof elem.type === 'string') && elem.type.trim().length > 0) {
     var _typeNode = {
