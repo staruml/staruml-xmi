@@ -12,6 +12,6 @@
   },
   "license": "MIT",
   "engines": {
-    "staruml": "^3.0.0"
+    "staruml": ">=3.0.0"
   }
 }
