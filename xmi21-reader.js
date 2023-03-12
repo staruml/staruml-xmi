@@ -330,7 +330,7 @@ function loadFromFile (filename) {
   // Parse XMI
   var parser = new DOMParser()
   var dom = parser.parseFromString(data, 'text/xml')
-  var XMINode = dom.getElementsByTagName('XMI')[0]
+  var XMINode = dom.getElementsByTagName('xmi:XMI')[0]
 
   // Read top-level elements
   var topLevelElements = []
