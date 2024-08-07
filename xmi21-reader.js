@@ -21,13 +21,13 @@
  *
  */
 
-const fs = require('fs')
+const fs = require("fs");
 
 /**
  * XML Node Types
  * @enum {number}
  */
-const ELEMENT_NODE = 1
+const ELEMENT_NODE = 1;
 // const ATTRIBUTE_NODE = 2
 // const TEXT_NODE = 3
 // const CDATA_SECTION_NODE = 4
@@ -43,24 +43,24 @@ const ELEMENT_NODE = 1
 /**
  * Map for Enumeration Readers
  */
-var enumerations = {}
+var enumerations = {};
 
 /**
  * Map for Element Readers
  */
-var elements = {}
+var elements = {};
 
 /**
  * Object Id Map
  * @type {Object<string,Object>}
  */
-var idMap = {}
+var idMap = {};
 
 /**
  * Post-processors
  * @type {Array.<function(Object)>}
  */
-var postprocessors = []
+var postprocessors = [];
 
 /**
  * Find child node by name
@@ -69,15 +69,15 @@ var postprocessors = []
  * @param {string} name
  * @return {null|XMLNode}
  */
-function _findChildByName (node, name) {
-  var i, len
+function _findChildByName(node, name) {
+  var i, len;
   for (i = 0, len = node.childNodes.length; i < len; i++) {
-    var child = node.childNodes[i]
+    var child = node.childNodes[i];
     if (child.nodeType === ELEMENT_NODE && child.nodeName === name) {
-      return child
+      return child;
     }
   }
-  return null
+  return null;
 }
 
 /**
@@ -87,12 +87,12 @@ function _findChildByName (node, name) {
  * @param {?} defaultValue
  * @return {number|boolean|string|null} value of the attr
  */
-function readString (node, name, defaultValue) {
-  var val = node.getAttribute(name)
-  if (typeof val !== 'undefined' && val !== null) {
-    return val
+function readString(node, name, defaultValue) {
+  var val = node.getAttribute(name);
+  if (typeof val !== "undefined" && val !== null) {
+    return val;
   }
-  return defaultValue
+  return defaultValue;
 }
 
 /**
@@ -102,12 +102,12 @@ function readString (node, name, defaultValue) {
  * @param {boolean} defaultValue
  * @return {boolean|null} value of the attr
  */
-function readBoolean (node, name, defaultValue) {
-  var val = node.getAttribute(name)
-  if (typeof val !== 'undefined' && val !== null) {
-    return (val.toLowerCase() === 'true')
+function readBoolean(node, name, defaultValue) {
+  var val = node.getAttribute(name);
+  if (typeof val !== "undefined" && val !== null) {
+    return val.toLowerCase() === "true";
   }
-  return defaultValue
+  return defaultValue;
 }
 
 /**
@@ -117,12 +117,12 @@ function readBoolean (node, name, defaultValue) {
  * @param {number} defaultValue
  * @return {number|null} value of the attr
  */
-function readInteger (node, name, defaultValue) {
-  var val = node.getAttribute(name)
-  if (typeof val !== 'undefined' && val !== null) {
-    return Number(val)
+function readInteger(node, name, defaultValue) {
+  var val = node.getAttribute(name);
+  if (typeof val !== "undefined" && val !== null) {
+    return Number(val);
   }
-  return defaultValue
+  return defaultValue;
 }
 
 /**
@@ -133,16 +133,16 @@ function readInteger (node, name, defaultValue) {
  * @param {?} defaultValue
  * @return {number|boolean|string|null} value of the attr
  */
-function readEnum (node, name, type, defaultValue) {
-  var _enum = enumerations[type]
+function readEnum(node, name, type, defaultValue) {
+  var _enum = enumerations[type];
   if (_enum) {
-    var val = readString(node, name)
-    var literal = _enum[val]
-    if (typeof literal !== 'undefined') {
-      return literal
+    var val = readString(node, name);
+    var literal = _enum[val];
+    if (typeof literal !== "undefined") {
+      return literal;
     }
   }
-  return defaultValue
+  return defaultValue;
 }
 
 /**
@@ -152,19 +152,19 @@ function readEnum (node, name, type, defaultValue) {
  * @param {?} defaultValue
  * @return {null|string} value of the attr
  */
-function readExpression (node, name, defaultValue) {
-  var _name = node.nodeName + '.' + name
-  var _node = _findChildByName(node, _name)
+function readExpression(node, name, defaultValue) {
+  var _name = node.nodeName + "." + name;
+  var _node = _findChildByName(node, _name);
   if (_node) {
-    var exprNode = _findChildByName(_node, 'UML:Expression')
+    var exprNode = _findChildByName(_node, "UML:Expression");
     if (exprNode) {
-      var val = _node.getAttribute('body')
-      if (typeof val !== 'undefined' && val !== null) {
-        return val
+      var val = _node.getAttribute("body");
+      if (typeof val !== "undefined" && val !== null) {
+        return val;
       }
     }
   }
-  return defaultValue
+  return defaultValue;
 }
 
 /**
@@ -173,26 +173,30 @@ function readExpression (node, name, defaultValue) {
  * @param {string} name
  * @return {Array.<Object>} converted array of js objects
  */
-function readElement (node, name) {
-  var parentId = readString(node, 'xmi:id')
+function readElement(node, name) {
+  var parentId = readString(node, "xmi:id");
   for (var i = 0, len = node.childNodes.length; i < len; i++) {
-    var child = node.childNodes[i]
+    var child = node.childNodes[i];
     if (child.nodeType === ELEMENT_NODE && child.nodeName === name) {
-      var _type = child.getAttribute('xmi:type')
-      var fun = elements[_type]
+      var _type = child.getAttribute("xmi:type");
+      var fun = elements[_type];
       if (fun) {
-        var elem = fun(child)
-        if (typeof elem !== 'undefined' && elem !== null && typeof elem === 'object') {
+        var elem = fun(child);
+        if (
+          typeof elem !== "undefined" &&
+          elem !== null &&
+          typeof elem === "object"
+        ) {
           if (parentId) {
-            elem._parent = { '$ref': parentId }
+            elem._parent = { $ref: parentId };
           }
-          idMap[elem._id] = elem
-          return elem
+          idMap[elem._id] = elem;
+          return elem;
         }
       }
     }
   }
-  return null
+  return null;
 }
 
 /**
@@ -202,28 +206,32 @@ function readElement (node, name) {
  * @param {string} defaultElementType
  * @return {Array.<Object>} converted array of js objects
  */
-function readElementArray (node, name, defaultElementType) {
-  var parentId = readString(node, 'xmi:id')
-  var jsonArray = []
+function readElementArray(node, name, defaultElementType) {
+  var parentId = readString(node, "xmi:id");
+  var jsonArray = [];
 
   for (var i = 0, len = node.childNodes.length; i < len; i++) {
-    var child = node.childNodes[i]
+    var child = node.childNodes[i];
     if (child.nodeType === ELEMENT_NODE && child.nodeName === name) {
-      var _type = child.getAttribute('xmi:type') || defaultElementType
-      var fun = elements[_type]
+      var _type = child.getAttribute("xmi:type") || defaultElementType;
+      var fun = elements[_type];
       if (fun) {
-        var elem = fun(child)
-        if (typeof elem !== 'undefined' && elem !== null && typeof elem === 'object') {
+        var elem = fun(child);
+        if (
+          typeof elem !== "undefined" &&
+          elem !== null &&
+          typeof elem === "object"
+        ) {
           if (parentId) {
-            elem._parent = { '$ref': parentId }
+            elem._parent = { $ref: parentId };
           }
-          idMap[elem._id] = elem
-          jsonArray.push(elem)
+          idMap[elem._id] = elem;
+          jsonArray.push(elem);
         }
       }
     }
   }
-  return jsonArray
+  return jsonArray;
 }
 
 /**
@@ -232,22 +240,22 @@ function readElementArray (node, name, defaultElementType) {
  * @param {string} name
  * @return {object} $ref object
  */
-function readRef (node, name) {
-  var val = node.getAttribute(name)
+function readRef(node, name) {
+  var val = node.getAttribute(name);
   if (val) {
     // Ref as attribute
-    return { '$ref': val }
+    return { $ref: val };
   } else {
     // Ref as childNode
-    val = _findChildByName(node, name)
+    val = _findChildByName(node, name);
     if (val) {
-      var refid = val.getAttribute('xmi:idref')
+      var refid = val.getAttribute("xmi:idref");
       if (refid) {
-        return { '$ref': refid }
+        return { $ref: refid };
       }
     }
   }
-  return null
+  return null;
 }
 
 /**
@@ -256,32 +264,32 @@ function readRef (node, name) {
  * @param {string} name
  * @return {Array.<object>} $ref object
  */
-function readRefArray (node, name) {
-  var jsonArray = []
+function readRefArray(node, name) {
+  var jsonArray = [];
   for (var i = 0, len = node.childNodes.length; i < len; i++) {
-    var child = node.childNodes[i]
+    var child = node.childNodes[i];
     if (child.nodeType === ELEMENT_NODE && child.nodeName === name) {
-      var refid = child.getAttribute('xmi:idref')
+      var refid = child.getAttribute("xmi:idref");
       if (refid) {
-        jsonArray.push({ '$ref': refid })
+        jsonArray.push({ $ref: refid });
       }
     }
   }
-  return jsonArray
+  return jsonArray;
 }
 
 /**
  * Execute All Post-processors
  */
-function postprocess () {
-  var i, len
+function postprocess() {
+  var i, len;
   for (i = 0, len = postprocessors.length; i < len; i++) {
-    var key
-    var processor = postprocessors[i]
+    var key;
+    var processor = postprocessors[i];
     for (key in idMap) {
       if (idMap.hasOwnProperty(key)) {
-        var elem = idMap[key]
-        processor(elem)
+        var elem = idMap[key];
+        processor(elem);
       }
     }
   }
@@ -290,8 +298,8 @@ function postprocess () {
 /**
  * Clear loaded objects
  */
-function clear () {
-  idMap = {}
+function clear() {
+  idMap = {};
 }
 
 /**
@@ -299,24 +307,24 @@ function clear () {
  * @param {string} id
  * @return {Object}
  */
-function get (id) {
-  return idMap[id]
+function get(id) {
+  return idMap[id];
 }
 
 /**
  * Get idMap
  * @return {Object}
  */
-function getIdMap () {
-  return idMap
+function getIdMap() {
+  return idMap;
 }
 
 /**
  * Put newly created object which have a new ID
  * @param {Object} obj
  */
-function put (obj) {
-  idMap[obj._id] = obj
+function put(obj) {
+  idMap[obj._id] = obj;
 }
 
 /**
@@ -325,59 +333,60 @@ function put (obj) {
  * @param {string} filename
  * @return {$.Promise}
  */
-function loadFromFile (filename) {
-  var data = fs.readFileSync(filename, 'utf8')
+function loadFromFile(filename) {
+  var data = fs.readFileSync(filename, "utf8");
+
   // Parse XMI
-  var parser = new DOMParser()
-  var dom = parser.parseFromString(data, 'text/xml')
-  var XMINode = dom.getElementsByTagName('XMI')[0]
+  var parser = new DOMParser();
+  var dom = parser.parseFromString(data, "text/xml");
+  var XMINode = dom.childNodes[0]; // dom.getElementsByTagName("XMI")[0];
 
   // Read top-level elements
-  var topLevelElements = []
+  var topLevelElements = [];
   for (var i = 0, len = XMINode.childNodes.length; i < len; i++) {
-    var child = XMINode.childNodes[i]
-    var fun = elements[child.nodeName]
+    var child = XMINode.childNodes[i];
+    var fun = elements[child.nodeName];
     if (fun) {
-      var elem = fun(child)
+      var elem = fun(child);
       if (elem) {
-        topLevelElements.push(elem)
+        topLevelElements.push(elem);
       }
     }
   }
-  postprocess()
+  postprocess();
 
   // Load XMI
   var XMIData = {
     _id: app.repository.generateGuid(),
-    _type: 'UMLModel',
-    name: 'XMIImported',
-    ownedElements: topLevelElements
-  }
-  topLevelElements.forEach(e => {
-    e._parent = { '$ref': XMIData._id }
-  })
+    _type: "UMLModel",
+    name: "XMIImported",
+    ownedElements: topLevelElements,
+  };
+  topLevelElements.forEach((e) => {
+    e._parent = { $ref: XMIData._id };
+  });
 
-  app.project.importFromJson(app.project.getProject(), XMIData)
-  app.modelExplorer.expand(app.repository.get(XMIData._id))
+  app.project.importFromJson(app.project.getProject(), XMIData);
+  app.modelExplorer.expand(app.repository.get(XMIData._id));
 }
 
-exports.enumerations = enumerations
-exports.elements = elements
-exports.postprocessors = postprocessors
+exports.enumerations = enumerations;
+exports.elements = elements;
+exports.postprocessors = postprocessors;
 
-exports.readString = readString
-exports.readBoolean = readBoolean
-exports.readInteger = readInteger
-exports.readEnum = readEnum
-exports.readExpression = readExpression
-exports.readElement = readElement
-exports.readElementArray = readElementArray
-exports.readRef = readRef
-exports.readRefArray = readRefArray
+exports.readString = readString;
+exports.readBoolean = readBoolean;
+exports.readInteger = readInteger;
+exports.readEnum = readEnum;
+exports.readExpression = readExpression;
+exports.readElement = readElement;
+exports.readElementArray = readElementArray;
+exports.readRef = readRef;
+exports.readRefArray = readRefArray;
 
-exports.postprocess = postprocess
-exports.clear = clear
-exports.get = get
-exports.put = put
-exports.getIdMap = getIdMap
-exports.loadFromFile = loadFromFile
+exports.postprocess = postprocess;
+exports.clear = clear;
+exports.get = get;
+exports.put = put;
+exports.getIdMap = getIdMap;
+exports.loadFromFile = loadFromFile;

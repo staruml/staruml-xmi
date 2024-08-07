@@ -1,27 +1,27 @@
 /*
-* Copyright (c) 2014 MKLab. All rights reserved.
-*
-* Permission is hereby granted, free of charge, to any person obtaining a
-* copy of this software and associated documentation files (the "Software"),
-* to deal in the Software without restriction, including without limitation
-* the rights to use, copy, modify, merge, publish, distribute, sublicense,
-* and/or sell copies of the Software, and to permit persons to whom the
-* Software is furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in
-* all copies or substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-* FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-* DEALINGS IN THE SOFTWARE.
-*
-*/
+ * Copyright (c) 2014 MKLab. All rights reserved.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+ * DEALINGS IN THE SOFTWARE.
+ *
+ */
 
-const fs = require('fs')
+const fs = require("fs");
 
 /**
  * XMLWriter
@@ -30,40 +30,40 @@ class XMLWriter {
   /**
    * @constructor
    */
-  constructor (indentString) {
+  constructor(indentString) {
     /** @member {Array.<string>} lines */
-    this.lines = []
+    this.lines = [];
 
     /** @member {string} indentString */
-    this.indentString = indentString || '\t' // default tab
+    this.indentString = indentString || "\t"; // default tab
 
     /** @member {Array.<string>} indentations */
-    this.indentations = []
+    this.indentations = [];
   }
 
   /**
    * Indent
    */
-  indent () {
-    this.indentations.push(this.indentString)
+  indent() {
+    this.indentations.push(this.indentString);
   }
 
   /**
    * Outdent
    */
-  outdent () {
-    this.indentations.splice(this.indentations.length - 1, 1)
+  outdent() {
+    this.indentations.splice(this.indentations.length - 1, 1);
   }
 
   /**
    * Write a line
    * @param {string} line
    */
-  writeLine (line) {
+  writeLine(line) {
     if (line) {
-      this.lines.push(this.indentations.join('') + line)
+      this.lines.push(this.indentations.join("") + line);
     } else {
-      this.lines.push('')
+      this.lines.push("");
     }
   }
 
@@ -71,25 +71,25 @@ class XMLWriter {
    * Return as all string data
    * @return {string}
    */
-  getData () {
-    return this.lines.join('\n')
+  getData() {
+    return this.lines.join("\n");
   }
 }
 
 /**
  * Map for Enumeration Writers
  */
-var enumerations = {}
+var enumerations = {};
 
 /**
  * Map for Element Writers
  */
-var elements = {}
+var elements = {};
 
 /**
  * Nodes to be added later
  */
-var deferedNodes = []
+var deferedNodes = [];
 
 /**
  * Add a value to an array field
@@ -97,11 +97,11 @@ var deferedNodes = []
  * @param {string} name
  * @param {?} value
  */
-function addTo (json, name, value) {
+function addTo(json, name, value) {
   if (!Array.isArray(json[name])) {
-    json[name] = []
+    json[name] = [];
   }
-  json[name].push(value)
+  json[name].push(value);
 }
 
 /**
@@ -110,25 +110,35 @@ function addTo (json, name, value) {
  * @param {string} name
  * @param {Array.<Element>} elements
  */
-function appendTo (json, name, elements) {
+function appendTo(json, name, elements) {
   if (!Array.isArray(json[name])) {
-    json[name] = []
+    json[name] = [];
   }
-  var arr = json[name]
+  var arr = json[name];
   elements.forEach(function (elem) {
-    if (!arr.includes(elem) && !arr.some(function (item) { return item._id === elem._id })) {
-      arr.push(elem)
+    if (
+      !arr.includes(elem) &&
+      !arr.some(function (item) {
+        return item._id === elem._id;
+      })
+    ) {
+      arr.push(elem);
     }
-  })
+  });
 }
 
 /**
  * Add a node to deferedNodes
  * @param{object} node
  */
-function addToDeferedNode (node) {
-  if (node['xmi:id'] && !deferedNodes.some(function (n) { return (n['xmi:id'] === node['xmi:id']) })) {
-    deferedNodes.push(node)
+function addToDeferedNode(node) {
+  if (
+    node["xmi:id"] &&
+    !deferedNodes.some(function (n) {
+      return n["xmi:id"] === node["xmi:id"];
+    })
+  ) {
+    deferedNodes.push(node);
   }
 }
 
@@ -137,8 +147,8 @@ function addToDeferedNode (node) {
  * @param {object} json
  * @param {string} typeName
  */
-function setType (json, typeName) {
-  json['xmi:type'] = typeName
+function setType(json, typeName) {
+  json["xmi:type"] = typeName;
 }
 
 /**
@@ -147,9 +157,9 @@ function setType (json, typeName) {
  * @param {string} name
  * @param {string} value
  */
-function writeString (json, name, value) {
+function writeString(json, name, value) {
   if (value && value.length > 0) {
-    json[name] = value
+    json[name] = value;
   }
 }
 
@@ -159,11 +169,11 @@ function writeString (json, name, value) {
  * @param {string} name
  * @param {boolean} value
  */
-function writeBoolean (json, name, value) {
+function writeBoolean(json, name, value) {
   if (value) {
-    json[name] = 'true'
+    json[name] = "true";
   } else {
-    json[name] = 'false'
+    json[name] = "false";
   }
 }
 
@@ -173,10 +183,10 @@ function writeBoolean (json, name, value) {
  * @param {string} name
  * @param {?} value
  */
-function writeEnum (json, name, type, value) {
-  var fun = enumerations[type]
+function writeEnum(json, name, type, value) {
+  var fun = enumerations[type];
   if (fun) {
-    json[name] = fun(value)
+    json[name] = fun(value);
   }
 }
 
@@ -186,14 +196,14 @@ function writeEnum (json, name, type, value) {
  * @param {string} name
  * @param {Element} elem
  */
-function writeElement (json, name, elem) {
-  var fun = elements[elem.getClassName()]
-  var node = null
+function writeElement(json, name, elem) {
+  var fun = elements[elem.getClassName()];
+  var node = null;
   if (fun) {
-    node = fun(elem)
-    addTo(json, name, node)
+    node = fun(elem);
+    addTo(json, name, node);
   }
-  return node
+  return node;
 }
 
 /**
@@ -202,14 +212,14 @@ function writeElement (json, name, elem) {
  * @param {string} name
  * @param {Array.<Element>} elems
  */
-function writeElementArray (json, name, elems) {
+function writeElementArray(json, name, elems) {
   elems.forEach(function (elem) {
-    var fun = elements[elem.getClassName()]
+    var fun = elements[elem.getClassName()];
     if (fun) {
-      var node = fun(elem)
-      addTo(json, name, node)
+      var node = fun(elem);
+      addTo(json, name, node);
     }
-  })
+  });
 }
 
 /**
@@ -218,9 +228,9 @@ function writeElementArray (json, name, elems) {
  * @param {string} name
  * @param {Element} elem
  */
-function writeRef (json, name, elem) {
+function writeRef(json, name, elem) {
   if (elem) {
-    json[name] = elem._id
+    json[name] = elem._id;
   }
 }
 
@@ -230,13 +240,13 @@ function writeRef (json, name, elem) {
  * @param {string} name
  * @param {Array.<Element>} elems
  */
-function writeRefArray (json, name, elems) {
+function writeRefArray(json, name, elems) {
   elems.forEach(function (elem) {
     if (elem) {
-      var node = { 'xmi:idref': elem._id }
-      addTo(json, name, node)
+      var node = { "xmi:idref": elem._id };
+      addTo(json, name, node);
     }
-  })
+  });
 }
 
 /**
@@ -246,23 +256,23 @@ function writeRefArray (json, name, elems) {
  * @param {string} valueType
  * @param {string} value
  */
-function writeValueSpec (json, name, valueType, value) {
-  value = String(value)
-  if (valueType === 'uml:OpaqueExpression') {
+function writeValueSpec(json, name, valueType, value) {
+  value = String(value);
+  if (valueType === "uml:OpaqueExpression") {
     if (value && value.length > 0) {
       json[name] = {
-        'xmi:id': app.repository.generateGuid(),
-        'xmi:type': valueType,
-        'body': value
-      }
+        "xmi:id": app.repository.generateGuid(),
+        "xmi:type": valueType,
+        body: value,
+      };
     }
   } else {
     if (value && value.length > 0) {
       json[name] = {
-        'xmi:id': app.repository.generateGuid(),
-        'xmi:type': valueType,
-        'value': value
-      }
+        "xmi:id": app.repository.generateGuid(),
+        "xmi:type": valueType,
+        value: value,
+      };
     }
   }
 }
@@ -272,16 +282,16 @@ function writeValueSpec (json, name, valueType, value) {
  * @param {object} json
  * @param {object} valueMap
  */
-function writeExtension (json, valueMap) {
-  var node = json['xmi:Extension']
+function writeExtension(json, valueMap) {
+  var node = json["xmi:Extension"];
   if (!node) {
     node = {
-      'extender': 'StarUML'
-    }
-    json['xmi:Extension'] = node
+      extender: "StarUML",
+    };
+    json["xmi:Extension"] = node;
   }
   for (var key in valueMap) {
-    node[key] = valueMap[key]
+    node[key] = valueMap[key];
   }
 }
 
@@ -291,45 +301,45 @@ function writeExtension (json, valueMap) {
  * @param{XMLWriter} xmlWriter
  * @param{string} tagName
  */
-function convertJsonToXML (json, xmlWriter, tagName) {
-  tagName = tagName || json['xmi:type']
+function convertJsonToXML(json, xmlWriter, tagName) {
+  tagName = tagName || json["xmi:type"];
 
-  var line = '<' + tagName
+  var line = "<" + tagName;
 
   // Convert attributes
-  var childCount = 0
-  var key, val
+  var childCount = 0;
+  var key, val;
   for (key in json) {
-    val = json[key]
-    if (typeof val === 'string') {
-      line += ' ' + key + '="' + encodeURI(val) + '"'
-    } else if (!(typeof val === 'object')) {
-      line += ' ' + key + '="' + val + '"'
+    val = json[key];
+    if (typeof val === "string") {
+      line += " " + key + '="' + encodeURI(val) + '"';
+    } else if (!(typeof val === "object")) {
+      line += " " + key + '="' + val + '"';
     } else {
-      childCount++
+      childCount++;
     }
   }
 
   if (childCount > 0) {
-    line += '>'
-    xmlWriter.writeLine(line)
-    xmlWriter.indent()
+    line += ">";
+    xmlWriter.writeLine(line);
+    xmlWriter.indent();
     // Convert children
     for (key in json) {
-      val = json[key]
+      val = json[key];
       if (Array.isArray(val)) {
         val.forEach(function (item) {
-          convertJsonToXML(item, xmlWriter, key)
-        })
-      } else if (typeof val === 'object') {
-        convertJsonToXML(val, xmlWriter, key)
+          convertJsonToXML(item, xmlWriter, key);
+        });
+      } else if (typeof val === "object") {
+        convertJsonToXML(val, xmlWriter, key);
       }
     }
-    xmlWriter.outdent()
-    xmlWriter.writeLine('</' + tagName + '>')
+    xmlWriter.outdent();
+    xmlWriter.writeLine("</" + tagName + ">");
   } else {
-    line += '/>'
-    xmlWriter.writeLine(line)
+    line += "/>";
+    xmlWriter.writeLine(line);
   }
 }
 
@@ -339,54 +349,58 @@ function convertJsonToXML (json, xmlWriter, tagName) {
  * @param {string} filename
  * @return {$.Promise}
  */
-function saveToFile (filename) {
+function saveToFile(filename) {
   try {
     // Build intermediate JSON representations
-    var project = app.project.getProject()
+    var project = app.project.getProject();
     var root = {
-      'xmi:id': app.repository.generateGuid(),
-      'xmi:type': 'uml:Model',
-      'name': 'RootModel',
-      'packagedElement': []
-    }
-    writeElementArray(root, 'packagedElement', project.ownedElements)
+      "xmi:id": app.repository.generateGuid(),
+      "xmi:type": "uml:Model",
+      name: "RootModel",
+      packagedElement: [],
+    };
+    writeElementArray(root, "packagedElement", project.ownedElements);
     deferedNodes.forEach(function (node) {
-      addTo(root, 'packagedElement', node)
-    })
+      addTo(root, "packagedElement", node);
+    });
 
     // Convert to XML
-    var xmlWriter = new XMLWriter()
-    xmlWriter.writeLine('<?xml version="1.0" encoding="UTF-8"?>')
-    xmlWriter.writeLine('<xmi:XMI xmi:version="2.1" xmlns:uml="http://schema.omg.org/spec/UML/2.0" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1">')
-    xmlWriter.indent()
-    xmlWriter.writeLine('<xmi:Documentation exporter="StarUML" exporterVersion="2.0"/>')
-    convertJsonToXML(root, xmlWriter)
-    xmlWriter.outdent()
-    xmlWriter.writeLine('</xmi:XMI>')
+    var xmlWriter = new XMLWriter();
+    xmlWriter.writeLine('<?xml version="1.0" encoding="UTF-8"?>');
+    xmlWriter.writeLine(
+      '<xmi:XMI xmi:version="2.1" xmlns:uml="http://schema.omg.org/spec/UML/2.0" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1">',
+    );
+    xmlWriter.indent();
+    xmlWriter.writeLine(
+      '<xmi:Documentation exporter="StarUML" exporterVersion="2.0"/>',
+    );
+    convertJsonToXML(root, xmlWriter);
+    xmlWriter.outdent();
+    xmlWriter.writeLine("</xmi:XMI>");
 
     // Save to File
-    fs.writeFileSync(filename, xmlWriter.getData())
+    fs.writeFileSync(filename, xmlWriter.getData());
   } catch (err) {
-    console.error(err)
+    console.error(err);
   }
 }
 
-exports.enumerations = enumerations
-exports.elements = elements
-exports.deferedNodes = deferedNodes
+exports.enumerations = enumerations;
+exports.elements = elements;
+exports.deferedNodes = deferedNodes;
 
-exports.addTo = addTo
-exports.appendTo = appendTo
-exports.addToDeferedNode = addToDeferedNode
-exports.setType = setType
-exports.writeString = writeString
-exports.writeBoolean = writeBoolean
-exports.writeEnum = writeEnum
-exports.writeElement = writeElement
-exports.writeElementArray = writeElementArray
-exports.writeRef = writeRef
-exports.writeRefArray = writeRefArray
-exports.writeValueSpec = writeValueSpec
-exports.writeExtension = writeExtension
+exports.addTo = addTo;
+exports.appendTo = appendTo;
+exports.addToDeferedNode = addToDeferedNode;
+exports.setType = setType;
+exports.writeString = writeString;
+exports.writeBoolean = writeBoolean;
+exports.writeEnum = writeEnum;
+exports.writeElement = writeElement;
+exports.writeElementArray = writeElementArray;
+exports.writeRef = writeRef;
+exports.writeRefArray = writeRefArray;
+exports.writeValueSpec = writeValueSpec;
+exports.writeExtension = writeExtension;
 
-exports.saveToFile = saveToFile
+exports.saveToFile = saveToFile;

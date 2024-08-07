@@ -4,7 +4,7 @@
   "description": "XMI (XML Metadata Interchange) import and export",
   "homepage": "https://github.com/staruml/staruml-xmi",
   "issues": "https://github.com/staruml/staruml-xmi/issues",
-  "version": "0.9.4",
+  "version": "0.9.5",
   "author": {
     "name": "Minkyu Lee",
     "email": "niklaus.lee@gmail.com",
@@ -12,6 +12,6 @@
   },
   "license": "MIT",
   "engines": {
-    "staruml": ">=3.0.0"
+    "staruml": ">=6.0.0"
   }
 }

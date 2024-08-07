@@ -21,47 +21,55 @@
  *
  */
 
-const xmi21reader = require('./xmi21-reader')
-const xmi21writer = require('./xmi21-writer')
-require('./uml2-import')
-require('./uml2-export')
+const xmi21reader = require("./xmi21-reader");
+const xmi21writer = require("./xmi21-writer");
+require("./uml2-import");
+require("./uml2-export");
 
 const XMI_FILE_FILTERS = [
-  {name: 'XMI Files', extensions: ['xmi']},
-  {name: 'All Files', extensions: ['*']}
-]
+  { name: "XMI Files", extensions: ["xmi"] },
+  { name: "All Files", extensions: ["*"] },
+];
 
-function _handleXMI21Import (fullPath) {
+async function _handleXMI21Import(fullPath) {
   if (fullPath) {
-    xmi21reader.loadFromFile(fullPath)
+    xmi21reader.loadFromFile(fullPath);
   } else {
-    var files = app.dialogs.showOpenDialog('Select a XMI File (.xmi)', null, XMI_FILE_FILTERS)
+    var files = await app.dialogs.showOpenDialogAsync(
+      "Select a XMI File (.xmi)",
+      null,
+      XMI_FILE_FILTERS,
+    );
     if (files && files.length > 0) {
       try {
-        xmi21reader.loadFromFile(files[0])
+        xmi21reader.loadFromFile(files[0]);
       } catch (err) {
-        app.dialogs.showErrorDialog('Failed to load the file.', err)
-        console.log(err)
+        app.dialogs.showErrorDialog("Failed to load the file.", err);
+        console.log(err);
       }
     }
   }
 }
 
-function _handleXMI21Export (fullPath) {
+async function _handleXMI21Export(fullPath) {
   if (fullPath) {
-    xmi21writer.saveToFile(fullPath)
+    xmi21writer.saveToFile(fullPath);
   } else {
-    var _filename = app.project.getProject().name
-    var filename = app.dialogs.showSaveDialog('Export Project As XMI', _filename + '.xmi', XMI_FILE_FILTERS)
+    var _filename = app.project.getProject().name;
+    var filename = await app.dialogs.showSaveDialogAsync(
+      "Export Project As XMI",
+      _filename + ".xmi",
+      XMI_FILE_FILTERS,
+    );
     if (filename) {
-      xmi21writer.saveToFile(filename)
+      xmi21writer.saveToFile(filename);
     }
   }
 }
 
-function init () {
-  app.commands.register('xmi:import', _handleXMI21Import)
-  app.commands.register('xmi:export', _handleXMI21Export)
+function init() {
+  app.commands.register("xmi:import", _handleXMI21Import);
+  app.commands.register("xmi:export", _handleXMI21Export);
 }
 
-exports.init = init
+exports.init = init;
