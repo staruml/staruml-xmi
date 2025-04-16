@@ -1356,7 +1356,7 @@ reader.postprocessors.push(function (elem) {
       parent1.attributes = parent1.attributes.filter((e) => e !== elem.end1);
       elem.end1._type = "UMLAssociationEnd";
       elem.end1._parent = { $ref: elem._id };
-      elem.end1.navigable = false;
+      elem.end1.navigable = "unspecified";
       elem.end1.reference = elem.end1.type;
     }
     if (elem.end2 && elem.end2.$ref) {
@@ -1365,7 +1365,7 @@ reader.postprocessors.push(function (elem) {
       parent2.attributes = parent2.attributes.filter((e) => e !== elem.end2);
       elem.end2._type = "UMLAssociationEnd";
       elem.end2._parent = { $ref: elem._id };
-      elem.end2.navigable = false;
+      elem.end2.navigable = "unspecified";
       elem.end2.reference = elem.end2.type;
     }
   }
